@@ -1,45 +1,45 @@
-name : iso_6 # vanilla | iso_1 | iso_2 | iso_3 | iso_4 | iso_5 | iso_6
+name  : iso_6 # vanilla | iso_1 | iso_2 | iso_3 | iso_4 | iso_5 | iso_6
 model : 00030.pt # 00010.pt | 00027.pt | 00030.pt
-seed : 1
+seed  : 1
 
-train : True
-load : False
-adv_test : False
-reg : True
-jacobian : False
+train     : True
+load      : False
+adv_test  : False
+reg       : True
+jacobian  : False
 
 # model
 
 channels1 : 32
 channels2 : 64
-hidden : 128
+hidden    : 128
 
 # training
 
-epochs : 30
-batch_size : 32
+epochs          : 30
+batch_size      : 32
 test_batch_size : 32
-learning_rate : 0.01
+learning_rate   : 0.01
 
 # e.g., eps_inf = 0.3 => eps_l2 = sqrt(784)*eps_inf = 28*0.3 = 8.4
 epsilon_l2 : 10
 lambda_min : 0.00001
 lambda_max : 0.0001
 
-verbose : True
-log_interval : 100
-save_step : 1
+verbose       : True
+log_interval  : 100
+save_step     : 1
 
 # testing
 
-testing_batch_size : 1
-test_epoch : 30
-loader : train
+testing_batch_size  : 1
+test_epoch          : 30
+loader              : train
 
 # attack
-
+attack_type       : fgsm
 perturbation_type : linf
-budget : 0.1
-alpha : 0.01
-max_iter : 40
+budget            : 0.1
+alpha             : 0.01
+max_iter          : 40
 
