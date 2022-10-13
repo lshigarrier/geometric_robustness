@@ -1,8 +1,10 @@
+from pickletools import optimize
 import torch
 import torch.nn.functional as F
 import numpy as np
 from scipy.linalg import orth, eigh
-
+from art.attacks.evasion import DeepFool, CarliniLInfMethod
+from art.estimators.classification import PyTorchClassifier
 
 def fgsm_attack(image, epsilon, data_grad):
     """
@@ -10,10 +12,13 @@ def fgsm_attack(image, epsilon, data_grad):
     """
     # Collect the element-wise sign of the data gradient
     sign_data_grad = data_grad.sign()
+
     # Create the perturbed image by adjusting each pixel of the input image
     perturbed_image = image + epsilon*sign_data_grad
+
     # Adding clipping to maintain [0,1] range
     perturbed_image = torch.clamp(perturbed_image, 0, 1)
+
     # Return the perturbed image
     return perturbed_image
 
@@ -215,23 +220,27 @@ class FastGradientSignUntargeted:
         with iterative grad sign updates
     """
 
-    def __init__(self, model, device, epsilon, alpha, min_val, max_val, max_iters, _type='linf', _loss='nll'):
-        self.model = model
-        # self.model.eval()
-        self.device = device
-        # Maximum perturbation
-        self.epsilon = epsilon
-        # Movement multiplier per iteration
-        self.alpha = alpha
-        # Minimum value of the pixels
-        self.min_val = min_val
-        # Maximum value of the pixels
-        self.max_val = max_val
-        # Maximum numbers of iteration to generated adversaries
-        self.max_iters = max_iters
-        # The perturbation of epsilon
-        self._type = _type
-        # Loss function
+    def __init__(self, 
+                        model,          # Pytorch model
+                        device,         # CPU/GPU
+                        epsilon,        # Maximum perturbation
+                        alpha,          # Movement multiplier per iteration
+                        min_val,        # Minimum value of the pixels
+                        max_val,        # Maximum value of the pixels
+                        max_iters,      # Maximum numbers of iteration to generated adversaries
+                        _type='linf',   # The metric of perturbation size for epsilon
+                        _loss='nll'     # Loss function
+                        ):
+
+        # Store variables internally
+        self.model      = model
+        self.device     = device
+        self.epsilon    = epsilon
+        self.alpha      = alpha
+        self.min_val    = min_val
+        self.max_val    = max_val
+        self.max_iters  = max_iters
+        self._type      = _type
         if _loss == 'nll':
             self._loss = F.nll_loss
         elif _loss == 'cross_entropy':
@@ -250,26 +259,197 @@ class FastGradientSignUntargeted:
         else:
             x = original_images.clone()
 
+        # Turn gradients on
         x.requires_grad = True
-
-        # max_x = original_images + self.epsilon
-        # min_x = original_images - self.epsilon
-
         with torch.enable_grad():
+
+            # Iterate
             for _iter in range(self.max_iters):
+
+                # Forward pass
                 outputs = self.model(x)
+
+                # Calculate loss
                 loss = self._loss(outputs, labels)
+
+                # Calculate gradients wrt input
                 grads = torch.autograd.grad(loss, x, only_inputs=True)[0]
+
+                # Add perturbation
                 x.data += self.alpha * torch.sign(grads.data)
-                # the adversaries' pixel value should within max_x and min_x due
-                # to the l_infinity / l2 restriction
+
+                # Project -- the adversaries' pixel value should within max_x and min_x due to the l_infinity / l2 restriction
                 x = project(x, original_images, self.epsilon, self._type)
-                # the adversaries' value should be valid pixel value
+
+                # Clamp -- the adversaries' value should be valid pixel value
                 x.clamp_(self.min_val, self.max_val)
 
         return x
 
 
+class DeepFool:
+    """
+        Deep Fool uses https://arxiv.org/abs/1511.04599
+        and is implemented using adversarial-robustness-toolbox (ART)
+    """
+
+    def __init__(self, 
+                        model,          # Pytorch model
+                        input_shape,    # Size of input image
+                        num_classes,    # Size of output
+                        device,         # CPU/GPU
+                        min_val,        # Minimum value of the pixels
+                        max_val,        # Maximum value of the pixels
+                        _optimizer,     # Update method
+                        max_iters           = 100,      # Maximum numbers of iterations
+                        overshoot_param     = 1e-6,     # Overshoot parameter 
+                        _type               = 'linf',   # The metric of perturbation size for epsilon
+                        _loss               = 'nll'     # Loss function
+                        ):
+
+        # Store variables internally
+        self.model              = model
+        self.input_shape        = input_shape
+        self.num_classes        = num_classes
+        self.device             = device
+        self.overshoot_param    = overshoot_param
+        self.min_val            = min_val
+        self.max_val            = max_val
+        self.max_iters          = max_iters
+        self._type              = _type
+        self._optimizer         = _optimizer
+        if _loss == 'nll':
+            self._loss = F.nll_loss
+        elif _loss == 'cross_entropy':
+            self._loss = F.cross_entropy
+        else:
+            raise NotImplementedError
+
+        # Load adversarial-robustness-toolbox model wrapper
+        self.art_classifier = PyTorchClassifier(
+                                            model       = self.model,
+                                            clip_values = (self.min_val, self.max_val),
+                                            loss        = self._loss,
+                                            optimizer   = self._optimizer,
+                                            input_shape = self.input_shape,
+                                            nb_classes  = self.num_classes,
+                                        )
+
+    def perturb(self, original_images, labels):
+        # Convert images and labels to numpy arrays
+        original_images  = original_images.numpy()
+        labels           = labels.numpy()
+
+        # Initialize attacker
+        attack = DeepFool(
+                            classifier  = self.art_classifier,
+                            max_iter    = self.max_iters,
+                            epsilon     = self.overshoot_param,
+                            nb_grads    = self.num_classes,         # We can make this smaller so that it only computes the top class gradients for faster computation
+                            batch_size  = original_images.shape[0],
+                            verbose     = False
+        )
+
+        # Generate attacks
+        x_adv = attack.generate(x = original_images, 
+                                y = labels)
+
+        # Retrun as PyTorch tensor
+        return torch.from_numpy(x_adv)
+
+
+class CWLinf:
+    """
+        The L_inf optimized attack of Carlini and Wagner from https://arxiv.org/abs/1608.04644
+        and is implemented using adversarial-robustness-toolbox (ART)
+    """
+
+    def __init__(self, 
+                        # Model/Data args
+                        model,          # Pytorch model
+                        input_shape,    # Size of input image
+                        num_classes,    # Size of output
+                        device,         # CPU/GPU
+                        min_val,        # Minimum value of the pixels
+                        max_val,        # Maximum value of the pixels
+                        _optimizer,     # Update method
+                        _loss = 'nll',   # Loss function
+
+                        # CW-Linf Attack args
+                        confidence      = 0.0,      # Confidence of adversarial examples: a higher value produces examples that are farther away, from the original input, but classified with higher confidence as the target class.
+                        targeted        = False,    # Should the attack target one specific class
+                        learning_rate   = 0.01,     # Learn rate
+                        max_iter        = 10,       # Maximum number of iterations
+                        decrease_factor = 0.9,      # The rate of shrinking tau, values in 0 < decrease_factor < 1 where larger is more accurate.
+                        initial_const   = 1e-5,     # The initial value of constant c.
+                        largest_const   = 20.0,     # The largest value of constant c.
+                        const_factor    = 2.0,      # The rate of increasing constant c with const_factor > 1, where smaller more accurate.
+                        
+                        ):
+
+        # Store variables internally
+        self.model              = model
+        self.input_shape        = input_shape
+        self.num_classes        = num_classes
+        self.device             = device
+        self.min_val            = min_val
+        self.max_val            = max_val
+        self._optimizer         = _optimizer
+        if _loss == 'nll':
+            self._loss = F.nll_loss
+        elif _loss == 'cross_entropy':
+            self._loss = F.cross_entropy
+        else:
+            raise NotImplementedError
+
+        self.confidence      = confidence
+        self.targeted        = targeted
+        self.learning_rate   = learning_rate
+        self.max_iter        = max_iter
+        self.decrease_factor = decrease_factor
+        self.initial_const   = initial_const
+        self.largest_const   = largest_const
+        self.const_factor    = const_factor
+
+        # Load adversarial-robustness-toolbox model wrapper
+        self.art_classifier = PyTorchClassifier(
+                                            model       = self.model,
+                                            clip_values = (self.min_val, self.max_val),
+                                            loss        = self._loss,
+                                            optimizer   = self._optimizer,
+                                            input_shape = self.input_shape,
+                                            nb_classes  = self.num_classes,
+                                        )
+
+    def perturb(self, original_images, labels):
+        # Convert images and labels to numpy arrays
+        original_images  = original_images.numpy()
+        labels           = labels.numpy()
+
+        # Initialize attacker
+        attack = CarliniLInfMethod(
+                            classifier      = self.art_classifier,
+                            confidence      = self.confidence,
+                            targeted        = self.targeted,
+                            learning_rate   = self.learning_rate,
+                            max_iter        = self.max_iter,
+                            decrease_factor = self.decrease_factor,
+                            initial_const   = self.initial_const,
+                            largest_const   = self.largest_const,
+                            const_factor    = self.const_factor,
+                            verbose              = False
+        )
+
+        # Generate attacks
+        x_adv = attack.generate(x = original_images, 
+                                y = labels)
+
+        # Retrun as PyTorch tensor
+        return torch.from_numpy(x_adv)
+
+
+
+        
 # ---------------------------------------------------- Main ------------------------------------------------------------
 
 
