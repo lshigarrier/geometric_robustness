@@ -462,9 +462,21 @@ def main():
     # Load attacker
     attack = None
     if param['adv_test']:
-        attack = FastGradientSignUntargeted(model, device, param['budget'], param['alpha'],
-                                            min_val=0, max_val=1, max_iters=param['max_iter'],
-                                            _type=param['perturbation_type'], _loss='cross_entropy')
+
+        if param["attack_type"] == "fgsm":
+            attack = FastGradientSignUntargeted(model, 
+                                                device, 
+                                                epsilon     = param['budget'], 
+                                                alpha       = param['alpha'],
+                                                min_val     = 0, 
+                                                max_val     = 1, 
+                                                max_iters   = param['max_iter'],
+                                                _type       = param['perturbation_type'], 
+                                                _loss       = 'cross_entropy')
+
+        else:
+            print("Invalid attack_type in config file, please use 'fgsm' or add a new class in attacks_utils....")
+            exit()
 
     # Train model
     if param['train']:
