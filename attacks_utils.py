@@ -447,8 +447,6 @@ class CWLinf:
         # Retrun as PyTorch tensor
         return torch.from_numpy(x_adv)
 
-
-
         
 # ---------------------------------------------------- Main ------------------------------------------------------------
 
