@@ -453,6 +453,10 @@ def main():
     torch.manual_seed(param['seed'])
 
     # Declare CPU/GPU useage
+    if param['gpu_number'] is not None:
+        os.environ["CUDA_DEVICE_ORDER"]     = "PCI_BUS_ID"
+        os.environ["CUDA_VISIBLE_DEVICES"]  = param['gpu_number']
+
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f'Using {device}')
 
