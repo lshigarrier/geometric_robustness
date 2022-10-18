@@ -1,12 +1,13 @@
-name  : iso_6 # vanilla | iso_1 | iso_2 | iso_3 | iso_4 | iso_5 | iso_6
-model : 00030.pt # 00010.pt | 00027.pt | 00030.pt
+name  : kyles_TEMP # iso_6 # vanilla | iso_1 | iso_2 | iso_3 | iso_4 | iso_5 | iso_6
+model : temp.pt # 00010.pt | 00027.pt | 00030.pt
 seed  : 1
 
-train     : True
-load      : False
-adv_test  : False
-reg       : True
-jacobian  : False
+train       : True
+gpu_number  : None
+load        : False
+adv_test    : False
+reg         : False
+jacobian    : False
 
 # model
 
@@ -16,7 +17,7 @@ hidden    : 128
 
 # training
 
-epochs          : 30
+epochs          : 10
 batch_size      : 32
 test_batch_size : 32
 learning_rate   : 0.01
@@ -32,9 +33,9 @@ save_step     : 1
 
 # testing
 
-testing_batch_size  : 1
+testing_batch_size  : 32
 test_epoch          : 30
-loader              : train
+loader              : test
 
 # attack
 attack_type       : fgsm
