@@ -11,8 +11,7 @@ from torch.utils.data import DataLoader
 from torchvision import datasets, transforms
 from mnist_model import SoftLeNet
 from mnist_utils import load_yaml
-from attacks_utils import FastGradientSignUntargeted
-from attacks_utils import ARTDeepFool as DeepFool
+from attacks_utils import FastGradientSignUntargeted, TorchAttackDeepFool
 from attacks_vis import plot_curves, plot_hist
 
 
@@ -189,7 +188,7 @@ def test(param, model, device, test_loader, lmbda, attack=None):
 
     ## Cycle through data
     #----------------------------------------------------------------#
-    with torch.no_grad():
+    with torch.enable_grad() if param['adv_test'] else torch.no_grad():
         for batch_idx, (data, target) in enumerate(test_loader):
             # Push to device
             data, target = data.to(device), target.to(device)
@@ -480,19 +479,7 @@ def main():
                                                 _loss       = 'cross_entropy')
 
         elif param['attack_type'] == "deep_fool":
-            attack = DeepFool(
-                                model           = model,
-                                input_shape     = param['input_shape'],    
-                                num_classes     = param['num_classes'],    
-                                device          = device,         
-                                min_val         = 0,        
-                                max_val         = 1,        
-                                _optimizer      = optimizer,     
-                                max_iters       = 100,    
-                                overshoot_param = 1e-6, 
-                                _type           = 'linf',
-                                _loss           = 'nll'
-            )
+            attack = TorchAttackDeepFool(model = model)
 
         else:
             print("Invalid attack_type in config file, please use 'fgsm' or add a new class in attacks_utils....")
