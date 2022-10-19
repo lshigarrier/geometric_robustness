@@ -1,0 +1,200 @@
+nohup: ignoring input
+Using cuda
+Using training batch size for test loader
+Using training batch size for train loader
+Randomly initialized weights
+Initialization done
+Start training
+Train Epoch: 1 [0/60000 (0%)]	Loss: 2.301254, Cross Entropy: 2.301254, Reg: 0.000000
+Elapsed time (s): 0.4460759162902832
+Memory usage (GB): 2.579967498779297
+Train Epoch: 1 [3200/60000 (5%)]	Loss: 2.301741, Cross Entropy: 2.301741, Reg: 0.000000
+Elapsed time (s): 0.35704946517944336
+Memory usage (GB): 2.5799903869628906
+Train Epoch: 1 [6400/60000 (11%)]	Loss: 2.298610, Cross Entropy: 2.298610, Reg: 0.000000
+Elapsed time (s): 0.43035030364990234
+Memory usage (GB): 2.5800018310546875
+Train Epoch: 1 [9600/60000 (16%)]	Loss: 2.297408, Cross Entropy: 2.297408, Reg: 0.000000
+Elapsed time (s): 0.42662572860717773
+Memory usage (GB): 2.5800018310546875
+Train Epoch: 1 [12800/60000 (21%)]	Loss: 2.289503, Cross Entropy: 2.289503, Reg: 0.000000
+Elapsed time (s): 0.45201849937438965
+Memory usage (GB): 2.5800704956054688
+Train Epoch: 1 [16000/60000 (27%)]	Loss: 2.288367, Cross Entropy: 2.288367, Reg: 0.000000
+Elapsed time (s): 0.3900718688964844
+Memory usage (GB): 2.5800704956054688
+Train Epoch: 1 [19200/60000 (32%)]	Loss: 2.276665, Cross Entropy: 2.276665, Reg: 0.000000
+Elapsed time (s): 0.3529198169708252
+Memory usage (GB): 2.5800743103027344
+Train Epoch: 1 [22400/60000 (37%)]	Loss: 2.264830, Cross Entropy: 2.264830, Reg: 0.000000
+Elapsed time (s): 0.44135189056396484
+Memory usage (GB): 2.5801963806152344
+Train Epoch: 1 [25600/60000 (43%)]	Loss: 2.144987, Cross Entropy: 2.144987, Reg: 0.000000
+Elapsed time (s): 0.48826146125793457
+Memory usage (GB): 2.5801963806152344
+Train Epoch: 1 [28800/60000 (48%)]	Loss: 1.920641, Cross Entropy: 1.920641, Reg: 0.000000
+Elapsed time (s): 0.45926785469055176
+Memory usage (GB): 2.5801963806152344
+Train Epoch: 1 [32000/60000 (53%)]	Loss: 1.869043, Cross Entropy: 1.869043, Reg: 0.000000
+Elapsed time (s): 0.45971059799194336
+Memory usage (GB): 2.5801963806152344
+Train Epoch: 1 [35200/60000 (59%)]	Loss: 1.866988, Cross Entropy: 1.866988, Reg: 0.000000
+Elapsed time (s): 0.4074850082397461
+Memory usage (GB): 2.5802040100097656
+Train Epoch: 1 [38400/60000 (64%)]	Loss: 1.773558, Cross Entropy: 1.773558, Reg: 0.000000
+Elapsed time (s): 0.34798717498779297
+Memory usage (GB): 2.5802040100097656
+Train Epoch: 1 [41600/60000 (69%)]	Loss: 1.731127, Cross Entropy: 1.731127, Reg: 0.000000
+Elapsed time (s): 0.4280855655670166
+Memory usage (GB): 2.5802040100097656
+Train Epoch: 1 [44800/60000 (75%)]	Loss: 1.682603, Cross Entropy: 1.682603, Reg: 0.000000
+Elapsed time (s): 0.5477066040039062
+Memory usage (GB): 2.5802040100097656
+Train Epoch: 1 [48000/60000 (80%)]	Loss: 1.592466, Cross Entropy: 1.592466, Reg: 0.000000
+Elapsed time (s): 0.34807777404785156
+Memory usage (GB): 2.5802040100097656
+Train Epoch: 1 [51200/60000 (85%)]	Loss: 1.601835, Cross Entropy: 1.601835, Reg: 0.000000
+Elapsed time (s): 0.42575883865356445
+Memory usage (GB): 2.5802078247070312
+Train Epoch: 1 [54400/60000 (91%)]	Loss: 1.614200, Cross Entropy: 1.614200, Reg: 0.000000
+Elapsed time (s): 0.42545294761657715
+Memory usage (GB): 2.580211639404297
+Train Epoch: 1 [57600/60000 (96%)]	Loss: 1.614116, Cross Entropy: 1.614116, Reg: 0.000000
+Elapsed time (s): 0.37282609939575195
+Memory usage (GB): 2.580211639404297
+Train set: Average loss: 1.9701, Average cross entropy: 1.9701, Average reg: 0.0000
+Test set: Average loss: 1.5837, Average cross entropy: 1.5837, Average reg: 0.0000, Accuracy: 8963/10000 (90%)
+
+Train Epoch: 2 [0/60000 (0%)]	Loss: 1.593989, Cross Entropy: 1.593989, Reg: 0.000000
+Elapsed time (s): 0.06885290145874023
+Memory usage (GB): 2.589153289794922
+Train Epoch: 2 [3200/60000 (5%)]	Loss: 1.548311, Cross Entropy: 1.548311, Reg: 0.000000
+Elapsed time (s): 0.468198299407959
+Memory usage (GB): 2.589160919189453
+Train Epoch: 2 [6400/60000 (11%)]	Loss: 1.603327, Cross Entropy: 1.603327, Reg: 0.000000
+Elapsed time (s): 0.4217684268951416
+Memory usage (GB): 2.589160919189453
+Train Epoch: 2 [9600/60000 (16%)]	Loss: 1.545908, Cross Entropy: 1.545908, Reg: 0.000000
+Elapsed time (s): 0.47832655906677246
+Memory usage (GB): 2.589160919189453
+Train Epoch: 2 [12800/60000 (21%)]	Loss: 1.587159, Cross Entropy: 1.587159, Reg: 0.000000
+Elapsed time (s): 0.39225149154663086
+Memory usage (GB): 2.589160919189453
+Train Epoch: 2 [16000/60000 (27%)]	Loss: 1.527849, Cross Entropy: 1.527849, Reg: 0.000000
+Elapsed time (s): 0.4735722541809082
+Memory usage (GB): 2.589160919189453
+Train Epoch: 2 [19200/60000 (32%)]	Loss: 1.580196, Cross Entropy: 1.580196, Reg: 0.000000
+Elapsed time (s): 0.4395771026611328
+Memory usage (GB): 2.589160919189453
+Train Epoch: 2 [22400/60000 (37%)]	Loss: 1.608381, Cross Entropy: 1.608381, Reg: 0.000000
+Elapsed time (s): 0.3826746940612793
+Memory usage (GB): 2.5891647338867188
+Train Epoch: 2 [25600/60000 (43%)]	Loss: 1.503052, Cross Entropy: 1.503052, Reg: 0.000000
+Elapsed time (s): 0.4197804927825928
+Memory usage (GB): 2.5891647338867188
+Train Epoch: 2 [28800/60000 (48%)]	Loss: 1.556039, Cross Entropy: 1.556039, Reg: 0.000000
+Elapsed time (s): 0.4597327709197998
+Memory usage (GB): 2.5891647338867188
+Train Epoch: 2 [32000/60000 (53%)]	Loss: 1.537647, Cross Entropy: 1.537647, Reg: 0.000000
+Elapsed time (s): 0.5101640224456787
+Memory usage (GB): 2.58917236328125
+Train Epoch: 2 [35200/60000 (59%)]	Loss: 1.636370, Cross Entropy: 1.636370, Reg: 0.000000
+Elapsed time (s): 0.518099308013916
+Memory usage (GB): 2.58917236328125
+Train Epoch: 2 [38400/60000 (64%)]	Loss: 1.581638, Cross Entropy: 1.581638, Reg: 0.000000
+Elapsed time (s): 0.4738492965698242
+Memory usage (GB): 2.5891761779785156
+Train Epoch: 2 [41600/60000 (69%)]	Loss: 1.578981, Cross Entropy: 1.578981, Reg: 0.000000
+Elapsed time (s): 0.4103710651397705
+Memory usage (GB): 2.5891761779785156
+Train Epoch: 2 [44800/60000 (75%)]	Loss: 1.584580, Cross Entropy: 1.584580, Reg: 0.000000
+Elapsed time (s): 0.3934001922607422
+Memory usage (GB): 2.5891761779785156
+Train Epoch: 2 [48000/60000 (80%)]	Loss: 1.545527, Cross Entropy: 1.545527, Reg: 0.000000
+Elapsed time (s): 0.43858861923217773
+Memory usage (GB): 2.5891761779785156
+Train Epoch: 2 [51200/60000 (85%)]	Loss: 1.532962, Cross Entropy: 1.532962, Reg: 0.000000
+Elapsed time (s): 0.3851644992828369
+Memory usage (GB): 2.5891761779785156
+Train Epoch: 2 [54400/60000 (91%)]	Loss: 1.532313, Cross Entropy: 1.532313, Reg: 0.000000
+Elapsed time (s): 0.3785054683685303
+Memory usage (GB): 2.5891761779785156
+Train Epoch: 2 [57600/60000 (96%)]	Loss: 1.584327, Cross Entropy: 1.584327, Reg: 0.000000
+Elapsed time (s): 0.426253080368042
+Memory usage (GB): 2.5891761779785156
+Train set: Average loss: 1.5726, Average cross entropy: 1.5726, Average reg: 0.0000
+Test set: Average loss: 1.5561, Average cross entropy: 1.5561, Average reg: 0.0000, Accuracy: 9104/10000 (91%)
+
+Exception in thread Thread-5:
+Traceback (most recent call last):
+  File "/usr/lib/python3.8/threading.py", line 932, in _bootstrap_inner
+    self.run()
+  File "/usr/lib/python3.8/threading.py", line 870, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/naddeok5/envs/GeoRobo/lib/python3.8/site-packages/torch/utils/data/_utils/pin_memory.py", line 28, in _pin_memory_loop
+    r = in_queue.get(timeout=MP_STATUS_CHECK_INTERVAL)
+  File "/usr/lib/python3.8/multiprocessing/queues.py", line 116, in get
+    return _ForkingPickler.loads(res)
+  File "/home/naddeok5/envs/GeoRobo/lib/python3.8/site-packages/torch/multiprocessing/reductions.py", line 297, in rebuild_storage_fd
+    fd = df.detach()
+  File "/usr/lib/python3.8/multiprocessing/resource_sharer.py", line 57, in detach
+    with _resource_sharer.get_connection(self._id) as conn:
+  File "/usr/lib/python3.8/multiprocessing/resource_sharer.py", line 87, in get_connection
+    c = Client(address, authkey=process.current_process().authkey)
+  File "/usr/lib/python3.8/multiprocessing/connection.py", line 502, in Client
+    c = SocketClient(address)
+  File "/usr/lib/python3.8/multiprocessing/connection.py", line 630, in SocketClient
+    s.connect(address)
+FileNotFoundError: [Errno 2] No such file or directory
+Train Epoch: 3 [0/60000 (0%)]	Loss: 1.586231, Cross Entropy: 1.586231, Reg: 0.000000
+Elapsed time (s): 0.09369754791259766
+Memory usage (GB): 2.58917236328125
+Train Epoch: 3 [3200/60000 (5%)]	Loss: 1.608681, Cross Entropy: 1.608681, Reg: 0.000000
+Elapsed time (s): 0.38817381858825684
+Memory usage (GB): 2.5891799926757812
+Train Epoch: 3 [6400/60000 (11%)]	Loss: 1.546804, Cross Entropy: 1.546804, Reg: 0.000000
+Elapsed time (s): 0.4046339988708496
+Memory usage (GB): 2.5891799926757812
+Train Epoch: 3 [9600/60000 (16%)]	Loss: 1.637261, Cross Entropy: 1.637261, Reg: 0.000000
+Elapsed time (s): 0.42809462547302246
+Memory usage (GB): 2.589183807373047
+Train Epoch: 3 [12800/60000 (21%)]	Loss: 1.600485, Cross Entropy: 1.600485, Reg: 0.000000
+Elapsed time (s): 0.362044095993042
+Memory usage (GB): 2.589183807373047
+Train Epoch: 3 [16000/60000 (27%)]	Loss: 1.495042, Cross Entropy: 1.495042, Reg: 0.000000
+Elapsed time (s): 0.4269289970397949
+Memory usage (GB): 2.589183807373047
+Train Epoch: 3 [19200/60000 (32%)]	Loss: 1.506304, Cross Entropy: 1.506304, Reg: 0.000000
+Elapsed time (s): 0.46906113624572754
+Memory usage (GB): 2.589183807373047
+Train Epoch: 3 [22400/60000 (37%)]	Loss: 1.560778, Cross Entropy: 1.560778, Reg: 0.000000
+Elapsed time (s): 0.4660189151763916
+Memory usage (GB): 2.5891876220703125
+Train Epoch: 3 [25600/60000 (43%)]	Loss: 1.602557, Cross Entropy: 1.602557, Reg: 0.000000
+Elapsed time (s): 0.41031813621520996
+Memory usage (GB): 2.5891876220703125
+Train Epoch: 3 [28800/60000 (48%)]	Loss: 1.563750, Cross Entropy: 1.563750, Reg: 0.000000
+Elapsed time (s): 0.4535868167877197
+Memory usage (GB): 2.5891876220703125
+Train Epoch: 3 [32000/60000 (53%)]	Loss: 1.515755, Cross Entropy: 1.515755, Reg: 0.000000
+Elapsed time (s): 0.44260549545288086
+Memory usage (GB): 2.5891876220703125
+Train Epoch: 3 [35200/60000 (59%)]	Loss: 1.481122, Cross Entropy: 1.481122, Reg: 0.000000
+Elapsed time (s): 0.3772432804107666
+Memory usage (GB): 2.5891876220703125
+Traceback (most recent call last):
+  File "isometry.py", line 549, in <module>
+    main()
+  File "isometry.py", line 498, in main
+    _ = training(param, device, train_loader, test_loader, model, optimizer, attack=attack)
+  File "isometry.py", line 404, in training
+    epoch_loss, epoch_entropy, epoch_reg = train(param, model, device, train_loader, optimizer, epoch, lmbda, attack=attack)
+  File "isometry.py", line 145, in train
+    loss.backward()
+  File "/home/naddeok5/envs/GeoRobo/lib/python3.8/site-packages/functorch/_src/monkey_patching.py", line 77, in _backward
+    return _old_backward(*args, **kwargs)
+  File "/home/naddeok5/envs/GeoRobo/lib/python3.8/site-packages/torch/_tensor.py", line 396, in backward
+    torch.autograd.backward(self, gradient, retain_graph, create_graph, inputs=inputs)
+  File "/home/naddeok5/envs/GeoRobo/lib/python3.8/site-packages/torch/autograd/__init__.py", line 173, in backward
+    Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+KeyboardInterrupt
