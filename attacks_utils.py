@@ -3,11 +3,7 @@ import torch
 import torch.nn.functional as F
 import numpy as np
 from scipy.linalg import orth, eigh
-
-import sys
-sys.path.insert(1, '../adversarial-robustness-toolbox/')
-from art.attacks.evasion import DeepFool, CarliniLInfMethod
-from art.estimators.classification import PyTorchClassifier
+from torchattacks import DeepFool
 
 def fgsm_attack(image, epsilon, data_grad):
     """
@@ -290,75 +286,52 @@ class FastGradientSignUntargeted:
         return x
 
 
-class ARTDeepFool:
+class TorchAttackDeepFool:
     """
-        Deep Fool uses https://arxiv.org/abs/1511.04599
-        and is implemented using adversarial-robustness-toolbox (ART)
+    'DeepFool: A Simple and Accurate Method to Fool Deep Neural Networks'
+    [https://arxiv.org/abs/1511.04599]
+
+    Distance Measure : L2
+    Arguments:
+        model (nn.Module): model to attack.
+        device (str): 'cpu' or 'cuda' (Default: 'cpu')
+        steps (int): number of steps. (Default: 50)
+        overshoot (float): parameter for enhancing the noise. (Default: 0.02)
+        return_type (str): 'float' for [0,1] or 'int' for [0-255] (Default: 'float')
+    Shape:
+        - images: :math:`(N, C, H, W)` where `N = number of batches`, `C = number of channels`, `H = height` and `W = width`. MUST HAVE RANGE [0, 1]
+        - labels: :math:`(N)` where each value :math:`y_i` is :math:`0 \leq y_i \leq` `number of labels`.
+        - output: :math:`(N, C, H, W)`.
     """
 
     def __init__(self, 
-                        model,          # Pytorch model
-                        input_shape,    # Size of input image
-                        num_classes,    # Size of output
-                        device,         # CPU/GPU
-                        min_val,        # Minimum value of the pixels
-                        max_val,        # Maximum value of the pixels
-                        _optimizer,     # Update method
-                        max_iters           = 100,      # Maximum numbers of iterations
-                        overshoot_param     = 1e-6,     # Overshoot parameter 
-                        _type               = 'linf',   # The metric of perturbation size for epsilon
-                        _loss               = 'nll'     # Loss function
+                        model,                    
+                        max_iters   =   50,     
+                        overshoot   = 0.02,     
+                        return_type = 'float', 
                         ):
 
         # Store variables internally
-        self.model              = model
-        self.input_shape        = input_shape
-        self.num_classes        = num_classes
-        self.device             = device
-        self.overshoot_param    = overshoot_param
-        self.min_val            = min_val
-        self.max_val            = max_val
-        self.max_iters          = max_iters
-        self._type              = _type
-        self._optimizer         = _optimizer
-        if _loss == 'nll':
-            self._loss = F.nll_loss
-        elif _loss == 'cross_entropy':
-            self._loss = F.cross_entropy
-        else:
-            raise NotImplementedError
+        self.model          = model
+        self.overshoot      = overshoot
+        self.max_iters      = max_iters
+        self.return_type    = return_type
 
-        # Load adversarial-robustness-toolbox model wrapper
-        self.art_classifier = PyTorchClassifier(
-                                            model       = self.model,
-                                            clip_values = (self.min_val, self.max_val),
-                                            loss        = self._loss,
-                                            optimizer   = self._optimizer,
-                                            input_shape = self.input_shape,
-                                            nb_classes  = self.num_classes,
+        self.set_attacker()
+        
+    def set_attacker(self):
+
+        self.attacker = DeepFool(
+                                        model           = self.model, 
+                                        steps           = self.max_iters, 
+                                        overshoot       = self.overshoot
                                         )
+        self.attacker.set_return_type(type = self.return_type) # float returns [0-1], int returns [0-255]
 
     def perturb(self, original_images, labels):
-        # Convert images and labels to numpy arrays
-        original_images  = original_images.detach().cpu().numpy()
-        labels           = labels.detach().cpu().numpy()
-
-        # Initialize attacker
-        attack = DeepFool(
-                            classifier  = self.art_classifier,
-                            max_iter    = self.max_iters,
-                            epsilon     = self.overshoot_param,
-                            nb_grads    = self.num_classes,         # We can make this smaller so that it only computes the top class gradients for faster computation
-                            batch_size  = original_images.shape[0],
-                            verbose     = False
-        )
-
-        # Generate attacks
-        x_adv = attack.generate(x = original_images, 
-                                y = labels)
-
-        # Retrun as PyTorch tensor
-        return torch.from_numpy(x_adv)
+        original_images = original_images.detach()
+        labels = labels.detach()
+        return self.attacker(original_images, labels)
 
 
 class ARTCWLinf:
