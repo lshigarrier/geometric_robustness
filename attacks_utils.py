@@ -3,6 +3,9 @@ import torch
 import torch.nn.functional as F
 import numpy as np
 from scipy.linalg import orth, eigh
+
+import sys
+sys.path.insert(1, '../adversarial-robustness-toolbox/')
 from art.attacks.evasion import DeepFool, CarliniLInfMethod
 from art.estimators.classification import PyTorchClassifier
 
@@ -287,7 +290,7 @@ class FastGradientSignUntargeted:
         return x
 
 
-class DeepFool:
+class ARTDeepFool:
     """
         Deep Fool uses https://arxiv.org/abs/1511.04599
         and is implemented using adversarial-robustness-toolbox (ART)
@@ -337,8 +340,8 @@ class DeepFool:
 
     def perturb(self, original_images, labels):
         # Convert images and labels to numpy arrays
-        original_images  = original_images.numpy()
-        labels           = labels.numpy()
+        original_images  = original_images.detach().cpu().numpy()
+        labels           = labels.detach().cpu().numpy()
 
         # Initialize attacker
         attack = DeepFool(
@@ -358,7 +361,7 @@ class DeepFool:
         return torch.from_numpy(x_adv)
 
 
-class CWLinf:
+class ARTCWLinf:
     """
         The L_inf optimized attack of Carlini and Wagner from https://arxiv.org/abs/1608.04644
         and is implemented using adversarial-robustness-toolbox (ART)
