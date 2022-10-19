@@ -1,11 +1,11 @@
 name  : kyles_TEMP # iso_6 # vanilla | iso_1 | iso_2 | iso_3 | iso_4 | iso_5 | iso_6
-model : temp.pt # 00010.pt | 00027.pt | 00030.pt
+model : 00010.pt # | 00027.pt | 00030.pt
 seed  : 1
 
-train       : True
-gpu_number  : None
-load        : False
-adv_test    : False
+train       : False
+gpu_number  : "7"
+load        : True
+adv_test    : True
 reg         : False
 jacobian    : False
 
@@ -14,6 +14,11 @@ jacobian    : False
 channels1 : 32
 channels2 : 64
 hidden    : 128
+
+# data
+input_shape : (1, 28, 28)
+num_classes : 10
+
 
 # training
 
@@ -33,12 +38,12 @@ save_step     : 1
 
 # testing
 
-testing_batch_size  : 32
+testing_batch_size  : 128
 test_epoch          : 30
 loader              : test
 
 # attack
-attack_type       : fgsm
+attack_type       : deep_fool # fgsm # 
 perturbation_type : linf
 budget            : 0.1
 alpha             : 0.01
