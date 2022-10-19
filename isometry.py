@@ -11,8 +11,7 @@ from torch.utils.data import DataLoader
 from torchvision import datasets, transforms
 from mnist_model import SoftLeNet
 from mnist_utils import load_yaml
-from attacks_utils import FastGradientSignUntargeted, TorchAttackDeepFool
-from attacks_vis import plot_curves, plot_hist
+from attacks_utils import FastGradientSignUntargeted, TorchAttackDeepFool, TorchAttackCWL2
 
 
 # ------------------------------------------ Isometric Regularization --------------------------------------------------
@@ -93,7 +92,7 @@ def iso_loss_transform(output, target, data, epsilon, model, device, test_mode=F
 # -------------------------------------------- Training & Testing ------------------------------------------------------
 
 
-def train(param, model, device, train_loader, optimizer, epoch, lmbda):
+def train(param, model, device, train_loader, optimizer, epoch, lmbda, attack=None):
     # Initiate variables
     epoch_loss      = 0
     epoch_entropy   = 0
@@ -115,6 +114,15 @@ def train(param, model, device, train_loader, optimizer, epoch, lmbda):
         # Ensure grad is on and gradients set to zero
         data.requires_grad = True
         optimizer.zero_grad()
+
+        # Adversarial train
+        if param['adv_train']:
+            # Update attacker
+            attack.model = model
+            attack.set_attacker()
+            
+            # Generate attacks
+            data = attack.perturb(data, target)  
 
         # Forward pass
         output = model(data)
@@ -397,7 +405,7 @@ def training(param, device, train_loader, test_loader, model, optimizer, attack=
         lmbda = param['lambda_min'] * (param['lambda_max']/param['lambda_min'])**((epoch - 1)/(param['epochs'] - 1))
 
         # Train
-        epoch_loss, epoch_entropy, epoch_reg = train(param, model, device, train_loader, optimizer, epoch, lmbda)
+        epoch_loss, epoch_entropy, epoch_reg = train(param, model, device, train_loader, optimizer, epoch, lmbda, attack=attack)
 
         # Validate
         test_loss, test_entropy, test_reg, _, _ = test(param, model, device, test_loader, lmbda, attack=attack)
@@ -415,12 +423,12 @@ def training(param, device, train_loader, test_loader, model, optimizer, attack=
         test_reg_list.append(test_reg)
 
     # Display plot
-    fig1 = plot_curves(loss_list, test_loss_list, "Loss function", "Epoch", "Loss")
-    fig2 = plot_curves(entropy_list, test_entropy_list, "Cross Entropy", "Epoch", "Cross entropy")
-    fig3 = plot_curves(reg_list, test_reg_list, "Regularization", "Epoch", "Regularization")
+    # fig1 = plot_curves(loss_list, test_loss_list, "Loss function", "Epoch", "Loss")
+    # fig2 = plot_curves(entropy_list, test_entropy_list, "Cross Entropy", "Epoch", "Cross entropy")
+    # fig3 = plot_curves(reg_list, test_reg_list, "Regularization", "Epoch", "Regularization")
 
-    # Return
-    return fig1, fig2, fig3
+    # # Return
+    # return fig1, fig2, fig3
 
 # ---------------------------------------------------- Main ------------------------------------------------------------
 
@@ -465,7 +473,7 @@ def main():
 
     # Load attacker
     attack = None
-    if param['adv_test']:
+    if param['adv_test'] or param['adv_train']:
 
         if param["attack_type"] == "fgsm":
             attack = FastGradientSignUntargeted(model, 
@@ -480,6 +488,9 @@ def main():
 
         elif param['attack_type'] == "deep_fool":
             attack = TorchAttackDeepFool(model = model)
+
+        elif param['attack_type'] == "cw":
+            attack = TorchAttackCWL2( model = model)
 
         else:
             print("Invalid attack_type in config file, please use 'fgsm' or add a new class in attacks_utils....")
