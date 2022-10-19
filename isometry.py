@@ -253,7 +253,7 @@ def test(param, model, device, test_loader, lmbda, attack=None):
 
                     # Update running totals
                     adv_correct += adv_pred.eq(target.view_as(adv_pred)).sum().item()
-                    adv_total += 1
+                    adv_total += len(data)
                     if adv_pred:
                         # If unfooled
                         hist_correct.append(reg.item())
@@ -267,8 +267,9 @@ def test(param, model, device, test_loader, lmbda, attack=None):
                 pred = output.argmax(dim=1, keepdim=True)  # get the index of the max log-probability
 
                 # Running total of correct
-                correct += pred.eq(target.view_as(pred)).sum().item()
-                
+                correct_mask = pred.eq(target.view_as(pred)).view(-1)
+                correct += correct_mask.sum().item()
+
                 # Test adversary
                 if param['adv_test']:
                     # use predicted label as target label (or not)
@@ -276,7 +277,7 @@ def test(param, model, device, test_loader, lmbda, attack=None):
                     data.requires_grad = True
 
                     # Generate attacks
-                    adv_data = attack.perturb(data, pred.view_as(target))  # pred or target
+                    adv_data = attack.perturb(data[correct_mask], target[correct_mask])  
 
                     # Feed forward
                     adv_output = model(adv_data)
@@ -285,7 +286,7 @@ def test(param, model, device, test_loader, lmbda, attack=None):
                     adv_pred = adv_output.argmax(dim=1, keepdim=True)
 
                     # Collect statistics
-                    adv_correct += adv_pred.eq(pred.view_as(adv_pred)).sum().item()  # pred or target
+                    adv_correct += adv_pred.eq(target[correct_mask].view_as(adv_pred)).sum().item()  # pred or target
                     adv_total   = correct
             
             ## Display results
