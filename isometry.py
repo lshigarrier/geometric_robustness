@@ -12,6 +12,7 @@ from torchvision import datasets, transforms
 from mnist_model import SoftLeNet
 from mnist_utils import load_yaml
 from attacks_utils import FastGradientSignUntargeted
+from attacks_utils import ARTDeepFool as DeepFool
 from attacks_vis import plot_curves, plot_hist
 
 
@@ -235,7 +236,7 @@ def test(param, model, device, test_loader, lmbda, attack=None):
                     # with torch.enable_grad():
 
                     # Generate attack
-                    adv_data = attack.perturb(data, target, False)
+                    adv_data = attack.perturb(data, target)
 
                     # Feed forward
                     adv_output = model(adv_data)
@@ -267,7 +268,7 @@ def test(param, model, device, test_loader, lmbda, attack=None):
                     # with torch.enable_grad():
 
                     # Generate attacks
-                    adv_data = attack.perturb(data, pred.view_as(target), False)  # pred or target
+                    adv_data = attack.perturb(data, pred.view_as(target))  # pred or target
 
                     # Feed forward
                     adv_output = model(adv_data)
@@ -277,7 +278,7 @@ def test(param, model, device, test_loader, lmbda, attack=None):
 
                     # Collect statistics
                     adv_correct += adv_pred.eq(pred.view_as(adv_pred)).sum().item()  # pred or target
-                    adv_total += 1
+                    adv_total += len(data)
             
             ## Display results
             #----------------------------------------------------------------#
@@ -374,16 +375,16 @@ def initialize(param, device):
     else:
         print(f'Randomly initialized weights')
 
-    print('Initialization done')
-    return train_loader, light_train_loader, test_loader, model
-
-
-def training(param, device, train_loader, test_loader, model, attack=None):
-    ## Initialize
-    #----------------------------------------------------------------------#
     # Set optimizer
     optimizer = optim.SGD(model.parameters(), lr=param['learning_rate'])
 
+    print('Initialization done')
+    return train_loader, light_train_loader, test_loader, model, optimizer
+
+
+def training(param, device, train_loader, test_loader, model, optimizer, attack=None):
+    ## Initialize
+    #----------------------------------------------------------------------#
     # Initiate variables
     loss_list, entropy_list, reg_list = [], [], []
     test_loss_list, test_entropy_list, test_reg_list = [], [], []
@@ -461,7 +462,7 @@ def main():
     print(f'Using {device}')
 
     # Load data and model
-    train_loader, light_train_loader, test_loader, model = initialize(param, device)
+    train_loader, light_train_loader, test_loader, model, optimizer = initialize(param, device)
 
     # Load attacker
     attack = None
@@ -478,6 +479,21 @@ def main():
                                                 _type       = param['perturbation_type'], 
                                                 _loss       = 'cross_entropy')
 
+        elif param['attack_type'] == "deep_fool":
+            attack = DeepFool(
+                                model           = model,
+                                input_shape     = param['input_shape'],    
+                                num_classes     = param['num_classes'],    
+                                device          = device,         
+                                min_val         = 0,        
+                                max_val         = 1,        
+                                _optimizer      = optimizer,     
+                                max_iters       = 100,    
+                                overshoot_param = 1e-6, 
+                                _type           = 'linf',
+                                _loss           = 'nll'
+            )
+
         else:
             print("Invalid attack_type in config file, please use 'fgsm' or add a new class in attacks_utils....")
             exit()
@@ -485,7 +501,7 @@ def main():
     # Train model
     if param['train']:
         print(f'Start training')
-        _ = training(param, device, train_loader, test_loader, model, attack=attack)
+        _ = training(param, device, train_loader, test_loader, model, optimizer, attack=attack)
 
     # Test model
     else:
@@ -524,12 +540,13 @@ def main():
             # Get regularization terms for correct and incorrect adversraial predictions 
             _, _, _, hist_correct, hist_incorrect = test(param, model, device, loader, lmbda, attack=attack)
 
-            # Get max regularization term used
-            max_reg = min(max(hist_incorrect), max(hist_correct))
+            if param['reg']:
+                # Get max regularization term used
+                max_reg = min(max(hist_incorrect), max(hist_correct))
 
-            # Plot 
-            hist1 = plot_hist(hist_correct, f'Robust points\n{len(hist_correct)}', 'Regularization', 'Number of points', xmax=max_reg)
-            hist2 = plot_hist(hist_incorrect, f'Non-robust points\n{len(hist_incorrect)}', 'Regularization', 'Number of points', xmax=max_reg)
+                # Plot 
+                hist1 = plot_hist(hist_correct, f'Robust points\n{len(hist_correct)}', 'Regularization', 'Number of points', xmax=max_reg)
+                hist2 = plot_hist(hist_incorrect, f'Non-robust points\n{len(hist_incorrect)}', 'Regularization', 'Number of points', xmax=max_reg)
     
     plt.show()
 
