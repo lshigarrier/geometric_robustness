@@ -1,12 +1,12 @@
 name  : kyles_TEMP # iso_6 # vanilla | iso_1 | iso_2 | iso_3 | iso_4 | iso_5 | iso_6
-model : adv_train.pt
+model : 00010.pt # baseline.pt # adv_train.pt
 seed  : 1
 
-train       : True
-gpu_number  : "7"
-load        : False
-adv_train   : True
-adv_test    : False
+train       : False
+gpu_number  : "5"
+load        : True
+adv_train   : False
+adv_test    : True
 reg         : False
 jacobian    : False
 
@@ -44,7 +44,7 @@ test_epoch          : 30
 loader              : test
 
 # attack
-attack_type       : fgsm # cw # deep_fool # 
+attack_type       : deep_fool # fgsm #  cw # 
 perturbation_type : linf # deep_fool only does L2
 budget            : 0.1
 alpha             : 0.01

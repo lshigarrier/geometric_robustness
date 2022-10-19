@@ -120,7 +120,7 @@ def train(param, model, device, train_loader, optimizer, epoch, lmbda, attack=No
             # Update attacker
             attack.model = model
             attack.set_attacker()
-            
+
             # Generate attacks
             data = attack.perturb(data, target)  
 
@@ -273,6 +273,7 @@ def test(param, model, device, test_loader, lmbda, attack=None):
                 if param['adv_test']:
                     # use predicted label as target label (or not)
                     # with torch.enable_grad():
+                    data.requires_grad = True
 
                     # Generate attacks
                     adv_data = attack.perturb(data, pred.view_as(target))  # pred or target
@@ -285,7 +286,7 @@ def test(param, model, device, test_loader, lmbda, attack=None):
 
                     # Collect statistics
                     adv_correct += adv_pred.eq(pred.view_as(adv_pred)).sum().item()  # pred or target
-                    adv_total += len(data)
+                    adv_total   = correct
             
             ## Display results
             #----------------------------------------------------------------#
