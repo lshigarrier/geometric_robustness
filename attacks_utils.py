@@ -268,7 +268,7 @@ class FastGradientSignUntargeted:
                 x.clamp_(self.min_val, self.max_val)
 
         return x
-
+        
 
 # ---------------------------------------------------- Main ------------------------------------------------------------
 
