@@ -193,7 +193,7 @@ def test(param, model, reg_model, device, test_loader, epoch, eta, attack=None):
             # Test adversary
             if param['adv_test']:
                 # Generate attacks
-                adv_data = attack(data[correct_mask], target[correct_mask])
+                adv_data = attack.perturb(data[correct_mask], target[correct_mask])
 
                 # Feed forward
                 adv_output = model(adv_data)

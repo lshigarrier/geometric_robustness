@@ -8,6 +8,7 @@ train      : False
 load       : True
 adv_train  : False
 adv_test   : True
+distill    : False
 reg        : False
 
 # model
@@ -28,7 +29,6 @@ batch_size      : 32
 test_batch_size : 32
 learning_rate   : 0.001
 
-distill      : True
 distill_temp : 20
 
 # eps_inf = 0.3 => eps_l2 = sqrt(784)*eps_inf = 28*0.3 = 8.4
@@ -39,7 +39,7 @@ eta_max   : 0.0001
 epoch_reg : 1
 
 verbose      : True
-log_interval : 100
+log_interval : 10
 save_step    : 1
 
 # testing
@@ -50,7 +50,7 @@ loader             : test
 
 # attack
 
-attack_type       : fgsm # deep_fool # cw
+attack_type       : fgsm # fgsm # deep_fool # cw
 perturbation_type : linf # deep_fool only does L2
 budget            : 0.1
 alpha             : 0.01
