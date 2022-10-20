@@ -1,6 +1,5 @@
 import matplotlib.pyplot as plt
 import numpy as np
-from mnist_utils import load_yaml
 
 
 def plot_accuracy(epsilons, accuracies):
@@ -161,15 +160,3 @@ def plot_curves(list1, list2, title, xlabel, ylabel):
     ax.set_ylabel(ylabel)
     ax.legend()
     return fig
-
-
-def main():
-    param = load_yaml()
-    path = param['adv_file'] + param['name']
-    target_path = None  # param['target_file'] + '_1000'
-    _ = plot_img_file(path, 5, target_path)
-    plt.show()
-
-
-if __name__ == '__main__':
-    main()

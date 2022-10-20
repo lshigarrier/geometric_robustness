@@ -1,42 +1,51 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from torch.utils.data import Dataset
-import numpy as np
 
 
-class RobustMnist(Dataset):
+class IsometryReg(nn.Module):
 
-    def __init__(self, param):
-        super(RobustMnist, self).__init__()
-        self.data = np.zeros((60000, 1, 28, 28), dtype=np.float)
-        self.target = np.zeros((60000,), dtype=np.int)
-        for t in range(1000, 60001, 1000):
-            data_array = np.load(param['robust_file']+f'_{t}.npy')
-            target_array = np.load(param['target_file']+f'_{t}.npy')
-            self.data[t-1000:t, 0, :] = data_array.copy()
-            self.target[t-1000:t] = target_array.copy()
+    def __init__(self, epsilon):
+        super(IsometryReg, self).__init__()
+        self.epsilon = epsilon
 
-    def __len__(self):
-        return self.target.shape[0]
+    def forward(self, data, output):
+        # Number of classes
+        c = output.shape[1]
+        m = c - 1
 
-    def __getitem__(self, idx):
-        return self.data[idx], self.target[idx]
+        # Coordinate change
+        new_output = torch.sqrt(output)
+        new_output = 2 * new_output[:, :m] / (1 - new_output[:, m].unsqueeze(1).repeat(1, m))
 
+        # Compute Jacobian matrix
+        jac = torch.zeros(m, *data.shape)
+        grad_output = torch.zeros(*new_output.shape)
+        for i in range(m):
+            grad_output.zero_()
+            grad_output[:, i] = 1
+            jac[i] = torch.autograd.grad(new_output, data, grad_outputs=grad_output, retain_graph=True)[0]
+        jac = torch.transpose(jac, dim0=0, dim1=1)
 
-class CoordChange(nn.Module):
-    """
-    Spherical transformation followed by stereographic projection
-    """
+        # Gram matrix of Jacobian
+        jac = torch.bmm(jac, torch.transpose(jac, 1, 2))
 
-    def __init__(self, m=9):
-        super(CoordChange, self).__init__()
-        self.m = m  # number of classes minus 1
+        # Compute the change of basis matrix
+        change = output[:, c-1] / torch.square(
+            2 * torch.sqrt(output[:, c-1]) - torch.norm(output[:, :c-1], p=1, dim=1))
 
-    def forward(self, x):
-        mu = torch.sqrt(x)
-        t = 2 * mu[:, :self.m] / (1 - mu[:, self.m].unsqueeze(1).repeat(1, self.m))
-        return t
+        # Distance from center of simplex
+        delta = torch.sqrt(output / c).sum(dim=1)
+        delta = 2 * torch.acos(delta)
+
+        # Diagonal embedding
+        change = torch.diag_embed(change.unsqueeze(1).repeat(1, c-1)) * delta ** 2 / self.epsilon ** 2
+
+        # Compute regularization term (alpha in docs)
+        reg = self.epsilon**2*torch.linalg.norm((jac - change).view(len(data), -1), dim=1)
+
+        # Return
+        return reg.mean()
 
 
 class JacobianReg(nn.Module):
@@ -158,21 +167,3 @@ class LogitLenet(nn.Module):
         x = self.dropout2(x)
         x = self.fc2(x)
         return x
-
-
-class FeatureNet(Lenet):
-
-    def __init__(self, param):
-        super(FeatureNet, self).__init__(param)
-
-    def forward(self, x):
-        x = self.conv1(x)
-        x = F.relu(x)
-        x = self.conv2(x)
-        x = F.relu(x)
-        x = F.max_pool2d(x, 2)
-        x = self.dropout1(x)
-        x = torch.flatten(x, 1)
-        x = self.fc1(x)
-        feature = F.relu(x)
-        return feature

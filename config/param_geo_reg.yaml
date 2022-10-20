@@ -1,0 +1,58 @@
+name  : jacobian/jac_2
+model : 00030.pt
+reg_type : jacobian # isometry
+gpu_number : "5"
+seed  : 1
+
+train      : False
+load       : True
+adv_train  : False
+adv_test   : True
+reg        : False
+
+# model
+
+channels1 : 32
+channels2 : 64
+hidden    : 128
+
+# data
+
+input_shape : (1, 28, 28)
+num_classes : 10
+
+# training
+
+epochs          : 30
+batch_size      : 32
+test_batch_size : 32
+learning_rate   : 0.001
+
+distill      : True
+distill_temp : 20
+
+# eps_inf = 0.3 => eps_l2 = sqrt(784)*eps_inf = 28*0.3 = 8.4
+# eps_inf = 0.2 => eps_l2 = sqrt(784)*eps_inf = 28*0.2 = 5.6
+epsilon   : 5.6
+eta_min   : 0.00001
+eta_max   : 0.0001
+epoch_reg : 1
+
+verbose      : True
+log_interval : 100
+save_step    : 1
+
+# testing
+
+testing_batch_size : 128
+test_epoch         : 30
+loader             : test
+
+# attack
+
+attack_type       : fgsm # deep_fool # cw
+perturbation_type : linf # deep_fool only does L2
+budget            : 0.1
+alpha             : 0.01
+max_iter          : 40
+

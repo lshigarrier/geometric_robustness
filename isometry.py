@@ -60,7 +60,7 @@ def change_matrix(output, epsilon, nb_class):
     return functorch.vmap(torch.diag)(change.unsqueeze(1).repeat(1, nb_class-1))*delta**2/epsilon**2
 
 
-def iso_loss_transform(output, target, data, epsilon, model, device, test_mode=False):
+def iso_loss_transform(output, target, data, epsilon, model, device):
     # Number of classes
     nb_class = output.shape[1]
 
@@ -80,13 +80,8 @@ def iso_loss_transform(output, target, data, epsilon, model, device, test_mode=F
     # Regularization term (alpha in docs)
     reg = epsilon**2*torch.linalg.norm((jac - change).view(len(data), -1), dim=1).sum()/len(data)
 
-    # Return 
-    if test_mode:
-        # print(f'cross entropy: {cross_entropy}\nreg: {reg}\njac*tjac: {jac}\nchange: {change}')
-        return cross_entropy, reg, change
-
-    else:
-        return cross_entropy, reg
+    # Return
+    return cross_entropy, reg
 
 
 # -------------------------------------------- Training & Testing ------------------------------------------------------
@@ -128,11 +123,10 @@ def train(param, model, device, train_loader, optimizer, epoch, lmbda, teacher_m
         output = model(data)
 
         # Calculate soft-labels
-        
 
         # Compute loss
         if param['distill']:
-            ## Sanity check that this method is equivalent to oringal criterion
+            ## Sanity check that this method is equivalent to original criterion
             # batch_size = labels.size(0)
             # label_onehot = torch.FloatTensor(batch_size, data.num_classes)
             # label_onehot.zero_()
@@ -144,11 +138,10 @@ def train(param, model, device, train_loader, optimizer, epoch, lmbda, teacher_m
             cross_entropy = torch.sum(-soft_labels * F.log_softmax(output, -1), -1).mean()
 
             # Do not compute regularization
-            reg =  torch.tensor(0)
+            reg = torch.tensor(0)
 
             # Loss is only cross entropy
             loss = cross_entropy
-
 
         elif param['reg']:
             # Compute cross entropy loss and regularization term
@@ -162,7 +155,7 @@ def train(param, model, device, train_loader, optimizer, epoch, lmbda, teacher_m
             cross_entropy = F.cross_entropy(output, target)
 
             # Do not compute regularization
-            reg =  torch.tensor(0)
+            reg = torch.tensor(0)
 
             # Loss is only cross entropy
             loss = cross_entropy
@@ -218,7 +211,7 @@ def test(param, model, device, test_loader, lmbda, attack=None):
     tic             = time.time()
 
     ## Cycle through data
-    #----------------------------------------------------------------#
+    # ---------------------------------------------------------------- #
     with torch.enable_grad() if param['adv_test'] else torch.no_grad():
         for batch_idx, (data, target) in enumerate(test_loader):
             # Push to device
@@ -239,7 +232,7 @@ def test(param, model, device, test_loader, lmbda, attack=None):
                 cross_entropy = F.cross_entropy(output, target)
 
                 # Do not compute regularization
-                reg =  torch.tensor(0)
+                reg = torch.tensor(0)
 
                 # Loss is only cross entropy
                 loss = cross_entropy
@@ -250,7 +243,7 @@ def test(param, model, device, test_loader, lmbda, attack=None):
             test_reg        += reg.item()*len(data)
 
             ## Check standard and adversarial accuracy
-            #----------------------------------------------------------------#
+            # ---------------------------------------------------------------- #
             # If batch size is 1
             if len(data) == 1:
                 # Get prediction
@@ -262,7 +255,6 @@ def test(param, model, device, test_loader, lmbda, attack=None):
 
                 # If correct test adversarial attack
                 if param['adv_test'] and correct_pred:
-                    # use predicted label as target label (or not)
                     # with torch.enable_grad():
 
                     # Generate attack
@@ -313,7 +305,7 @@ def test(param, model, device, test_loader, lmbda, attack=None):
                     adv_total   = correct
             
             ## Display results
-            #----------------------------------------------------------------#
+            # ---------------------------------------------------------------- #
             if not(param['train']) and param['verbose'] and (batch_idx % param['log_interval'] == 0):
                 print('Test: {}/{} ({:.0f}%)\tLoss: {:.6f}, Cross Entropy: {:.6f}, Reg: {:.6f}'.format(
                     batch_idx * len(data), len(test_loader.dataset), 100. * batch_idx / len(test_loader),
@@ -323,7 +315,7 @@ def test(param, model, device, test_loader, lmbda, attack=None):
                 tic = time.time()
     
     ## Calculate results, display and return
-    #----------------------------------------------------------------#
+    # ---------------------------------------------------------------- #
     test_loss       /= len(test_loader.dataset)
     test_entropy    /= len(test_loader.dataset)
     test_reg        /= len(test_loader.dataset)
@@ -342,31 +334,31 @@ def test(param, model, device, test_loader, lmbda, attack=None):
 
 def initialize(param, device):
     ## Load TEST batch size
-    #--------------------------------------------------------------#
-    # use evaluation batch size
+    # -------------------------------------------------------------- #
+    # Use evaluation batch size
     if param['load']:
         test_kwargs = {'batch_size': param['testing_batch_size']}
         print(f'Using testing batch size for test loader')
 
-    # use validation batch size
+    # Use validation batch size
     else:
         test_kwargs = {'batch_size': param['test_batch_size']}
         print(f'Using training batch size for test loader')
 
     ## Load TRAIN batch size
-    #--------------------------------------------------------------#
-    # use evaluation batch size
+    # -------------------------------------------------------------- #
+    # Use evaluation batch size
     if param['load']:
         train_kwargs = {'batch_size': param['testing_batch_size']}
         print(f'Using testing batch size for train loader')
 
-    # use train batch size
+    # Use train batch size
     else:
         train_kwargs = {'batch_size': param['batch_size']}
         print(f'Using training batch size for train loader')
 
     ## Machine settings
-    #--------------------------------------------------------------#
+    # -------------------------------------------------------------- #
     if torch.cuda.is_available():
         cuda_kwargs = {'num_workers': 1,
                        'pin_memory' : True,
@@ -376,24 +368,24 @@ def initialize(param, device):
         test_kwargs.update(cuda_kwargs)
 
     ## Load dataset from torchvision
-    #--------------------------------------------------------------#
-    # train set
+    # -------------------------------------------------------------- #
+    # Train set
     dataset1 = datasets.MNIST('./data/mnist', train=True, download=True, transform=transforms.ToTensor())
 
-    # small train set
+    # Small train set
     subset = torch.utils.data.Subset(dataset1, range(1000))
 
-    # test set
+    # Test set
     dataset2 = datasets.MNIST('./data/mnist', train=False, transform=transforms.ToTensor())
 
-    # create data loaders
+    # Create data loaders
     train_loader        = DataLoader(dataset1, **train_kwargs)
     light_train_loader  = DataLoader(subset, **train_kwargs)
     test_loader         = DataLoader(dataset2, **test_kwargs)
 
     ## Load model
-    #--------------------------------------------------------------#
-    # initalize network class
+    # -------------------------------------------------------------- #
+    # Initalize network class
     model = SoftLeNet(param).to(device)
 
     # load parameters from file
@@ -409,13 +401,13 @@ def initialize(param, device):
 
     # Load teacher model
     if param['distill']:
-        # initalize network class
+        # Initalize network class
         teacher_model = LogitLenet(param).to(device)
 
         print(f'Loading weights onto teacher model')
         teacher_model.load_state_dict(torch.load(f'models/isometry/{param["name"]}/{param["model"]}', map_location='cpu'))
 
-        # make model deterministic and turn of gradient computations
+        # Make model deterministic and turn off gradient computations
         teacher_model.eval()
     else:
         teacher_model = None
@@ -429,14 +421,14 @@ def initialize(param, device):
 
 def training(param, device, train_loader, test_loader, model, optimizer, teacher_model, attack=None):
     ## Initialize
-    #----------------------------------------------------------------------#
+    # ---------------------------------------------------------------------- #
     # Initiate variables
     loss_list, entropy_list, reg_list = [], [], []
     test_loss_list, test_entropy_list, test_reg_list = [], [], []
-    #----------------------------------------------------------------------#
+    # ---------------------------------------------------------------------- #
 
     ## Cycle through epochs
-    #----------------------------------------------------------------------#
+    # ---------------------------------------------------------------------- #
     for epoch in range(1, param['epochs'] + 1):
         # Set lambda term
         # lmbda = param['lambda_min'] + (epoch - 1)/(param['epochs'] - 1)*(param['lambda_max'] - param['lambda_min'])
@@ -460,35 +452,8 @@ def training(param, device, train_loader, test_loader, model, optimizer, teacher
         test_entropy_list.append(test_entropy)
         test_reg_list.append(test_reg)
 
-    # Display plot
-    # fig1 = plot_curves(loss_list, test_loss_list, "Loss function", "Epoch", "Loss")
-    # fig2 = plot_curves(entropy_list, test_entropy_list, "Cross Entropy", "Epoch", "Cross entropy")
-    # fig3 = plot_curves(reg_list, test_reg_list, "Regularization", "Epoch", "Regularization")
-
-    # # Return
-    # return fig1, fig2, fig3
 
 # ---------------------------------------------------- Main ------------------------------------------------------------
-
-
-def testing_loss(param, device, loader, model):
-    model.eval()
-    with torch.no_grad():
-        for batch_idx, (data, target) in enumerate(loader):
-            data, target = data.to(device), target.to(device)
-            output = model(data)
-            if param['reg']:
-                cross_entropy, reg = iso_loss_transform(output, target, data, param['epsilon_l2'], model, device, test_mode=True)
-                loss = (1 - param['lambda_max']) * cross_entropy + param['lambda_max'] * reg
-            else:
-                loss = F.cross_entropy(output, target)
-            if len(data) == 1:
-                pred = output.argmax(dim=1, keepdim=True)[0]
-            else:
-                pred = output.argmax(dim=1, keepdim=True)  # get the index of the max log-probability
-            print(f'loss: {loss}\npred: {pred}\ntarget: {target}')
-            if batch_idx == 0:
-                break
 
 
 def main():
@@ -498,7 +463,7 @@ def main():
     # Set random seed
     torch.manual_seed(param['seed'])
 
-    # Declare CPU/GPU useage
+    # Declare CPU/GPU usage
     if param['gpu_number'] is not None:
         os.environ["CUDA_DEVICE_ORDER"]     = "PCI_BUS_ID"
         os.environ["CUDA_VISIBLE_DEVICES"]  = param['gpu_number']
@@ -537,7 +502,7 @@ def main():
     # Train model
     if param['train']:
         print(f'Start training')
-        _ = training(param, device, train_loader, test_loader, model, optimizer, teacher_model, attack=attack)
+        training(param, device, train_loader, test_loader, model, optimizer, teacher_model, attack=attack)
 
     # Test model
     else:
@@ -552,37 +517,15 @@ def main():
             loader = light_train_loader
             print('Using light train loader')
 
-        # Compute jacobian
-        if param['jacobian']:
-            for batch_idx, (data, target) in enumerate(loader):
-                output = model(data)
-                if param['reg']:
-                    cross_entropy, reg, change = iso_loss_transform(output, target, data, param['epsilon_l2'], model, device, test_mode=True)
-                jac = jacobian_transform(data, model, device)[0]
-                svd = torch.linalg.svdvals(jac)
-                std, mean = torch.std_mean(svd)
-                print(torch.sqrt(change[0, 0, 0]))
-                print(svd)
-                print(len(svd))
-                print(mean)
-                print(std)
-                break
-        
-        # 
-        else:
-            # Compute lambda value
-            lmbda = param['lambda_min'] * (param['lambda_max'] / param['lambda_min']) ** ((param['test_epoch'] - 1) / (param['epochs'] - 1))
+        # Compute lambda value
+        lmbda = param['lambda_min'] * (param['lambda_max'] / param['lambda_min']) ** ((param['test_epoch'] - 1) / (param['epochs'] - 1))
 
-            # Get regularization terms for correct and incorrect adversraial predictions 
-            _, _, _, hist_correct, hist_incorrect = test(param, model, device, loader, lmbda, attack=attack)
+        # Get regularization terms for correct and incorrect adversraial predictions
+        _, _, _, hist_correct, hist_incorrect = test(param, model, device, loader, lmbda, attack=attack)
 
-            if param['reg']:
-                # Get max regularization term used
-                max_reg = min(max(hist_incorrect), max(hist_correct))
-
-                # Plot 
-                hist1 = plot_hist(hist_correct, f'Robust points\n{len(hist_correct)}', 'Regularization', 'Number of points', xmax=max_reg)
-                hist2 = plot_hist(hist_incorrect, f'Non-robust points\n{len(hist_incorrect)}', 'Regularization', 'Number of points', xmax=max_reg)
+        if param['reg']:
+            # Get max regularization term used
+            max_reg = min(max(hist_incorrect), max(hist_correct))
     
     plt.show()
 
