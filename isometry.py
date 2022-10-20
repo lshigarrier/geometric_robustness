@@ -9,7 +9,7 @@ import os
 
 from torch.utils.data import DataLoader
 from torchvision import datasets, transforms
-from mnist_model import SoftLeNet
+from mnist_model import SoftLeNet, LogitLenet
 from mnist_utils import load_yaml
 from attacks_utils import FastGradientSignUntargeted, TorchAttackDeepFool, TorchAttackCWL2
 
@@ -92,7 +92,7 @@ def iso_loss_transform(output, target, data, epsilon, model, device, test_mode=F
 # -------------------------------------------- Training & Testing ------------------------------------------------------
 
 
-def train(param, model, device, train_loader, optimizer, epoch, lmbda, attack=None):
+def train(param, model, device, train_loader, optimizer, epoch, lmbda, teacher_model, attack=None):
     # Initiate variables
     epoch_loss      = 0
     epoch_entropy   = 0
@@ -127,13 +127,36 @@ def train(param, model, device, train_loader, optimizer, epoch, lmbda, attack=No
         # Forward pass
         output = model(data)
 
+        # Calculate soft-labels
+        
+
         # Compute loss
-        if param['reg']:
+        if param['distill']:
+            ## Sanity check that this method is equivalent to oringal criterion
+            # batch_size = labels.size(0)
+            # label_onehot = torch.FloatTensor(batch_size, data.num_classes)
+            # label_onehot.zero_()
+            # label_onehot.scatter_(1, labels.view(-1, 1), 1)
+            # print("One Hot", label_onehot[0])
+            # print(torch.sum(-label_onehot * F.log_softmax(outputs, -1), -1).mean())
+            
+            soft_labels = F.softmax(teacher_model(data) / param["distill_temp"], -1)
+            cross_entropy = torch.sum(-soft_labels * F.log_softmax(output, -1), -1).mean()
+
+            # Do not compute regularization
+            reg =  torch.tensor(0)
+
+            # Loss is only cross entropy
+            loss = cross_entropy
+
+
+        elif param['reg']:
             # Compute cross entropy loss and regularization term
             cross_entropy, reg = iso_loss_transform(output, target, data, param['epsilon_l2'], model, device)
 
             # Loss with regularization
             loss = (1 - lmbda) * cross_entropy + lmbda * reg
+
         else:
             # Compute cross entropy loss
             cross_entropy = F.cross_entropy(output, target)
@@ -384,14 +407,27 @@ def initialize(param, device):
     else:
         print(f'Randomly initialized weights')
 
+    # Load teacher model
+    if param['distill']:
+        # initalize network class
+        teacher_model = LogitLenet(param).to(device)
+
+        print(f'Loading weights onto teacher model')
+        teacher_model.load_state_dict(torch.load(f'models/isometry/{param["name"]}/{param["model"]}', map_location='cpu'))
+
+        # make model deterministic and turn of gradient computations
+        teacher_model.eval()
+    else:
+        teacher_model = None
+
     # Set optimizer
     optimizer = optim.SGD(model.parameters(), lr=param['learning_rate'])
 
     print('Initialization done')
-    return train_loader, light_train_loader, test_loader, model, optimizer
+    return train_loader, light_train_loader, test_loader, model, optimizer, teacher_model
 
 
-def training(param, device, train_loader, test_loader, model, optimizer, attack=None):
+def training(param, device, train_loader, test_loader, model, optimizer, teacher_model, attack=None):
     ## Initialize
     #----------------------------------------------------------------------#
     # Initiate variables
@@ -407,7 +443,7 @@ def training(param, device, train_loader, test_loader, model, optimizer, attack=
         lmbda = param['lambda_min'] * (param['lambda_max']/param['lambda_min'])**((epoch - 1)/(param['epochs'] - 1))
 
         # Train
-        epoch_loss, epoch_entropy, epoch_reg = train(param, model, device, train_loader, optimizer, epoch, lmbda, attack=attack)
+        epoch_loss, epoch_entropy, epoch_reg = train(param, model, device, train_loader, optimizer, epoch, lmbda, teacher_model, attack=attack)
 
         # Validate
         test_loss, test_entropy, test_reg, _, _ = test(param, model, device, test_loader, lmbda, attack=attack)
@@ -471,7 +507,7 @@ def main():
     print(f'Using {device}')
 
     # Load data and model
-    train_loader, light_train_loader, test_loader, model, optimizer = initialize(param, device)
+    train_loader, light_train_loader, test_loader, model, optimizer, teacher_model = initialize(param, device)
 
     # Load attacker
     attack = None
@@ -501,7 +537,7 @@ def main():
     # Train model
     if param['train']:
         print(f'Start training')
-        _ = training(param, device, train_loader, test_loader, model, optimizer, attack=attack)
+        _ = training(param, device, train_loader, test_loader, model, optimizer, teacher_model, attack=attack)
 
     # Test model
     else:
