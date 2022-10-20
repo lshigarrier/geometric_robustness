@@ -74,6 +74,31 @@ class Lenet(nn.Module):
         output = F.log_softmax(x, dim=1)
         return output
 
+class LogitLenet(nn.Module):
+
+    def __init__(self, param):
+        super(LogitLenet, self).__init__()
+        self.conv1 = nn.Conv2d(1, param['channels1'], 3, 1)
+        self.conv2 = nn.Conv2d(param['channels1'], param['channels2'], 3, 1)
+        self.dropout1 = nn.Dropout(0.25)
+        self.dropout2 = nn.Dropout(0.5)
+        self.fc1 = nn.Linear(9216, param['hidden'])
+        self.fc2 = nn.Linear(param['hidden'], 10)
+
+    def forward(self, x):
+        x = x.float()
+        x = self.conv1(x)
+        x = F.relu(x)
+        x = self.conv2(x)
+        x = F.relu(x)
+        x = F.max_pool2d(x, 2)
+        x = self.dropout1(x)
+        x = torch.flatten(x, 1)
+        x = self.fc1(x)
+        x = F.relu(x)
+        x = self.dropout2(x)
+        x = self.fc2(x)
+        return x
 
 class FeatureNet(Lenet):
 
