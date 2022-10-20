@@ -9,11 +9,9 @@ import os
 
 from torch.utils.data import DataLoader
 from torchvision import datasets, transforms
-from mnist_model import SoftLeNet
+from mnist_model import SoftLeNet, LogitLenet
 from mnist_utils import load_yaml
-from attacks_utils import FastGradientSignUntargeted
-from attacks_utils import ARTDeepFool as DeepFool
-from attacks_vis import plot_curves, plot_hist
+from attacks_utils import FastGradientSignUntargeted, TorchAttackDeepFool, TorchAttackCWL2
 
 
 # ------------------------------------------ Isometric Regularization --------------------------------------------------
@@ -94,7 +92,7 @@ def iso_loss_transform(output, target, data, epsilon, model, device, test_mode=F
 # -------------------------------------------- Training & Testing ------------------------------------------------------
 
 
-def train(param, model, device, train_loader, optimizer, epoch, lmbda):
+def train(param, model, device, train_loader, optimizer, epoch, lmbda, teacher_model, attack=None):
     # Initiate variables
     epoch_loss      = 0
     epoch_entropy   = 0
@@ -117,16 +115,48 @@ def train(param, model, device, train_loader, optimizer, epoch, lmbda):
         data.requires_grad = True
         optimizer.zero_grad()
 
+        # Adversarial train
+        if param['adv_train']:
+            # Update attacker
+            attack.model = model
+            attack.set_attacker()
+
+            # Generate attacks
+            data = attack.perturb(data, target)  
+
         # Forward pass
         output = model(data)
 
+        # Calculate soft-labels
+        
+
         # Compute loss
-        if param['reg']:
+        if param['distill']:
+            ## Sanity check that this method is equivalent to oringal criterion
+            # batch_size = labels.size(0)
+            # label_onehot = torch.FloatTensor(batch_size, data.num_classes)
+            # label_onehot.zero_()
+            # label_onehot.scatter_(1, labels.view(-1, 1), 1)
+            # print("One Hot", label_onehot[0])
+            # print(torch.sum(-label_onehot * F.log_softmax(outputs, -1), -1).mean())
+            
+            soft_labels = F.softmax(teacher_model(data) / param["distill_temp"], -1)
+            cross_entropy = torch.sum(-soft_labels * F.log_softmax(output, -1), -1).mean()
+
+            # Do not compute regularization
+            reg =  torch.tensor(0)
+
+            # Loss is only cross entropy
+            loss = cross_entropy
+
+
+        elif param['reg']:
             # Compute cross entropy loss and regularization term
             cross_entropy, reg = iso_loss_transform(output, target, data, param['epsilon_l2'], model, device)
 
             # Loss with regularization
             loss = (1 - lmbda) * cross_entropy + lmbda * reg
+
         else:
             # Compute cross entropy loss
             cross_entropy = F.cross_entropy(output, target)
@@ -189,7 +219,7 @@ def test(param, model, device, test_loader, lmbda, attack=None):
 
     ## Cycle through data
     #----------------------------------------------------------------#
-    with torch.no_grad():
+    with torch.enable_grad() if param['adv_test'] else torch.no_grad():
         for batch_idx, (data, target) in enumerate(test_loader):
             # Push to device
             data, target = data.to(device), target.to(device)
@@ -246,7 +276,7 @@ def test(param, model, device, test_loader, lmbda, attack=None):
 
                     # Update running totals
                     adv_correct += adv_pred.eq(target.view_as(adv_pred)).sum().item()
-                    adv_total += 1
+                    adv_total += len(data)
                     if adv_pred:
                         # If unfooled
                         hist_correct.append(reg.item())
@@ -260,15 +290,17 @@ def test(param, model, device, test_loader, lmbda, attack=None):
                 pred = output.argmax(dim=1, keepdim=True)  # get the index of the max log-probability
 
                 # Running total of correct
-                correct += pred.eq(target.view_as(pred)).sum().item()
-                
+                correct_mask = pred.eq(target.view_as(pred)).view(-1)
+                correct += correct_mask.sum().item()
+
                 # Test adversary
                 if param['adv_test']:
                     # use predicted label as target label (or not)
                     # with torch.enable_grad():
+                    data.requires_grad = True
 
                     # Generate attacks
-                    adv_data = attack.perturb(data, pred.view_as(target))  # pred or target
+                    adv_data = attack.perturb(data[correct_mask], target[correct_mask])  
 
                     # Feed forward
                     adv_output = model(adv_data)
@@ -277,8 +309,8 @@ def test(param, model, device, test_loader, lmbda, attack=None):
                     adv_pred = adv_output.argmax(dim=1, keepdim=True)
 
                     # Collect statistics
-                    adv_correct += adv_pred.eq(pred.view_as(adv_pred)).sum().item()  # pred or target
-                    adv_total += len(data)
+                    adv_correct += adv_pred.eq(target[correct_mask].view_as(adv_pred)).sum().item()  # pred or target
+                    adv_total   = correct
             
             ## Display results
             #----------------------------------------------------------------#
@@ -375,14 +407,27 @@ def initialize(param, device):
     else:
         print(f'Randomly initialized weights')
 
+    # Load teacher model
+    if param['distill']:
+        # initalize network class
+        teacher_model = LogitLenet(param).to(device)
+
+        print(f'Loading weights onto teacher model')
+        teacher_model.load_state_dict(torch.load(f'models/isometry/{param["name"]}/{param["model"]}', map_location='cpu'))
+
+        # make model deterministic and turn of gradient computations
+        teacher_model.eval()
+    else:
+        teacher_model = None
+
     # Set optimizer
     optimizer = optim.SGD(model.parameters(), lr=param['learning_rate'])
 
     print('Initialization done')
-    return train_loader, light_train_loader, test_loader, model, optimizer
+    return train_loader, light_train_loader, test_loader, model, optimizer, teacher_model
 
 
-def training(param, device, train_loader, test_loader, model, optimizer, attack=None):
+def training(param, device, train_loader, test_loader, model, optimizer, teacher_model, attack=None):
     ## Initialize
     #----------------------------------------------------------------------#
     # Initiate variables
@@ -398,7 +443,7 @@ def training(param, device, train_loader, test_loader, model, optimizer, attack=
         lmbda = param['lambda_min'] * (param['lambda_max']/param['lambda_min'])**((epoch - 1)/(param['epochs'] - 1))
 
         # Train
-        epoch_loss, epoch_entropy, epoch_reg = train(param, model, device, train_loader, optimizer, epoch, lmbda)
+        epoch_loss, epoch_entropy, epoch_reg = train(param, model, device, train_loader, optimizer, epoch, lmbda, teacher_model, attack=attack)
 
         # Validate
         test_loss, test_entropy, test_reg, _, _ = test(param, model, device, test_loader, lmbda, attack=attack)
@@ -416,12 +461,12 @@ def training(param, device, train_loader, test_loader, model, optimizer, attack=
         test_reg_list.append(test_reg)
 
     # Display plot
-    fig1 = plot_curves(loss_list, test_loss_list, "Loss function", "Epoch", "Loss")
-    fig2 = plot_curves(entropy_list, test_entropy_list, "Cross Entropy", "Epoch", "Cross entropy")
-    fig3 = plot_curves(reg_list, test_reg_list, "Regularization", "Epoch", "Regularization")
+    # fig1 = plot_curves(loss_list, test_loss_list, "Loss function", "Epoch", "Loss")
+    # fig2 = plot_curves(entropy_list, test_entropy_list, "Cross Entropy", "Epoch", "Cross entropy")
+    # fig3 = plot_curves(reg_list, test_reg_list, "Regularization", "Epoch", "Regularization")
 
-    # Return
-    return fig1, fig2, fig3
+    # # Return
+    # return fig1, fig2, fig3
 
 # ---------------------------------------------------- Main ------------------------------------------------------------
 
@@ -462,11 +507,11 @@ def main():
     print(f'Using {device}')
 
     # Load data and model
-    train_loader, light_train_loader, test_loader, model, optimizer = initialize(param, device)
+    train_loader, light_train_loader, test_loader, model, optimizer, teacher_model = initialize(param, device)
 
     # Load attacker
     attack = None
-    if param['adv_test']:
+    if param['adv_test'] or param['adv_train']:
 
         if param["attack_type"] == "fgsm":
             attack = FastGradientSignUntargeted(model, 
@@ -480,19 +525,10 @@ def main():
                                                 _loss       = 'cross_entropy')
 
         elif param['attack_type'] == "deep_fool":
-            attack = DeepFool(
-                                model           = model,
-                                input_shape     = param['input_shape'],    
-                                num_classes     = param['num_classes'],    
-                                device          = device,         
-                                min_val         = 0,        
-                                max_val         = 1,        
-                                _optimizer      = optimizer,     
-                                max_iters       = 100,    
-                                overshoot_param = 1e-6, 
-                                _type           = 'linf',
-                                _loss           = 'nll'
-            )
+            attack = TorchAttackDeepFool(model = model)
+
+        elif param['attack_type'] == "cw":
+            attack = TorchAttackCWL2( model = model)
 
         else:
             print("Invalid attack_type in config file, please use 'fgsm' or add a new class in attacks_utils....")
@@ -501,7 +537,7 @@ def main():
     # Train model
     if param['train']:
         print(f'Start training')
-        _ = training(param, device, train_loader, test_loader, model, optimizer, attack=attack)
+        _ = training(param, device, train_loader, test_loader, model, optimizer, teacher_model, attack=attack)
 
     # Test model
     else:

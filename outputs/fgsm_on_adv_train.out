@@ -1,0 +1,12 @@
+Using cuda
+Using testing batch size for test loader
+Using testing batch size for train loader
+Loading weights
+Initialization done
+Start testing
+Using test loader
+Test: 0/10000 (0%)	Loss: 1.590034, Cross Entropy: 1.590034, Reg: 0.000000
+Elapsed time (s): 0.48432183265686035
+Memory usage (GB): 2.580280303955078
+Test set: Average loss: 1.5912, Average cross entropy: 1.5912, Average reg: 0.0000, Accuracy: 8705/10000 (87%), Robust accuracy: 8562/8705 (98%)
+
