@@ -10,3 +10,42 @@ Elapsed time (s): 0.5463776588439941
 Memory usage (GB): 2.5865821838378906
 Test set: Average loss: 1.5873, Average cross entropy: 1.5873, Average reg: 0.0000, Accuracy: 8738/10000 (87%), Robust accuracy: 8724/8738 (100%)
 
+attack_type       : fgsm
+perturbation_type : linf
+budget            : 1
+alpha             : 0.01
+max_iter          : 1000
+
+Using cpu
+Using testing batch size for test loader
+Using testing batch size for train loader
+Loading weights
+Initialization done
+Start testing
+Using test loader
+Test: 0/10000 (0%)	Loss: 1.508033, Cross Entropy: 1.508033, Reg: 0.000000
+Elapsed time (s): 92.38018107414246
+Memory usage (GB): 2.593250274658203
+Test: 1280/10000 (13%)	Loss: 1.604581, Cross Entropy: 1.604581, Reg: 0.000000
+Elapsed time (s): 845.0354900360107
+Memory usage (GB): 4.381919860839844
+Test: 2560/10000 (25%)	Loss: 1.578344, Cross Entropy: 1.578344, Reg: 0.000000
+Elapsed time (s): 852.8567190170288
+Memory usage (GB): 4.689807891845703
+Test: 3840/10000 (38%)	Loss: 1.625219, Cross Entropy: 1.625219, Reg: 0.000000
+Elapsed time (s): 860.0415678024292
+Memory usage (GB): 4.628700256347656
+Test: 5120/10000 (51%)	Loss: 1.601747, Cross Entropy: 1.601747, Reg: 0.000000
+Elapsed time (s): 854.3228580951691
+Memory usage (GB): 4.777805328369141
+Test: 6400/10000 (63%)	Loss: 1.593969, Cross Entropy: 1.593969, Reg: 0.000000
+Elapsed time (s): 869.0192708969116
+Memory usage (GB): 4.6566162109375
+Test: 7680/10000 (76%)	Loss: 1.593969, Cross Entropy: 1.593969, Reg: 0.000000
+Elapsed time (s): 877.1054277420044
+Memory usage (GB): 4.633735656738281
+Test: 8960/10000 (89%)	Loss: 1.562720, Cross Entropy: 1.562720, Reg: 0.000000
+Elapsed time (s): 879.3631131649017
+Memory usage (GB): 4.88037109375
+Test set: Average loss: 1.5873, Average cross entropy: 1.5873, Average reg: 0.0000, Accuracy: 8738/10000 (87%), Robust accuracy: 8724/8738 (100%)
+

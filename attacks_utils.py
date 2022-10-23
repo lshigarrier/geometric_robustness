@@ -1,6 +1,6 @@
 import torch
 import torch.nn.functional as F
-from torchattacks import DeepFool, CW
+from torchattacks import DeepFool, CW, PGD
 
 
 def fgsm_attack(image, epsilon, data_grad):
@@ -50,20 +50,18 @@ class FastGradientSignUntargeted:
     """
 
     def __init__(self, 
-                        model,          # Pytorch model
-                        device,         # CPU/GPU
-                        epsilon,        # Maximum perturbation
-                        alpha,          # Movement multiplier per iteration
-                        min_val,        # Minimum value of the pixels
-                        max_val,        # Maximum value of the pixels
-                        max_iters,      # Maximum numbers of iteration to generated adversaries
-                        _type='linf',   # The metric of perturbation size for epsilon
-                        _loss='nll'     # Loss function
+                        model,                # Pytorch model
+                        epsilon,              # Maximum perturbation
+                        alpha,                # Movement multiplier per iteration
+                        min_val,              # Minimum value of the pixels
+                        max_val,              # Maximum value of the pixels
+                        max_iters,            # Maximum numbers of iteration to generated adversaries
+                        _type='linf',         # The metric of perturbation size for epsilon
+                        _loss='nll' # Loss function
                         ):
 
         # Store variables internally
         self.model      = model
-        self.device     = device
         self.epsilon    = epsilon
         self.alpha      = alpha
         self.min_val    = min_val
@@ -104,7 +102,7 @@ class FastGradientSignUntargeted:
                 loss = self._loss(outputs, labels)
 
                 # Calculate gradients wrt input
-                grads = torch.autograd.grad(loss, x, only_inputs=True)[0]
+                grads = torch.autograd.grad(loss, x)[0]
 
                 # Add perturbation
                 x.data += self.alpha * torch.sign(grads.data)
@@ -116,7 +114,59 @@ class FastGradientSignUntargeted:
                 x.clamp_(self.min_val, self.max_val)
 
         return x
-        
+
+
+class TorchAttackPGD:
+    """
+    ‘Towards Deep Learning Models Resistant to Adversarial Attacks’
+    [https://arxiv.org/abs/1706.06083]
+
+    Distance Measure : Linf
+        Arguments:
+        model (nn.Module): model to attack.
+        eps (float): maximum perturbation (Default: 0.2)
+        alpha (float): step size (Default: 0.01)
+        steps (int): number of steps. (Default: 40)
+        random_start (bool): using random initialization (Default: False)
+        return_type (str): 'float' for [0,1] or 'int' for [0-255] (Default: 'float')
+    Shape:
+        - images: :math:`(N, C, H, W)` where `N = number of batches`, `C = number of channels`, `H = height` and `W = width`. MUST HAVE RANGE [0, 1]
+        - labels: :math:`(N)` where each value :math:`y_i` is :math:`0 \leq y_i \leq` `number of labels`.
+        - output: :math:`(N, C, H, W)`.
+    """
+
+    def __init__(self,
+                        model,
+                        eps   = 0.2,
+                        alpha = 0.01,
+                        steps = 40,
+                        random_start = False,
+                        return_type = 'float'
+                        ):
+        # Store variables internally
+        self.model        = model
+        self.eps          = eps
+        self.alpha        = alpha
+        self.steps        = steps
+        self.random_start = random_start
+        self.return_type = return_type
+
+        self.set_attacker()
+
+    def set_attacker(self):
+        self.attacker = PGD(
+                            model = self.model,
+                            eps   = self.eps,
+                            alpha = self.alpha,
+                            steps = self.steps,
+                            random_start = self.random_start
+        )
+        self.attacker.set_return_type(type=self.return_type)  # float returns [0-1], int returns [0-255]
+
+    def perturb(self, original_images, labels):
+        original_images = original_images.detach()
+        labels = labels.detach()
+        return self.attacker(original_images, labels)
 
 class TorchAttackDeepFool:
     """
@@ -126,8 +176,6 @@ class TorchAttackDeepFool:
     Distance Measure : L2
     Arguments:
         model (nn.Module): model to attack.
-        device (str): 'cpu' or 'cuda' (Default: 'cpu')
-        steps (int): number of steps. (Default: 50)
         overshoot (float): parameter for enhancing the noise. (Default: 0.02)
         return_type (str): 'float' for [0,1] or 'int' for [0-255] (Default: 'float')
     Shape:
@@ -177,7 +225,7 @@ class TorchAttackCWL2:
             :math:`minimize \Vert\frac{1}{2}(tanh(w)+1)-x\Vert^2_2+c\cdot f(\frac{1}{2}(tanh(w)+1))`
         kappa (float): kappa (also written as 'confidence') in the paper. (Default: 0)
             :math:`f(x')=max(max\{Z(x')_i:i\neq t\} -Z(x')_t, - \kappa)`
-        steps (int): number of steps. (Default: 50)
+        max_iters (int): number of steps. (Default: 50)
         lr (float): learning rate of the Adam optimizer. (Default: 0.01)
     .. warning:: With default c, you can't easily get adversarial images. Set higher c like 1.
     Shape:
@@ -185,8 +233,8 @@ class TorchAttackCWL2:
         - labels: :math:`(N)` where each value :math:`y_i` is :math:`0 \leq y_i \leq` `number of labels`.
         - output: :math:`(N, C, H, W)`.
     Examples::
-        >>> attack = torchattacks.CW(model, c=1, kappa=0, steps=50, lr=0.01)
-        >>> adv_images = attack(images, labels)
+        >>> attack = TorchAttackCWL2(model, c=1, kappa=0, steps=50, lr=0.01)
+        >>> adv_images = attack.perturb(images, labels)
     .. note:: Binary search for c is NOT IMPLEMENTED methods in the paper due to time consuming.
     """
 

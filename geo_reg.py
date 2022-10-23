@@ -8,9 +8,9 @@ import os
 
 from torch.utils.data import DataLoader
 from torchvision import datasets, transforms
-from mnist_model import SoftLeNet, LogitLenet, IsometryReg, JacobianReg
+from mnist_model import SoftLenet, LogitLenet, IsometryReg, JacobianReg
 from mnist_utils import load_yaml
-from attacks_utils import FastGradientSignUntargeted, TorchAttackDeepFool, TorchAttackCWL2
+from attacks_utils import FastGradientSignUntargeted, TorchAttackPGD, TorchAttackDeepFool, TorchAttackCWL2
 from attacks_vis import plot_curves
 
 
@@ -141,78 +141,87 @@ def test(param, model, reg_model, device, test_loader, epoch, eta, attack=None):
 
     ## Cycle through data
     # ---------------------------------------------------------------- #
-    with torch.enable_grad() if param['adv_test'] else torch.no_grad():
-        for batch_idx, (data, target) in enumerate(test_loader):
-            # Push to device
-            data, target = data.to(device), target.to(device)
+    # with torch.enable_grad() if param['adv_test'] else torch.no_grad():
+    for batch_idx, (data, target) in enumerate(test_loader):
+        # Push to device
+        data, target = data.to(device), target.to(device)
 
-            # Ensure grad is on
-            data.requires_grad = True
+        # Ensure grad is on
+        data.requires_grad = True
 
-            # Forward pass
-            output = model(data)
+        # Forward pass
+        output = model(data)
 
-            # Compute loss
-            if param['reg'] and epoch >= param['epoch_reg']:
-                # Compute regularization term and cross entropy
-                reg     = reg_model(data, output)
-                entropy = F.cross_entropy(output, target)
+        # Compute loss
+        if param['reg'] and epoch >= param['epoch_reg']:
 
-                # Loss with regularization
-                loss = (1 - eta) * entropy + eta * reg
-            else:
-                # Compute cross entropy loss
-                entropy = F.cross_entropy(output, target)
+            # with torch.enable_grad():
+            # Compute regularization term and
+            reg = reg_model(data, output)
 
-                # Do not compute regularization
-                reg = torch.tensor(0)
+            # Compute cross entropy
+            entropy = F.cross_entropy(output, target)
 
-                # Loss is only cross entropy
-                loss = entropy
+            # Loss with regularization
+            loss = (1 - eta) * entropy + eta * reg
 
-            # Gradients set to zero
-            model.zero_grad()
+        else:
+            # Compute cross entropy loss
+            entropy = F.cross_entropy(output, target)
 
-            # Running statistics
-            test_loss    += loss.item()*len(data)
-            test_entropy += entropy.item()*len(data)
-            test_reg     += reg.item()*len(data)
+            # Do not compute regularization
+            reg = torch.tensor(0)
 
-            ## Check standard and adversarial accuracy
-            # ---------------------------------------------------------------- #
+            # Loss is only cross entropy
+            loss = entropy
+
+        # Gradients set to zero
+        model.zero_grad()
+
+        # Running statistics
+        test_loss    += loss.item()*len(data)
+        test_entropy += entropy.item()*len(data)
+        test_reg     += reg.item()*len(data)
+
+        ## Check standard and adversarial accuracy
+        # ---------------------------------------------------------------- #
+        # Get prediction
+        pred = output.argmax(dim=1, keepdim=True)  # get the index of the max log-probability
+        # If batch size is 1
+        if len(data) == 1:
+            pred = pred[0]
+
+        # Running total of correct
+        correct_mask = pred.eq(target.view_as(pred)).view(-1)
+        correct += correct_mask.sum().item()
+
+        # Test adversary
+        if param['adv_test']:
+            # Generate attacks
+            adv_data = attack.perturb(data[correct_mask], target[correct_mask])
+            # For testing purposes
+            assert not torch.isnan(adv_data).any()
+            diff_tensor = adv_data.view(adv_data.shape[0], -1) - data[correct_mask].view(adv_data.shape[0], -1)
+            print(f'Mean linf norm: {torch.max(torch.abs(diff_tensor), dim=1)[0].mean()}')
+
+            # Feed forward
+            adv_output = model(adv_data)
+
             # Get prediction
-            pred = output.argmax(dim=1, keepdim=True)  # get the index of the max log-probability
-            # If batch size is 1
-            if len(data) == 1:
-                pred = pred[0]
+            adv_pred = adv_output.argmax(dim=1, keepdim=True)
 
-            # Running total of correct
-            correct_mask = pred.eq(target.view_as(pred)).view(-1)
-            correct += correct_mask.sum().item()
+            # Collect statistics
+            adv_correct += adv_pred.eq(target[correct_mask].view_as(adv_pred)).sum().item()
 
-            # Test adversary
-            if param['adv_test']:
-                # Generate attacks
-                adv_data = attack.perturb(data[correct_mask], target[correct_mask])
-
-                # Feed forward
-                adv_output = model(adv_data)
-
-                # Get prediction
-                adv_pred = adv_output.argmax(dim=1, keepdim=True)
-
-                # Collect statistics
-                adv_correct += adv_pred.eq(target[correct_mask].view_as(adv_pred)).sum().item()
-
-            ## Display results
-            # ---------------------------------------------------------------- #
-            if not(param['train']) and param['verbose'] and (batch_idx % param['log_interval'] == 0):
-                print('Test: {}/{} ({:.0f}%)\tLoss: {:.6f}, Cross Entropy: {:.6f}, Reg: {:.6f}'.format(
-                    batch_idx * len(data), len(test_loader.dataset), 100. * batch_idx / len(test_loader),
-                    loss.item(), entropy.item(), reg.item()))
-                print(f'Elapsed time (s): {time.time() - tic}')
-                print(f'Memory usage (GB): {psutil.Process(os.getpid()).memory_info()[0] / (2. ** 30)}')
-                tic = time.time()
+        ## Display results
+        # ---------------------------------------------------------------- #
+        if not(param['train']) and param['verbose'] and (batch_idx % param['log_interval'] == 0):
+            print('Test: {}/{} ({:.0f}%)\tLoss: {:.6f}, Cross Entropy: {:.6f}, Reg: {:.6f}'.format(
+                batch_idx * len(data), len(test_loader.dataset), 100. * batch_idx / len(test_loader),
+                loss.item(), entropy.item(), reg.item()))
+            print(f'Elapsed time (s): {time.time() - tic}')
+            print(f'Memory usage (GB): {psutil.Process(os.getpid()).memory_info()[0] / (2. ** 30)}')
+            tic = time.time()
 
     ## Calculate results, display and return
     # ---------------------------------------------------------------- #
@@ -230,6 +239,9 @@ def test(param, model, reg_model, device, test_loader, epoch, eta, attack=None):
             test_loss, test_entropy, test_reg,
             correct, len(test_loader.dataset), 100. * correct / len(test_loader.dataset)))
     return test_loss, test_entropy, test_reg
+
+
+# ---------------------------------------- Initialization & Main Loop --------------------------------------------------
 
 
 def initialize(param, device):
@@ -286,7 +298,7 @@ def initialize(param, device):
     ## Load model
     # -------------------------------------------------------------- #
     # Initalize network class
-    model = SoftLeNet(param).to(device)
+    model = SoftLenet(param).to(device)
 
     # Load parameters from file
     if param['load']:
@@ -327,8 +339,6 @@ def initialize(param, device):
 
 
 def training(param, device, train_loader, test_loader, model, reg_model, teacher_model, optimizer, attack=None):
-    # Detect anomaly in autograd
-    torch.autograd.set_detect_anomaly(True)
     ## Initialize
     # ---------------------------------------------------------------------- #
     # Initiate variables
@@ -361,19 +371,22 @@ def training(param, device, train_loader, test_loader, model, reg_model, teacher
         test_reg_list.append(test_reg)
 
     # Display plot
-    # fig1 = plot_curves(loss_list, test_loss_list, "Loss function", "Epoch", "Loss")
-    # fig2 = plot_curves(entropy_list, test_entropy_list, "Cross Entropy", "Epoch", "Cross entropy")
-    # fig3 = plot_curves(reg_list, test_reg_list, "Regularization", "Epoch", "Regularization")
+    fig1 = plot_curves(loss_list, test_loss_list, "Loss function", "Epoch", "Loss")
+    fig2 = plot_curves(entropy_list, test_entropy_list, "Cross Entropy", "Epoch", "Cross entropy")
+    fig3 = plot_curves(reg_list, test_reg_list, "Regularization", "Epoch", "Regularization")
 
     # Return
-    # return fig1, fig2, fig3
-    return 0
+    return fig1, fig2, fig3
+    # return 0
 
 
 # ---------------------------------------------------- Main ------------------------------------------------------------
 
 
 def main():
+    # Detect anomaly in autograd
+    torch.autograd.set_detect_anomaly(True)
+
     # Load configurations
     param = load_yaml('param_geo_reg')
 
@@ -396,7 +409,6 @@ def main():
     if param['adv_test'] or param['adv_train']:
         if param["attack_type"] == "fgsm":
             attack = FastGradientSignUntargeted(model,
-                                                device,
                                                 epsilon   = param['budget'],
                                                 alpha     = param['alpha'],
                                                 min_val   = 0,
@@ -405,6 +417,8 @@ def main():
                                                 _type     = param['perturbation_type'],
                                                 _loss     = 'cross_entropy')
 
+        elif param['attack_type'] == "pgd":
+            attack = TorchAttackPGD(model=model)
         elif param['attack_type'] == "deep_fool":
             attack = TorchAttackDeepFool(model=model)
 

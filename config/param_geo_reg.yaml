@@ -1,7 +1,7 @@
-name  : jacobian/jac_2
-model : 00030.pt
-reg_type : jacobian # isometry
-gpu_number : "5"
+name  : jacobian/vanilla # isometry/kyles_TEMP # isometry/iso_6 # jacobian/vanilla # jacobian/jac_2
+model : 00030.pt # baseline.pt
+reg_type : jacobian # isometry # jacobian
+gpu_number : None
 seed  : 1
 
 train      : False
@@ -25,8 +25,8 @@ num_classes : 10
 # training
 
 epochs          : 30
-batch_size      : 32
-test_batch_size : 32
+batch_size      : 64
+test_batch_size : 64
 learning_rate   : 0.001
 
 distill_temp : 20
@@ -34,8 +34,8 @@ distill_temp : 20
 # eps_inf = 0.3 => eps_l2 = sqrt(784)*eps_inf = 28*0.3 = 8.4
 # eps_inf = 0.2 => eps_l2 = sqrt(784)*eps_inf = 28*0.2 = 5.6
 epsilon   : 5.6
-eta_min   : 0.00001
-eta_max   : 0.0001
+eta_min   : 0.0002
+eta_max   : 0.0002
 epoch_reg : 1
 
 verbose      : True
@@ -50,9 +50,9 @@ loader             : test
 
 # attack
 
-attack_type       : fgsm # fgsm # deep_fool # cw
-perturbation_type : linf # deep_fool only does L2
-budget            : 0.1
+attack_type       : pgd # fgsm # pgd # deep_fool # cw
+perturbation_type : linf # pgd only does Linf, deep_fool only does L2
+budget            : 0.3
 alpha             : 0.01
 max_iter          : 40
 

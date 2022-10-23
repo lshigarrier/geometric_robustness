@@ -26,20 +26,23 @@ class IsometryReg(nn.Module):
             grad_output[:, i] = 1
             jac[i] = torch.autograd.grad(new_output, data, grad_outputs=grad_output, retain_graph=True)[0]
         jac = torch.transpose(jac, dim0=0, dim1=1)
+        jac = jac.view(jac.shape[0], jac.shape[1], -1)
 
         # Gram matrix of Jacobian
         jac = torch.bmm(jac, torch.transpose(jac, 1, 2))
 
         # Compute the change of basis matrix
-        change = output[:, c-1] / torch.square(
-            2 * torch.sqrt(output[:, c-1]) - torch.norm(output[:, :c-1], p=1, dim=1))
+        change = output[:, m] / torch.square(
+            2 * torch.sqrt(output[:, m]) - torch.norm(output[:, :c-1], p=1, dim=1))
 
         # Distance from center of simplex
         delta = torch.sqrt(output / c).sum(dim=1)
         delta = 2 * torch.acos(delta)
 
         # Diagonal embedding
-        change = torch.diag_embed(change.unsqueeze(1).repeat(1, c-1)) * delta ** 2 / self.epsilon ** 2
+        change = torch.diag_embed(change.unsqueeze(1).repeat(1, m))
+        change = change * (delta ** 2)[:, None, None]
+        change = change / self.epsilon ** 2
 
         # Compute regularization term (alpha in docs)
         reg = self.epsilon**2*torch.linalg.norm((jac - change).view(len(data), -1), dim=1)
@@ -79,7 +82,7 @@ class JacobianReg(nn.Module):
             jac[i] = data.grad.data
         '''
         jac = torch.transpose(jac, dim0=0, dim1=1)
-        jac = torch.reshape(jac, (jac.shape[0], -1))
+        jac = jac.view(jac.shape[0], -1)
 
         # Compute delta and rho
         delta = torch.sqrt(output/c).sum(dim=1)
@@ -91,10 +94,10 @@ class JacobianReg(nn.Module):
         return reg.mean()
 
 
-class SoftLeNet(nn.Module):
+class SoftLenet(nn.Module):
 
     def __init__(self, param, eps=1e-6):
-        super(SoftLeNet, self).__init__()
+        super(SoftLenet, self).__init__()
         self.conv1 = nn.Conv2d(1, param['channels1'], 3, 1)
         self.conv2 = nn.Conv2d(param['channels1'], param['channels2'], 3, 1)
         self.fc1 = nn.Linear(9216, param['hidden'])
