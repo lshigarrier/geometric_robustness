@@ -409,21 +409,27 @@ def main():
     if param['adv_test'] or param['adv_train']:
         if param["attack_type"] == "fgsm":
             attack = FastGradientSignUntargeted(model,
-                                                epsilon   = param['budget'],
-                                                alpha     = param['alpha'],
-                                                min_val   = 0,
-                                                max_val   = 1,
-                                                max_iters = param['max_iter'],
-                                                _type     = param['perturbation_type'],
-                                                _loss     = 'cross_entropy')
+                                                epsilon      = param['budget'],
+                                                alpha        = param['alpha'],
+                                                min_val      = 0,
+                                                max_val      = 1,
+                                                max_iters    = param['max_iter'],
+                                                _type        = param['perturbation_type'],
+                                                random_start = param['random_start'],
+                                                _loss        = 'cross_entropy')
 
         elif param['attack_type'] == "pgd":
-            attack = TorchAttackPGD(model=model)
+            attack = TorchAttackPGD(model        = model,
+                                    eps          = param['budget'],
+                                    alpha        = param['alpha'],
+                                    steps        = param['max_iter'],
+                                    random_start = param['random_start'])
+
         elif param['attack_type'] == "deep_fool":
             attack = TorchAttackDeepFool(model=model)
 
         elif param['attack_type'] == "cw":
-            attack = TorchAttackCWL2( model=model)
+            attack = TorchAttackCWL2(model=model)
 
         else:
             print("Invalid attack_type in config file, please use 'fgsm' or add a new class in attacks_utils....")

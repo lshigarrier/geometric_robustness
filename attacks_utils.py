@@ -56,8 +56,9 @@ class FastGradientSignUntargeted:
                         min_val,              # Minimum value of the pixels
                         max_val,              # Maximum value of the pixels
                         max_iters,            # Maximum numbers of iteration to generated adversaries
+                        random_start=False,   # Random initialization
                         _type='linf',         # The metric of perturbation size for epsilon
-                        _loss='nll' # Loss function
+                        _loss='nll'           # Loss function
                         ):
 
         # Store variables internally
@@ -68,6 +69,7 @@ class FastGradientSignUntargeted:
         self.max_val    = max_val
         self.max_iters  = max_iters
         self._type      = _type
+        self.random_start = random_start
         if _loss == 'nll':
             self._loss = F.nll_loss
         elif _loss == 'cross_entropy':
@@ -78,12 +80,12 @@ class FastGradientSignUntargeted:
     def set_attacker(self):
         pass
 
-    def perturb(self, original_images, labels, random_start=False):
+    def perturb(self, original_images, labels):
         # original_images: values are within self.min_val and self.max_val
 
         # The adversaries created from random close points to the original data
-        if random_start:
-            rand_perturb = torch.FloatTensor(original_images.shape).uniform_(-self.epsilon, self.epsilon).to(self.device)
+        if self.random_start:
+            rand_perturb = torch.FloatTensor(original_images.shape).uniform_(-self.epsilon, self.epsilon)
             x = original_images + rand_perturb
             x.clamp_(self.min_val, self.max_val)
         else:
