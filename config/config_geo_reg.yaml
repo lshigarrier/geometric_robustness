@@ -1,7 +1,7 @@
 name  : isometry/adv_train # isometry/kyles_TEMP
 model : 00030.pt # baseline.pt # fgsm_adv_train.pt # 00030.pt
 reg_type : isometry # isometry # jacobian
-gpu_number : None
+gpu_number : "7"
 seed  : 1
 
 train      : True
