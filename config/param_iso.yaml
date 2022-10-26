@@ -1,9 +1,9 @@
 name  : kyles_TEMP # iso_6 # vanilla | iso_1 | iso_2 | iso_3 | iso_4 | iso_5 | iso_6
-model : distilled_from_baseline.pt # baseline.pt # adv_train.pt
+model : baseline.pt # baseline.pt # adv_train.pt
 seed  : 1
 
 train       : False
-gpu_number  : "5"
+gpu_number  : "6"
 load        : True
 adv_train   : False
 adv_test    : True
@@ -24,8 +24,8 @@ num_classes : 10
 # training
 
 epochs          : 10
-batch_size      : 32
-test_batch_size : 125
+batch_size      : 16
+test_batch_size : 16
 learning_rate   : 0.01
 
 distill : True
@@ -42,14 +42,15 @@ save_step     : 1
 
 # testing
 
-testing_batch_size  : 128
+testing_batch_size  : 16
 test_epoch          : 30
 loader              : test
 
 # attack
-attack_type       : fgsm # deep_fool # cw # 
+attack_type       : pgd # deep_fool # cw # 
 perturbation_type : linf # deep_fool only does L2
-budget            : 0.1
+budget            : 0.15
 alpha             : 0.01
 max_iter          : 40
+save_an_image     : True
 
