@@ -15,7 +15,7 @@ def moving_average(array, window_size):
 
 def load_yaml(file_name=None):
     parser = argparse.ArgumentParser()
-    parser.add_argument('--yaml', type=str, default='param_mnist')
+    parser.add_argument('--yaml', type=str, default='config_geo_reg')
     args = parser.parse_args()
     if file_name:
         yaml_file = f'config/{file_name}.yaml'

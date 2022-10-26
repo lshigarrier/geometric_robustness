@@ -1,6 +1,6 @@
 import torch
 import torch.nn.functional as F
-from torchattacks import DeepFool, CW, PGD
+from torchattacks import GN, PGD, DeepFool, CW
 
 
 def fgsm_attack(image, epsilon, data_grad):
@@ -91,6 +91,8 @@ class FastGradientSignUntargeted:
         else:
             x = original_images.clone()
 
+        x.requires_grad = True
+
         # Turn gradients on
         with torch.enable_grad():
 
@@ -107,7 +109,11 @@ class FastGradientSignUntargeted:
                 grads = torch.autograd.grad(loss, x)[0]
 
                 # Add perturbation
-                x.data += self.alpha * torch.sign(grads.data)
+                diff_tensor = self.alpha * torch.sign(grads.data)
+                x.data += diff_tensor
+                # For testing purposes
+                # print(torch.max(torch.abs(diff_tensor), dim=1)[0].mean())
+                # print(torch.linalg.norm(grads.data).mean())
 
                 # Project -- the adversaries' pixel value should within max_x and min_x due to the l_infinity / l2 restriction
                 x = project(x, original_images, self.epsilon, self._type)
@@ -116,6 +122,43 @@ class FastGradientSignUntargeted:
                 x.clamp_(self.min_val, self.max_val)
 
         return x
+
+
+class TorchAttackGaussianNoise:
+    """
+        Arguments:
+        model (nn.Module): model to attack.
+        std (float): standard deviation (Default: 0.1)
+    Shape:
+        - images: :math:`(N, C, H, W)` where `N = number of batches`, `C = number of channels`, `H = height` and `W = width`. MUST HAVE RANGE [0, 1]
+        - labels: :math:`(N)` where each value :math:`y_i` is :math:`0 \leq y_i \leq` `number of labels`.
+        - output: :math:`(N, C, H, W)`.
+    """
+
+    def __init__(self,
+                        model,
+                        std = 0.1,
+                        return_type='float'
+                        ):
+        # Store variables internally
+        self.model = model
+        self.std   = std
+        self.return_type = return_type
+
+        self.set_attacker()
+
+    def set_attacker(self):
+        self.attacker = GN(
+                            model = self.model,
+                            std = self.std
+        )
+        self.attacker.set_return_type(type=self.return_type)  # float returns [0-1], int returns [0-255]
+
+    def perturb(self, original_images, labels):
+        original_images = original_images.detach()
+        labels = labels.detach()
+        adv_images = self.attacker(original_images, labels)
+        return adv_images
 
 
 class TorchAttackPGD:
@@ -167,8 +210,11 @@ class TorchAttackPGD:
 
     def perturb(self, original_images, labels):
         original_images = original_images.detach()
+        original_images.requires_grad = True
         labels = labels.detach()
-        return self.attacker(original_images, labels)
+        with torch.enable_grad():
+            adv_images = self.attacker(original_images, labels)
+        return adv_images
 
 class TorchAttackDeepFool:
     """
@@ -211,8 +257,11 @@ class TorchAttackDeepFool:
 
     def perturb(self, original_images, labels):
         original_images = original_images.detach()
+        original_images.requires_grad = True
         labels = labels.detach()
-        return self.attacker(original_images, labels)
+        with torch.enable_grad():
+            adv_images = self.attacker(original_images, labels)
+        return adv_images
 
 
 class TorchAttackCWL2:
@@ -273,5 +322,8 @@ class TorchAttackCWL2:
 
     def perturb(self, original_images, labels):
         original_images = original_images.detach()
+        original_images.requires_grad = True
         labels = labels.detach()
-        return self.attacker(original_images, labels)
+        with torch.enable_grad():
+            adv_images = self.attacker(original_images, labels)
+        return adv_images

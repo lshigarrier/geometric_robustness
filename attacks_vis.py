@@ -160,3 +160,43 @@ def plot_curves(list1, list2, title, xlabel, ylabel):
     ax.set_ylabel(ylabel)
     ax.legend()
     return fig
+
+
+def plot_robust_curves(budgets, base_data, robust_data, xlabel, ylabel):
+    fig, ax = plt.subplots()
+    ax.plot(budgets, base_data, label='Baseline', marker='.', color='blue')
+    ax.plot(budgets, robust_data, label='Regularized', marker='.', color='green')
+    ax.set_xlabel(xlabel)
+    ax.set_ylabel(ylabel)
+    ax.legend()
+    return fig
+
+
+def main():
+    file0 = 'models/isometry/iso_8/budgets.txt'
+    file1 = 'models/isometry/vanilla_2/robust_acc.txt'
+    file2 = 'models/isometry/iso_8/robust_acc.txt'
+    budgets = np.loadtxt(file0)
+    base_data = np.loadtxt(file1)
+    base_data /= 100
+    # base_data = base_data/base_data[0]*10000
+    robust_data = np.loadtxt(file2)
+    robust_data /= 100
+    # robust_data = robust_data/robust_data[0]*10000
+    _ = plot_robust_curves(budgets, base_data, robust_data, 'Attack perturbation', 'Accuracy (%)')
+    file0 = 'models/isometry/iso_8/noises.txt'
+    file1 = 'models/isometry/vanilla_2/noise_acc.txt'
+    file2 = 'models/isometry/iso_8/noise_acc.txt'
+    budgets = np.loadtxt(file0)
+    base_data = np.loadtxt(file1)
+    base_data /= 100
+    # base_data = base_data/base_data[0]*10000
+    robust_data = np.loadtxt(file2)
+    robust_data /= 100
+    # robust_data = robust_data/robust_data[0]*10000
+    __ = plot_robust_curves(budgets, base_data, robust_data, 'Standard deviation', 'Accuracy (%)')
+    plt.show()
+
+
+if __name__ == '__main__':
+    main()

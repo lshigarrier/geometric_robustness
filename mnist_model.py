@@ -114,8 +114,7 @@ class SoftLenet(nn.Module):
         x = self.fc1(x)
         x = F.relu(x)
         x = self.fc2(x)
-        output = torch.maximum(F.softmax(x, dim=1), torch.tensor(self.eps))
-        return torch.minimum(output, torch.tensor(1 - 9*self.eps))
+        return F.softmax(x, dim=1)*(1 - 10*self.eps) + self.eps
 
 
 class Lenet(nn.Module):

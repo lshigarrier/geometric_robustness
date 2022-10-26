@@ -1,0 +1,13 @@
+name: robust
+channels:
+  - defaults
+dependencies:
+  - torchvision
+  - cudatoolkit=11.6
+  - pytorch
+  - matplotlib
+  - psutil
+  - os
+  - numpy
+  - yaml
+prefix: /home/loic/anaconda3/envs/robust
