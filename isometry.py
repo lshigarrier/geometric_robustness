@@ -9,10 +9,10 @@ import os
 
 from torch.utils.data import DataLoader
 from torchvision import datasets, transforms
-from mnist_model import SoftLeNet, LogitLenet
+from mnist_model import SoftLeNet, LogitLenet, Lenet
 from mnist_utils import load_yaml
-from attacks_utils import FastGradientSignUntargeted, TorchAttackDeepFool, TorchAttackCWL2
-
+from attacks_utils import FastGradientSignUntargeted, TorchAttackDeepFool, TorchAttackCWL2, TorchAttackFGSM, TorchAttackPGD
+from attacks_vis import plot_side_by_side
 
 # ------------------------------------------ Isometric Regularization --------------------------------------------------
 
@@ -127,28 +127,19 @@ def train(param, model, device, train_loader, optimizer, epoch, lmbda, teacher_m
         # Forward pass
         output = model(data)
 
-        # Calculate soft-labels
-        
-
         # Compute loss
         if param['distill']:
-            ## Sanity check that this method is equivalent to oringal criterion
-            # batch_size = labels.size(0)
-            # label_onehot = torch.FloatTensor(batch_size, data.num_classes)
-            # label_onehot.zero_()
-            # label_onehot.scatter_(1, labels.view(-1, 1), 1)
-            # print("One Hot", label_onehot[0])
-            # print(torch.sum(-label_onehot * F.log_softmax(outputs, -1), -1).mean())
-            
-            soft_labels = F.softmax(teacher_model(data) / param["distill_temp"], -1)
-            cross_entropy = torch.sum(-soft_labels * F.log_softmax(output, -1), -1).mean()
+            # Get soft-labels
+            soft_labels = F.softmax(teacher_model(data, perform_softmax = False) / param["distill_temp"], -1)
+
+            # Calculate loss with soft_labels
+            cross_entropy = torch.sum(-soft_labels * torch.log(output), -1).mean()
 
             # Do not compute regularization
             reg =  torch.tensor(0)
 
             # Loss is only cross entropy
             loss = cross_entropy
-
 
         elif param['reg']:
             # Compute cross entropy loss and regularization term
@@ -252,7 +243,7 @@ def test(param, model, device, test_loader, lmbda, attack=None):
             ## Check standard and adversarial accuracy
             #----------------------------------------------------------------#
             # If batch size is 1
-            if len(data) == 1:
+            if len(data) == 1 and False:
                 # Get prediction
                 pred = output.argmax(dim=1, keepdim=True)[0]
 
@@ -311,6 +302,23 @@ def test(param, model, device, test_loader, lmbda, attack=None):
                     # Collect statistics
                     adv_correct += adv_pred.eq(target[correct_mask].view_as(adv_pred)).sum().item()  # pred or target
                     adv_total   = correct
+
+                    
+                    fooled_mask = adv_pred.ne(target[correct_mask].view_as(adv_pred)).view(-1)
+                    if fooled_mask.sum().item() != 0:
+
+                        # Save a single attack
+                        if param['save_an_image']:
+                            param['save_an_image'] = False
+                            # Random sample
+                            idx = torch.randint(fooled_mask.sum(), (1,)).item()
+                            
+                            plot_side_by_side(  img         = data[correct_mask][fooled_mask][idx], 
+                                                adv_img     = adv_data[fooled_mask][idx], 
+                                                pred        = pred[correct_mask][fooled_mask][idx], 
+                                                adv_pred    = adv_pred[fooled_mask][idx],
+                                                title       = param['perturbation_type'].upper() + ": " + str(param['budget']) + " " + param['attack_type'].upper(),
+                                                save_path   = "img/attacks/" + param['attack_type'] + "_" + param['perturbation_type'] + "_" + str(param['budget']) + ".png")
             
             ## Display results
             #----------------------------------------------------------------#
@@ -394,7 +402,8 @@ def initialize(param, device):
     ## Load model
     #--------------------------------------------------------------#
     # initalize network class
-    model = SoftLeNet(param).to(device)
+
+    model = Lenet(param).to(device)
 
     # load parameters from file
     if param['load']:
@@ -410,7 +419,7 @@ def initialize(param, device):
     # Load teacher model
     if param['distill']:
         # initalize network class
-        teacher_model = LogitLenet(param).to(device)
+        teacher_model = Lenet(param).to(device)
 
         print(f'Loading weights onto teacher model')
         teacher_model.load_state_dict(torch.load(f'models/isometry/{param["name"]}/{param["model"]}', map_location='cpu'))
@@ -514,15 +523,15 @@ def main():
     if param['adv_test'] or param['adv_train']:
 
         if param["attack_type"] == "fgsm":
-            attack = FastGradientSignUntargeted(model, 
-                                                device, 
-                                                epsilon     = param['budget'], 
-                                                alpha       = param['alpha'],
-                                                min_val     = 0, 
-                                                max_val     = 1, 
-                                                max_iters   = param['max_iter'],
-                                                _type       = param['perturbation_type'], 
-                                                _loss       = 'cross_entropy')
+            attack = TorchAttackFGSM(   model   = model,
+                                        eps     = param['budget'])
+
+        elif param['attack_type'] == "pgd":
+            attack = TorchAttackPGD(model   = model,
+                                    eps     = param['budget'],
+                                    alpha   = param['alpha'],
+                                    steps   = param['max_iter'],
+                                    )
 
         elif param['attack_type'] == "deep_fool":
             attack = TorchAttackDeepFool(model = model)
