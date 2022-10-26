@@ -1,15 +1,15 @@
-name  : isometry/adv_train # isometry/kyles_TEMP
-model : 00030.pt # baseline.pt # fgsm_adv_train.pt # 00030.pt
+name  : isometry/iso-4_1 # isometry/kyles_TEMP
+model : 00030.pt # baseline.pt # 00030.pt
 reg_type : isometry # isometry # jacobian
 gpu_number : None
 seed  : 1
 
-train      : False
-load       : True
+train      : True
+load       : False
 adv_train  : False
-adv_test   : True
+adv_test   : False
 distill    : False
-reg        : False
+reg        : True
 
 # model
 
@@ -39,7 +39,7 @@ eta_max   : 0.0001
 epoch_reg : 1
 
 verbose      : True
-log_interval : 2
+log_interval : 200
 save_step    : 1
 
 # testing
@@ -51,9 +51,9 @@ loader             : test
 # attack
 
 attack_type       : pgd # fgsm # gn # pgd # deep_fool # cw
-std               : 1
+std               : 0.1
 perturbation_type : linf # pgd only does Linf, deep_fool only does L2
-budget            : 0.5
+budget            : 0.2
 alpha             : 0.01
 max_iter          : 40
 random_start      : True
