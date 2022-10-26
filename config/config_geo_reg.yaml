@@ -4,10 +4,10 @@ reg_type : isometry # isometry # jacobian
 gpu_number : None
 seed  : 1
 
-train      : True
-load       : False
-adv_train  : True
-adv_test   : False
+train      : False
+load       : True
+adv_train  : False
+adv_test   : True
 distill    : False
 reg        : False
 
@@ -34,27 +34,27 @@ distill_temp : 20
 # eps_inf = 0.3 => eps_l2 = sqrt(784)*eps_inf = 28*0.3 = 8.4
 # eps_inf = 0.2 => eps_l2 = sqrt(784)*eps_inf = 28*0.2 = 5.6
 epsilon   : 5.6
-eta_min   : 0.0000001
-eta_max   : 0.000001
-epoch_reg : 2
+eta_min   : None
+eta_max   : 0.0001
+epoch_reg : 1
 
 verbose      : True
-log_interval : 100
+log_interval : 2
 save_step    : 1
 
 # testing
 
 testing_batch_size : 128
 test_epoch         : 30
-loader             : train
+loader             : test
 
 # attack
 
 attack_type       : pgd # fgsm # gn # pgd # deep_fool # cw
 std               : 1
 perturbation_type : linf # pgd only does Linf, deep_fool only does L2
-budget            : 0.2
-alpha             : 0.02
-max_iter          : 10
+budget            : 0.5
+alpha             : 0.01
+max_iter          : 40
 random_start      : True
 

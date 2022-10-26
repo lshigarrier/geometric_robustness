@@ -392,6 +392,17 @@ def training(param, device, train_loader, test_loader, model, reg_model, teacher
 # ---------------------------------------------------- Main ------------------------------------------------------------
 
 
+def train_loop():
+    print(f'Start training')
+    eta_list = [1e-4, 3e-4, 5e-4, 7e-4, 9e-4, 1e-3, 3e-3, 5e-3, 7e-3, 9e-3, 1e-2]
+    model_list = ['iso-4_1', 'iso-4_3', 'iso-4_5', 'iso-4_7', 'iso-4_9',
+                  'iso-3_1', 'iso-3_3', 'iso-3_5', 'iso-3_7', 'iso-3_9', 'iso-2_1']
+
+    for i in range(len(eta_list)):
+        param['name'] = 'isometry/' + model_list[i]
+        param['eta_max'] = eta_list[i]
+
+
 def main():
     # Detect anomaly in autograd
     torch.autograd.set_detect_anomaly(True)
@@ -451,7 +462,14 @@ def main():
     # Train model
     if param['train']:
         print(f'Start training')
-        _ = training(param, device, train_loader, test_loader, model, reg_model, teacher_model, optimizer, attack=attack)
+        eta_list = [1e-4, 3e-4, 5e-4, 7e-4, 9e-4, 1e-3, 3e-3, 5e-3, 7e-3, 9e-3, 1e-2]
+        model_list = ['iso-4_1', 'iso-4_3', 'iso-4_5', 'iso-4_7', 'iso-4_9',
+                      'iso-3_1', 'iso-3_3', 'iso-3_5', 'iso-3_7', 'iso-3_9', 'iso-2_1']
+
+        for i in range(len(eta_list)):
+            param['name'] = 'isometry/' + model_list[i]
+            param['eta_max'] = eta_list[i]
+            training(param, device, train_loader, test_loader, model, reg_model, teacher_model, optimizer, attack=attack)
 
     # Test model
     else:
@@ -474,7 +492,7 @@ def main():
         # Launch testing
         test(param, model, reg_model, device, loader, eta, attack)
 
-    plt.show()
+    # plt.show()
 
 
 if __name__ == '__main__':

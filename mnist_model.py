@@ -10,6 +10,9 @@ class IsometryReg(nn.Module):
         self.epsilon = epsilon
 
     def forward(self, data, output):
+        # Squared input dimension
+        n2 = data.shape[2]*data.shape[3]
+        print(n2)
         # Number of classes
         c = output.shape[1]
         m = c - 1
@@ -45,7 +48,7 @@ class IsometryReg(nn.Module):
         change = change / self.epsilon ** 2
 
         # Compute regularization term (alpha in docs)
-        reg = self.epsilon**2*torch.linalg.norm((jac - change).view(len(data), -1), dim=1)
+        reg = self.epsilon**2/n2*torch.linalg.norm((jac - change).view(len(data), -1), dim=1)
 
         # Return
         return reg.mean()

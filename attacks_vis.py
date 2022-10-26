@@ -162,10 +162,11 @@ def plot_curves(list1, list2, title, xlabel, ylabel):
     return fig
 
 
-def plot_robust_curves(budgets, base_data, robust_data, xlabel, ylabel):
+def plot_robust_curves(budgets, base_data, robust_data, adv_data, xlabel, ylabel):
     fig, ax = plt.subplots()
-    ax.plot(budgets, base_data, label='Baseline', marker='.', color='blue')
-    ax.plot(budgets, robust_data, label='Regularized', marker='.', color='green')
+    ax.plot(budgets, base_data, label='Baseline', marker='.', color='blue', linewidth=4, markersize=12, linestyle='dashed')
+    ax.plot(budgets, robust_data, label='Regularized', marker='.', color='green', linewidth=4, markersize=12, linestyle='solid')
+    ax.plot(budgets, adv_data, label='Adversarial training', marker='.', color='red', linewidth=4, markersize=12, linestyle='dotted')
     ax.set_xlabel(xlabel)
     ax.set_ylabel(ylabel)
     ax.legend()
@@ -173,9 +174,11 @@ def plot_robust_curves(budgets, base_data, robust_data, xlabel, ylabel):
 
 
 def main():
+    plt.rcParams.update({'font.size': 16})
     file0 = 'models/isometry/iso_8/budgets.txt'
     file1 = 'models/isometry/vanilla_2/robust_acc.txt'
     file2 = 'models/isometry/iso_8/robust_acc.txt'
+    file3 = 'models/isometry/adv_train/robust_acc.txt'
     budgets = np.loadtxt(file0)
     base_data = np.loadtxt(file1)
     base_data /= 100
@@ -183,7 +186,12 @@ def main():
     robust_data = np.loadtxt(file2)
     robust_data /= 100
     # robust_data = robust_data/robust_data[0]*10000
-    _ = plot_robust_curves(budgets, base_data, robust_data, 'Attack perturbation', 'Accuracy (%)')
+    adv_data = np.loadtxt(file3)
+    adv_data /= 100
+    # robust_data = robust_data/robust_data[0]*10000
+    _ = plot_robust_curves(budgets, base_data, robust_data, adv_data, 'Attack perturbation', 'Accuracy (%)')
+
+    '''
     file0 = 'models/isometry/iso_8/noises.txt'
     file1 = 'models/isometry/vanilla_2/noise_acc.txt'
     file2 = 'models/isometry/iso_8/noise_acc.txt'
@@ -195,6 +203,8 @@ def main():
     robust_data /= 100
     # robust_data = robust_data/robust_data[0]*10000
     __ = plot_robust_curves(budgets, base_data, robust_data, 'Standard deviation', 'Accuracy (%)')
+    '''
+
     plt.show()
 
 
