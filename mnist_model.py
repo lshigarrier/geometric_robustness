@@ -131,7 +131,8 @@ class Lenet(nn.Module):
         self.fc1 = nn.Linear(9216, param['hidden'])
         self.fc2 = nn.Linear(param['hidden'], 10)
 
-    def forward(self, x):
+    def forward(self, x, perform_softmax = True):
+        x = x.float()
         x = self.conv1(x)
         x = F.relu(x)
         x = self.conv2(x)
@@ -142,9 +143,14 @@ class Lenet(nn.Module):
         x = self.fc1(x)
         x = F.relu(x)
         x = self.dropout2(x)
-        x = self.fc2(x)
-        output = F.log_softmax(x, dim=1)
-        return output
+        logits = self.fc2(x)
+
+        if perform_softmax:
+            softmax_output = F.log_softmax(logits, dim=1)
+            return softmax_output
+
+        else:
+            return logits
 
 
 class LogitLenet(nn.Module):

@@ -1,7 +1,6 @@
 import torch
 import torch.nn.functional as F
-from torchattacks import GN, PGD, DeepFool, CW
-
+from torchattacks import GN, FGSM, PGD, DeepFool, CW
 
 def fgsm_attack(image, epsilon, data_grad):
     """
@@ -161,6 +160,53 @@ class TorchAttackGaussianNoise:
         return adv_images
 
 
+class TorchAttackFGSM:
+    """
+    FGSM in the paper 'Explaining and harnessing adversarial examples'
+    [https://arxiv.org/abs/1412.6572]
+
+    Distance Measure : Linf
+
+    Arguments:
+        model (nn.Module): model to attack.
+        eps (float): maximum perturbation. (Default: 8/255)
+
+    Shape:
+        - images: :math:`(N, C, H, W)` where `N = number of batches`, `C = number of channels`,        `H = height` and `W = width`. It must have a range [0, 1].
+        - labels: :math:`(N)` where each value :math:`y_i` is :math:`0 \leq y_i \leq` `number of labels`.
+        - output: :math:`(N, C, H, W)`.
+    """
+
+    def __init__(self, 
+                        model,                    
+                        eps         = 8/255,
+                        return_type = 'float',
+                        ):
+
+        # Store variables internally
+        self.model       = model
+        self.eps         = eps
+        self.return_type = return_type
+
+        self.set_attacker()
+        
+    def set_attacker(self):
+
+        self.attacker = FGSM(
+                            model = self.model,
+                            eps   = self.eps
+                            )
+        self.attacker.set_return_type(type = self.return_type) # float returns [0-1], int returns [0-255]
+
+    def perturb(self, original_images, labels):
+        original_images = original_images.detach()
+        original_images.requires_grad = True
+        labels = labels.detach()
+        with torch.enable_grad():
+            adv_images = self.attacker(original_images, labels)
+        return adv_images
+
+
 class TorchAttackPGD:
     """
     ‘Towards Deep Learning Models Resistant to Adversarial Attacks’
@@ -215,6 +261,7 @@ class TorchAttackPGD:
         with torch.enable_grad():
             adv_images = self.attacker(original_images, labels)
         return adv_images
+
 
 class TorchAttackDeepFool:
     """

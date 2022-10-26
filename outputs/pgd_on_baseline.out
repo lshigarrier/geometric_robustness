@@ -1,0 +1,31 @@
+Using cuda
+Using testing batch size for test loader
+Using testing batch size for train loader
+Loading weights
+Loading weights onto teacher model
+Initialization done
+Start testing
+Using test loader
+Test: 0/10000 (0%)	Loss: 1.536356, Cross Entropy: 1.536356, Reg: 0.000000
+Elapsed time (s): 0.5449082851409912
+Memory usage (GB): 2.586200714111328
+Test: 1600/10000 (16%)	Loss: 0.000292, Cross Entropy: 0.000292, Reg: 0.000000
+Elapsed time (s): 4.6434245109558105
+Memory usage (GB): 2.586254119873047
+Test: 3200/10000 (32%)	Loss: 2.917078, Cross Entropy: 2.917078, Reg: 0.000000
+Elapsed time (s): 5.047345876693726
+Memory usage (GB): 2.586261749267578
+Test: 4800/10000 (48%)	Loss: 1.223686, Cross Entropy: 1.223686, Reg: 0.000000
+Elapsed time (s): 4.790297269821167
+Memory usage (GB): 2.5863075256347656
+Test: 6400/10000 (64%)	Loss: 0.000039, Cross Entropy: 0.000039, Reg: 0.000000
+Elapsed time (s): 4.40626072883606
+Memory usage (GB): 2.5863075256347656
+Test: 8000/10000 (80%)	Loss: 1.227252, Cross Entropy: 1.227252, Reg: 0.000000
+Elapsed time (s): 4.6282877922058105
+Memory usage (GB): 2.5864334106445312
+Test: 9600/10000 (96%)	Loss: 0.212630, Cross Entropy: 0.212630, Reg: 0.000000
+Elapsed time (s): 4.550342082977295
+Memory usage (GB): 2.586498260498047
+Test set: Average loss: 0.2452, Average cross entropy: 0.2452, Average reg: 0.0000, Accuracy: 9612/10000 (96%), Robust accuracy: 1065/9612 (11%)
+
