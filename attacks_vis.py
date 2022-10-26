@@ -1,7 +1,37 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from mnist_utils import load_yaml
+import torch
 
+def plot_side_by_side(img, adv_img, pred, adv_pred, title, save_path):
+    
+    petrubation = adv_img - img
+
+    fig, (ax1, ax2, ax3) = plt.subplots(1, 3)
+    fig.suptitle(title, fontsize=14, y=0.95)
+
+    for ax in [ax1, ax2, ax3]:
+        ax.set_xticks([])
+        ax.set_yticks([])
+    
+    ax1.imshow(img.permute(1, 2, 0).cpu().detach(), cmap="gray")
+    ax1.set_title("Orginal")
+    ax1.set_xlabel("Prediction: " + str(pred.item()))
+
+
+    ax2.imshow(adv_img.permute(1, 2, 0).cpu().detach(), cmap="gray")
+    ax2.set_title("Adversarial")
+    ax2.set_xlabel("Prediction: " + str(adv_pred.item()))
+
+
+    ax3.imshow(petrubation.permute(1, 2, 0).cpu().detach(), cmap="gray")
+    ax3.set_title("Perturbation")
+
+    linf = round(torch.norm(petrubation, p=float('inf')).item(),2)
+    l2   = round(torch.norm(petrubation, p=2).item(),2)
+    ax3.set_xlabel("Linf: " + str(linf) + "  L2: " + str(l2))
+
+    fig.savefig(save_path)
 
 def plot_accuracy(epsilons, accuracies):
     fig, ax = plt.subplots()
