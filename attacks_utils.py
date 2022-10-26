@@ -3,7 +3,7 @@ import torch
 import torch.nn.functional as F
 import numpy as np
 from scipy.linalg import orth, eigh
-from torchattacks import DeepFool, CW
+from torchattacks import DeepFool, CW, FGSM, PGD
 
 def fgsm_attack(image, epsilon, data_grad):
     """
@@ -288,6 +288,97 @@ class FastGradientSignUntargeted:
 
         return x
 
+class TorchAttackFGSM:
+    """
+    FGSM in the paper 'Explaining and harnessing adversarial examples'
+    [https://arxiv.org/abs/1412.6572]
+
+    Distance Measure : Linf
+
+    Arguments:
+        model (nn.Module): model to attack.
+        eps (float): maximum perturbation. (Default: 8/255)
+
+    Shape:
+        - images: :math:`(N, C, H, W)` where `N = number of batches`, `C = number of channels`,        `H = height` and `W = width`. It must have a range [0, 1].
+        - labels: :math:`(N)` where each value :math:`y_i` is :math:`0 \leq y_i \leq` `number of labels`.
+        - output: :math:`(N, C, H, W)`.
+    """
+
+    def __init__(self, 
+                        model,                    
+                        eps         =   8/255,     
+                        return_type = 'float', 
+                        ):
+
+        # Store variables internally
+        self.model          = model
+        self.eps      = eps
+        self.return_type    = return_type
+
+        self.set_attacker()
+        
+    def set_attacker(self):
+
+        self.attacker = FGSM(
+                                        model           = self.model, 
+                                        eps           = self.eps
+                                        )
+        self.attacker.set_return_type(type = self.return_type) # float returns [0-1], int returns [0-255]
+
+    def perturb(self, original_images, labels):
+        original_images = original_images.detach()
+        labels = labels.detach()
+        return self.attacker(original_images, labels)
+
+class TorchAttackPGD:
+    """
+    PGD in the paper 'Towards Deep Learning Models Resistant to Adversarial Attacks'
+    [https://arxiv.org/abs/1706.06083]
+
+    Distance Measure : Linf
+
+    Arguments:
+        model (nn.Module): model to attack.
+        eps (float): maximum perturbation. (Default: 8/255)
+        alpha (float): step size. (Default: 2/255)
+        steps (int): number of steps. (Default: 10)
+        random_start (bool): using random initialization of delta. (Default: True)
+
+    Shape:
+        - images: :math:`(N, C, H, W)` where `N = number of batches`, `C = number of channels`,        `H = height` and `W = width`. It must have a range [0, 1].
+        - labels: :math:`(N)` where each value :math:`y_i` is :math:`0 \leq y_i \leq` `number of labels`.
+        - output: :math:`(N, C, H, W)`.
+    """
+    def __init__(self, model, eps=8/255,
+                 alpha=2/255, steps=10, random_start=True, return_type = "float"):
+
+        # Store variables internally
+        self.model          = model
+        self.eps            = eps
+        self.alpha          = alpha
+        self.steps          = steps
+        self.random_start   = random_start
+        self.return_type    = return_type
+
+        self.set_attacker()
+        
+    def set_attacker(self):
+
+        self.attacker = PGD(
+                            model   = self.model, 
+                            eps     = self.eps,
+                            alpha   = self.alpha, 
+                            steps   = self.steps, 
+                            random_start = self.random_start
+                            )
+        self.attacker.set_return_type(type = self.return_type) # float returns [0-1], int returns [0-255]
+
+    def perturb(self, original_images, labels):
+        original_images = original_images.detach()
+        labels = labels.detach()
+        return self.attacker(original_images, labels)
+
 
 class TorchAttackDeepFool:
     """
@@ -335,7 +426,6 @@ class TorchAttackDeepFool:
         original_images = original_images.detach()
         labels = labels.detach()
         return self.attacker(original_images, labels)
-
 
 class TorchAttackCWL2:
     """
