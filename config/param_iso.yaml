@@ -1,14 +1,18 @@
 name  : kyles_TEMP # iso_6 # vanilla | iso_1 | iso_2 | iso_3 | iso_4 | iso_5 | iso_6
-model : baseline.pt # baseline.pt # adv_train.pt
+model : parseval.pt # baseline.pt # adv_train.pt
 seed  : 1
 
-train       : False
-gpu_number  : "6"
-load        : True
-adv_train   : False
-adv_test    : True
-reg         : False
-jacobian    : False
+train           : True
+gpu_number      : "7"
+load            : False
+adv_train       : False
+adv_test        : False
+parseval_train  : True
+
+distill         : False
+distill_temp    : 20
+reg             : False
+jacobian        : False
 
 # model
 
@@ -22,14 +26,10 @@ input_shape : (1, 28, 28)
 num_classes : 10
 
 # training
-
 epochs          : 10
-batch_size      : 16
-test_batch_size : 16
+batch_size      : 128
+test_batch_size : 128
 learning_rate   : 0.01
-
-distill : True
-distill_temp : 20
 
 # e.g., eps_inf = 0.3 => eps_l2 = sqrt(784)*eps_inf = 28*0.3 = 8.4
 epsilon_l2 : 10
@@ -42,12 +42,12 @@ save_step     : 1
 
 # testing
 
-testing_batch_size  : 16
+testing_batch_size  : 128
 test_epoch          : 30
 loader              : test
 
 # attack
-attack_type       : pgd # deep_fool # cw # 
+attack_type       : fgsm # deep_fool # cw # 
 perturbation_type : linf # deep_fool only does L2
 budget            : 0.15
 alpha             : 0.01

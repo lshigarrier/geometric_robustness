@@ -13,7 +13,7 @@ from mnist_model import SoftLeNet, LogitLenet, Lenet
 from mnist_utils import load_yaml
 from attacks_utils import FastGradientSignUntargeted, TorchAttackDeepFool, TorchAttackCWL2, TorchAttackFGSM, TorchAttackPGD
 from attacks_vis import plot_side_by_side
-
+from defense_utils import parseval_orthonormal_constraint
 # ------------------------------------------ Isometric Regularization --------------------------------------------------
 
 
@@ -164,6 +164,10 @@ def train(param, model, device, train_loader, optimizer, epoch, lmbda, teacher_m
 
         # Update model parameters
         optimizer.step()
+
+        # Parseval Tight Constraint
+        if param['parseval_train']:
+            model = parseval_orthonormal_constraint(model)
 
         # Update running totals
         epoch_loss      += loss.item()*len(data)

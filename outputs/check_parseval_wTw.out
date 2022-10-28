@@ -1,0 +1,10 @@
+Regular
+conv1.weight tensor([[17.1515]])
+conv2.weight tensor([[27.4376]])
+fc1.weight tensor([[53.0763]])
+fc2.weight tensor([[10.5972]])
+Parseval
+conv1.weight tensor([[4.6154]])
+conv2.weight tensor([[4.8177]])
+fc1.weight tensor([[6.0781]])
+fc2.weight tensor([[4.6576]])
