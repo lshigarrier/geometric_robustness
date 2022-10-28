@@ -11,6 +11,7 @@ adv_test   : True
 distill    : False
 reg        : False
 loop       : False
+plot       : False
 
 # model
 

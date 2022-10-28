@@ -32,7 +32,7 @@ class IsometryReg(nn.Module):
             grad_output[:, i] = 1
             jac[i] = torch.autograd.grad(new_output, data, grad_outputs=grad_output, retain_graph=True)[0]
         jac = torch.transpose(jac, dim0=0, dim1=1)
-        jac = jac.view(jac.shape[0], jac.shape[1], -1)
+        jac = jac.contiguous().view(jac.shape[0], jac.shape[1], -1)
 
         # Gram matrix of Jacobian
         jac = torch.bmm(jac, torch.transpose(jac, 1, 2))
@@ -51,7 +51,7 @@ class IsometryReg(nn.Module):
         change = change / self.epsilon ** 2
 
         # Compute regularization term (alpha in docs)
-        reg = self.epsilon**2/n2*torch.linalg.norm((jac - change).view(len(data), -1), dim=1)
+        reg = self.epsilon**2/n2*torch.linalg.norm((jac - change).contiguous().view(len(data), -1), dim=1)
 
         # Return
         return reg.mean()
@@ -86,7 +86,7 @@ class JacobianReg(nn.Module):
             grad_output[:, i] = 1
             jac[i] = torch.autograd.grad(new_output, data, grad_outputs=grad_output, retain_graph=True)[0]
         jac = torch.transpose(jac, dim0=0, dim1=1)
-        jac = jac.view(jac.shape[0], -1)
+        jac = jac.contiguous().view(jac.shape[0], -1)
 
         # Compute delta and rho
         delta = torch.sqrt(output/c).sum(dim=1)

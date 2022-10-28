@@ -202,7 +202,7 @@ def test(param, model, reg_model, device, test_loader, eta, attack=None):
                 adv_data = attack.perturb(data[correct_mask], target[correct_mask])
                 ## For testing purposes
                 # assert not torch.isnan(adv_data).any()
-                diff_tensor = adv_data.view(adv_data.shape[0], -1) - data[correct_mask].view(adv_data.shape[0], -1)
+                diff_tensor = adv_data.contiguous().view(adv_data.shape[0], -1) - data[correct_mask].contiguous().view(adv_data.shape[0], -1)
                 # print(f'Mean linf norm: {torch.max(torch.abs(diff_tensor), dim=1)[0].mean()}')
                 min_norm = torch.max(torch.abs(diff_tensor), dim=1)[0].min()
                 print(f'Min Linf norm: {min_norm}')
@@ -379,7 +379,7 @@ def training(param, device, train_loader, test_loader, model, reg_model, teacher
         test_entropy_list.append(test_entropy)
         test_reg_list.append(test_reg)
 
-    if not param['loop']:
+    if param['plot']:
         # Display plot
         fig1 = plot_curves(loss_list, test_loss_list, "Loss function", "Epoch", "Loss")
         fig2 = plot_curves(entropy_list, test_entropy_list, "Cross Entropy", "Epoch", "Cross entropy")
@@ -474,7 +474,7 @@ def one_train_or_test(param):
         # Launch testing
         test(param, model, reg_model, device, loader, eta, attack)
 
-    if not param['loop']:
+    if param['plot']:
         plt.show()
 
 
