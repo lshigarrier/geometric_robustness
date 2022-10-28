@@ -1,6 +1,6 @@
 import torch
 import torch.nn.functional as F
-from torchattacks import GN, FGSM, PGD, DeepFool, CW
+from torchattacks import GN, FGSM, PGD, PGDL2, DeepFool, CW
 
 def fgsm_attack(image, epsilon, data_grad):
     """
@@ -143,6 +143,7 @@ class TorchAttackGaussianNoise:
         self.model = model
         self.std   = std
         self.return_type = return_type
+        self.attacker = None
 
         self.set_attacker()
 
@@ -187,6 +188,7 @@ class TorchAttackFGSM:
         self.model       = model
         self.eps         = eps
         self.return_type = return_type
+        self.attacker = None
 
         self.set_attacker()
         
@@ -241,11 +243,69 @@ class TorchAttackPGD:
         self.steps        = steps
         self.random_start = random_start
         self.return_type = return_type
+        self.attacker = None
 
         self.set_attacker()
 
     def set_attacker(self):
         self.attacker = PGD(
+                            model = self.model,
+                            eps   = self.eps,
+                            alpha = self.alpha,
+                            steps = self.steps,
+                            random_start = self.random_start
+        )
+        self.attacker.set_return_type(type=self.return_type)  # float returns [0-1], int returns [0-255]
+
+    def perturb(self, original_images, labels):
+        original_images = original_images.detach()
+        original_images.requires_grad = True
+        labels = labels.detach()
+        with torch.enable_grad():
+            adv_images = self.attacker(original_images, labels)
+        return adv_images
+
+
+class TorchAttackPGDL2:
+    """
+    ‘Towards Deep Learning Models Resistant to Adversarial Attacks’
+    [https://arxiv.org/abs/1706.06083]
+
+    Distance Measure : Linf
+        Arguments:
+        model (nn.Module): model to attack.
+        eps (float): maximum perturbation (Default: 0.2)
+        alpha (float): step size (Default: 0.01)
+        steps (int): number of steps. (Default: 40)
+        random_start (bool): using random initialization (Default: False)
+        return_type (str): 'float' for [0,1] or 'int' for [0-255] (Default: 'float')
+    Shape:
+        - images: :math:`(N, C, H, W)` where `N = number of batches`, `C = number of channels`, `H = height` and `W = width`. MUST HAVE RANGE [0, 1]
+        - labels: :math:`(N)` where each value :math:`y_i` is :math:`0 \leq y_i \leq` `number of labels`.
+        - output: :math:`(N, C, H, W)`.
+    """
+
+    def __init__(self,
+                        model,
+                        eps   = 0.2,
+                        alpha = 0.01,
+                        steps = 40,
+                        random_start = False,
+                        return_type = 'float'
+                        ):
+        # Store variables internally
+        self.model        = model
+        self.eps          = eps
+        self.alpha        = alpha
+        self.steps        = steps
+        self.random_start = random_start
+        self.return_type = return_type
+        self.attacker = None
+
+        self.set_attacker()
+
+    def set_attacker(self):
+        self.attacker = PGDL2(
                             model = self.model,
                             eps   = self.eps,
                             alpha = self.alpha,
@@ -291,6 +351,7 @@ class TorchAttackDeepFool:
         self.overshoot      = overshoot
         self.max_iters      = max_iters
         self.return_type    = return_type
+        self.attacker = None
 
         self.set_attacker()
         
@@ -331,8 +392,8 @@ class TorchAttackCWL2:
         - labels: :math:`(N)` where each value :math:`y_i` is :math:`0 \leq y_i \leq` `number of labels`.
         - output: :math:`(N, C, H, W)`.
     Examples::
-        >>> attack = TorchAttackCWL2(model, c=1, kappa=0, steps=50, lr=0.01)
-        >>> adv_images = attack.perturb(images, labels)
+        >> attack = TorchAttackCWL2(model, c=1, kappa=0, steps=50, lr=0.01)
+        >> adv_images = attack.perturb(images, labels)
     .. note:: Binary search for c is NOT IMPLEMENTED methods in the paper due to time consuming.
     """
 
@@ -352,6 +413,7 @@ class TorchAttackCWL2:
         self.max_iters       = max_iters
         self.lr             = lr
         self.return_type    = return_type
+        self.attacker = None
 
         # Initialize
         self.set_attacker()

@@ -8,9 +8,9 @@ import os
 
 from torch.utils.data import DataLoader
 from torchvision import datasets, transforms
-from mnist_model import SoftLenet, LogitLenet, IsometryReg, JacobianReg
+from mnist_model import Lenet, IsometryReg, JacobianReg
 from mnist_utils import load_yaml
-from attacks_utils import FastGradientSignUntargeted, TorchAttackGaussianNoise, TorchAttackPGD, TorchAttackDeepFool, TorchAttackCWL2
+from attacks_utils import TorchAttackGaussianNoise, TorchAttackFGSM, TorchAttackPGD, TorchAttackPGDL2, TorchAttackDeepFool, TorchAttackCWL2
 from attacks_vis import plot_curves
 
 
@@ -63,7 +63,7 @@ def train(param, model, reg_model, teacher_model, device, train_loader, optimize
             # print("One Hot", label_onehot[0])
             # print(torch.sum(-label_onehot * F.log_softmax(outputs, -1), -1).mean())
 
-            soft_labels = F.softmax(teacher_model(data) / param["distill_temp"], -1)
+            soft_labels = F.softmax(teacher_model(data, perform_softmax=False) / param["distill_temp"], -1)
             # torch.log(output) or F.log_softmax(output, -1) ?
             entropy = torch.sum(-soft_labels * torch.log(output), -1).mean()
 
@@ -75,7 +75,7 @@ def train(param, model, reg_model, teacher_model, device, train_loader, optimize
 
         elif param['reg']:
             # Compute regularization term and cross entropy loss
-            reg     = reg_model(data, output)
+            reg     = reg_model(data, output, device)
             entropy = F.cross_entropy(output, target)
 
             # Loss with regularization
@@ -158,7 +158,7 @@ def test(param, model, reg_model, device, test_loader, eta, attack=None):
                     output = model(data)
 
                     # Compute regularization term and
-                    reg = reg_model(data, output)
+                    reg = reg_model(data, output, device)
 
                     # Compute cross entropy
                     entropy = F.cross_entropy(output, target)
@@ -303,7 +303,7 @@ def initialize(param, device):
     ## Load model
     # -------------------------------------------------------------- #
     # Initalize network class
-    model = SoftLenet(param).to(device)
+    model = Lenet(param).to(device)
 
     # Load parameters from file
     if param['load']:
@@ -325,7 +325,7 @@ def initialize(param, device):
     # Load teacher model
     if param['distill']:
         # Initalize network class
-        teacher_model = LogitLenet(param).to(device)
+        teacher_model = Lenet(param).to(device)
 
         print(f'Loading weights onto teacher model')
         teacher_model.load_state_dict(torch.load(f'models/{param["name"]}/{param["model"]}', map_location='cpu'))
@@ -379,45 +379,21 @@ def training(param, device, train_loader, test_loader, model, reg_model, teacher
         test_entropy_list.append(test_entropy)
         test_reg_list.append(test_reg)
 
-    # Display plot
-    fig1 = plot_curves(loss_list, test_loss_list, "Loss function", "Epoch", "Loss")
-    fig2 = plot_curves(entropy_list, test_entropy_list, "Cross Entropy", "Epoch", "Cross entropy")
-    fig3 = plot_curves(reg_list, test_reg_list, "Regularization", "Epoch", "Regularization")
+    if not param['loop']:
+        # Display plot
+        fig1 = plot_curves(loss_list, test_loss_list, "Loss function", "Epoch", "Loss")
+        fig2 = plot_curves(entropy_list, test_entropy_list, "Cross Entropy", "Epoch", "Cross entropy")
+        fig3 = plot_curves(reg_list, test_reg_list, "Regularization", "Epoch", "Regularization")
 
-    # Return
-    return fig1, fig2, fig3
-    # return 0
+        # Return
+        return fig1, fig2, fig3
+    return None
 
 
 # ---------------------------------------------------- Main ------------------------------------------------------------
 
 
-def train_loop():
-    # Detect anomaly in autograd
-    torch.autograd.set_detect_anomaly(True)
-
-    # Load configurations
-    param = load_yaml('config_geo_reg')
-
-    # Create config lists
-    eta_list = [1e-4, 3e-4, 5e-4, 7e-4, 9e-4, 1e-3, 3e-3, 5e-3, 7e-3, 9e-3, 1e-2]
-    model_list = ['iso-4_1', 'iso-4_3', 'iso-4_5', 'iso-4_7', 'iso-4_9',
-                  'iso-3_1', 'iso-3_3', 'iso-3_5', 'iso-3_7', 'iso-3_9', 'iso-2_1']
-
-    # Loop over configurations
-    for i in range(len(eta_list)):
-        param['name'] = 'isometry/' + model_list[i]
-        param['eta_max'] = eta_list[i]
-        main(param)
-
-
-def main(param):
-    # Detect anomaly in autograd
-    # torch.autograd.set_detect_anomaly(True)
-
-    # Load configurations
-    # param = load_yaml('config_geo_reg')
-
+def one_train_or_test(param):
     # Set random seed
     torch.manual_seed(param['seed'])
 
@@ -436,32 +412,37 @@ def main(param):
     attack = None
     if param['adv_test'] or param['adv_train']:
         if param["attack_type"] == "fgsm":
-            attack = FastGradientSignUntargeted(model,
-                                                epsilon      = param['budget'],
-                                                alpha        = param['alpha'],
-                                                min_val      = 0,
-                                                max_val      = 1,
-                                                max_iters    = param['max_iter'],
-                                                _type        = param['perturbation_type'],
-                                                random_start = param['random_start'],
-                                                _loss        = 'cross_entropy')
+            attack = TorchAttackFGSM(model = model,
+                                     eps   = param['budget'])
 
         elif param['attack_type'] == 'gn':
             attack = TorchAttackGaussianNoise(model = model,
-                                              std   = param['std'])
+                                              std   = param['budget'])
 
         elif param['attack_type'] == "pgd":
-            attack = TorchAttackPGD(model        = model,
-                                    eps          = param['budget'],
-                                    alpha        = param['alpha'],
-                                    steps        = param['max_iter'],
-                                    random_start = param['random_start'])
+            if param['perturbation_type'] == 'linf':
+                attack = TorchAttackPGD(model        = model,
+                                        eps          = param['budget'],
+                                        alpha        = param['alpha'],
+                                        steps        = param['max_iter'],
+                                        random_start = param['random_start'])
+            elif param['perturbation_type'] == 'l2':
+                attack = TorchAttackPGDL2(model        = model,
+                                          eps          = param['budget'],
+                                          alpha        = param['alpha'],
+                                          steps        = param['max_iter'],
+                                          random_start = param['random_start'])
+            else:
+                print("Invalid perturbation_type in config file, please use 'linf' or 'l2'")
+                exit()
 
         elif param['attack_type'] == "deep_fool":
-            attack = TorchAttackDeepFool(model=model)
+            attack = TorchAttackDeepFool(model     = model,
+                                         max_iters = param['max_iter'])
 
         elif param['attack_type'] == "cw":
-            attack = TorchAttackCWL2(model=model)
+            attack = TorchAttackCWL2(model     = model,
+                                     max_iters = param['max_iter'])
 
         else:
             print("Invalid attack_type in config file, please use 'fgsm' or add a new class in attacks_utils....")
@@ -493,8 +474,34 @@ def main(param):
         # Launch testing
         test(param, model, reg_model, device, loader, eta, attack)
 
-    # plt.show()
+    if not param['loop']:
+        plt.show()
+
+
+def main():
+    # Detect anomaly in autograd
+    torch.autograd.set_detect_anomaly(True)
+
+    # Load configurations
+    param = load_yaml('config_geo_reg')
+
+    if param['loop']:
+        # Create config lists
+        eta_list = []
+        # eta_list = [1e-4, 3e-4, 5e-4, 7e-4, 9e-4, 1e-3, 3e-3, 5e-3, 7e-3, 9e-3, 1e-2]
+        # model_list = ['iso-4_1', 'iso-4_3', 'iso-4_5', 'iso-4_7', 'iso-4_9',
+        #              'iso-3_1', 'iso-3_3', 'iso-3_5', 'iso-3_7', 'iso-3_9', 'iso-2_1']
+
+        # Loop over configurations
+        for i in range(len(eta_list)):
+            # param['name'] = 'isometry/' + model_list[i]
+            # param['eta_max'] = eta_list[i]
+            # print(param['name'])
+            one_train_or_test(param)
+
+    else:
+        one_train_or_test(param)
 
 
 if __name__ == '__main__':
-    train_loop()
+    main()
