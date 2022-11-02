@@ -205,36 +205,26 @@ def plot_robust_curves(budgets, base_data, robust_data, adv_data, xlabel, ylabel
 
 def main():
     plt.rcParams.update({'font.size': 16})
-    file0 = 'models/isometry/iso_8/budgets.txt'
-    file1 = 'models/isometry/vanilla_2/robust_acc.txt'
-    file2 = 'models/isometry/iso_8/robust_acc.txt'
-    file3 = 'models/isometry/adv_train/robust_acc.txt'
+
+    file0 = 'outputs/icassp/budgets.txt'
+    file1 = 'outputs/icassp/vanilla_2_robust_acc.txt'
+    file2 = 'outputs/icassp/iso_8_robust_acc.txt'
+    file3 = 'outputs/icassp/adv_train_robust_acc.txt'
+
     budgets = np.loadtxt(file0)
     base_data = np.loadtxt(file1)
     base_data /= 100
     # base_data = base_data/base_data[0]*10000
+
     robust_data = np.loadtxt(file2)
     robust_data /= 100
     # robust_data = robust_data/robust_data[0]*10000
+
     adv_data = np.loadtxt(file3)
     adv_data /= 100
     # robust_data = robust_data/robust_data[0]*10000
+
     _ = plot_robust_curves(budgets, base_data, robust_data, adv_data, 'Attack perturbation', 'Accuracy (%)')
-
-    '''
-    file0 = 'models/isometry/iso_8/noises.txt'
-    file1 = 'models/isometry/vanilla_2/noise_acc.txt'
-    file2 = 'models/isometry/iso_8/noise_acc.txt'
-    budgets = np.loadtxt(file0)
-    base_data = np.loadtxt(file1)
-    base_data /= 100
-    # base_data = base_data/base_data[0]*10000
-    robust_data = np.loadtxt(file2)
-    robust_data /= 100
-    # robust_data = robust_data/robust_data[0]*10000
-    __ = plot_robust_curves(budgets, base_data, robust_data, 'Standard deviation', 'Accuracy (%)')
-    '''
-
     plt.show()
 
 

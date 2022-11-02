@@ -1,0 +1,4284 @@
+name  : isometry/adv_train # isometry/kyles_TEMP
+model : 00030.pt # baseline.pt # fgsm_adv_train.pt # 00030.pt
+reg_type : isometry # isometry # jacobian
+gpu_number : None
+seed  : 1
+
+train      : False
+load       : True
+adv_train  : False
+adv_test   : True
+distill    : False
+reg        : False
+
+# model
+
+channels1 : 32
+channels2 : 64
+hidden    : 128
+
+# data
+
+input_shape : (1, 28, 28)
+num_classes : 10
+
+# training
+
+epochs          : 30
+batch_size      : 64
+test_batch_size : 64
+learning_rate   : 0.001
+
+distill_temp : 20
+
+# eps_inf = 0.3 => eps_l2 = sqrt(784)*eps_inf = 28*0.3 = 8.4
+# eps_inf = 0.2 => eps_l2 = sqrt(784)*eps_inf = 28*0.2 = 5.6
+epsilon   : 5.6
+eta_min   : 0.0000001
+eta_max   : 0.000001
+epoch_reg : 2
+
+verbose      : True
+log_interval : 2
+save_step    : 1
+
+# testing
+
+testing_batch_size : 128
+test_epoch         : 30
+loader             : test
+
+# attack
+
+attack_type       : pgd # fgsm # gn # pgd # deep_fool # cw
+std               : 1
+perturbation_type : linf # pgd only does Linf, deep_fool only does L2
+budget            : 0.025
+alpha             : 0.01
+max_iter          : 40
+random_start      : True
+
+
+
+------------------------------------------------------------------------------------------------------
+
+
+### epoch 30
+
+## test
+
+# budget : 0.025
+
+Using cpu
+Using testing batch size for test loader
+Using testing batch size for train loader
+Loading weights
+Initialization done
+Start testing
+Using test loader
+Min Linf norm: 0.024763647466897964
+Test: 0/10000 (0%)	Loss: 1.476760, Cross Entropy: 1.476760, Reg: 0.000000
+Elapsed time (s): 7.193711996078491
+Memory usage (GB): 0.41710662841796875
+Min Linf norm: 0.024842718616127968
+Min Linf norm: 0.024781960994005203
+Test: 256/10000 (3%)	Loss: 1.484563, Cross Entropy: 1.484563, Reg: 0.000000
+Elapsed time (s): 16.53324270248413
+Memory usage (GB): 0.4784355163574219
+Min Linf norm: 0.024866104125976562
+Min Linf norm: 0.024776870384812355
+Test: 512/10000 (5%)	Loss: 1.468970, Cross Entropy: 1.468970, Reg: 0.000000
+Elapsed time (s): 15.482505798339844
+Memory usage (GB): 0.496795654296875
+Min Linf norm: 0.02487284503877163
+Min Linf norm: 0.024698076769709587
+Test: 768/10000 (8%)	Loss: 1.476781, Cross Entropy: 1.476781, Reg: 0.000000
+Elapsed time (s): 16.534043550491333
+Memory usage (GB): 0.496185302734375
+Min Linf norm: 0.024762451648712158
+Min Linf norm: 0.024817410856485367
+Test: 1024/10000 (10%)	Loss: 1.491720, Cross Entropy: 1.491720, Reg: 0.000000
+Elapsed time (s): 15.02918529510498
+Memory usage (GB): 0.4793586730957031
+Min Linf norm: 0.024900466203689575
+Min Linf norm: 0.024778906255960464
+Test: 1280/10000 (13%)	Loss: 1.476040, Cross Entropy: 1.476040, Reg: 0.000000
+Elapsed time (s): 16.120848894119263
+Memory usage (GB): 0.5245399475097656
+Min Linf norm: 0.024739686399698257
+Min Linf norm: 0.02474128268659115
+Test: 1536/10000 (15%)	Loss: 1.469192, Cross Entropy: 1.469192, Reg: 0.000000
+Elapsed time (s): 16.321779012680054
+Memory usage (GB): 0.5247917175292969
+Min Linf norm: 0.024777069687843323
+Min Linf norm: 0.024796539917588234
+Test: 1792/10000 (18%)	Loss: 1.468975, Cross Entropy: 1.468975, Reg: 0.000000
+Elapsed time (s): 15.85085678100586
+Memory usage (GB): 0.5242385864257812
+Min Linf norm: 0.024895021691918373
+Min Linf norm: 0.02474018931388855
+Test: 2048/10000 (20%)	Loss: 1.515355, Cross Entropy: 1.515355, Reg: 0.000000
+Elapsed time (s): 17.558990240097046
+Memory usage (GB): 0.5122528076171875
+Min Linf norm: 0.024697870016098022
+Min Linf norm: 0.024753157049417496
+Test: 2304/10000 (23%)	Loss: 1.480077, Cross Entropy: 1.480077, Reg: 0.000000
+Elapsed time (s): 19.05909490585327
+Memory usage (GB): 0.5306777954101562
+Min Linf norm: 0.0248407069593668
+Min Linf norm: 0.024820804595947266
+Test: 2560/10000 (25%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 17.678348064422607
+Memory usage (GB): 0.5312767028808594
+Min Linf norm: 0.02481081523001194
+Min Linf norm: 0.02479303441941738
+Test: 2816/10000 (28%)	Loss: 1.492358, Cross Entropy: 1.492358, Reg: 0.000000
+Elapsed time (s): 17.854632139205933
+Memory usage (GB): 0.523773193359375
+Min Linf norm: 0.02484762668609619
+Min Linf norm: 0.024740030989050865
+Test: 3072/10000 (30%)	Loss: 1.468972, Cross Entropy: 1.468972, Reg: 0.000000
+Elapsed time (s): 17.159191846847534
+Memory usage (GB): 0.5243682861328125
+Min Linf norm: 0.02473309636116028
+Min Linf norm: 0.02488437294960022
+Test: 3328/10000 (33%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 17.75693106651306
+Memory usage (GB): 0.5140762329101562
+Min Linf norm: 0.024759678170084953
+Min Linf norm: 0.024806324392557144
+Test: 3584/10000 (35%)	Loss: 1.468797, Cross Entropy: 1.468797, Reg: 0.000000
+Elapsed time (s): 18.279263734817505
+Memory usage (GB): 0.5246124267578125
+Min Linf norm: 0.024655207991600037
+Min Linf norm: 0.024803007021546364
+Test: 3840/10000 (38%)	Loss: 1.476783, Cross Entropy: 1.476783, Reg: 0.000000
+Elapsed time (s): 16.603914737701416
+Memory usage (GB): 0.524017333984375
+Min Linf norm: 0.024681270122528076
+Min Linf norm: 0.024793118238449097
+Test: 4096/10000 (41%)	Loss: 1.468986, Cross Entropy: 1.468986, Reg: 0.000000
+Elapsed time (s): 18.175686597824097
+Memory usage (GB): 0.5242691040039062
+Min Linf norm: 0.024729132652282715
+Min Linf norm: 0.024867748841643333
+Test: 4352/10000 (43%)	Loss: 1.483675, Cross Entropy: 1.483675, Reg: 0.000000
+Elapsed time (s): 16.651968479156494
+Memory usage (GB): 0.5305213928222656
+Min Linf norm: 0.024843811988830566
+Min Linf norm: 0.02482028305530548
+Test: 4608/10000 (46%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 17.558666944503784
+Memory usage (GB): 0.5138473510742188
+Min Linf norm: 0.024538684636354446
+Min Linf norm: 0.02479488216340542
+Test: 4864/10000 (48%)	Loss: 1.466520, Cross Entropy: 1.466520, Reg: 0.000000
+Elapsed time (s): 19.424317359924316
+Memory usage (GB): 0.5141372680664062
+Min Linf norm: 0.02465101145207882
+Min Linf norm: 0.02446693740785122
+Test: 5120/10000 (51%)	Loss: 1.463296, Cross Entropy: 1.463296, Reg: 0.000000
+Elapsed time (s): 20.00839328765869
+Memory usage (GB): 0.5140228271484375
+Min Linf norm: 0.024759411811828613
+Min Linf norm: 0.024648070335388184
+Test: 5376/10000 (53%)	Loss: 1.462325, Cross Entropy: 1.462325, Reg: 0.000000
+Elapsed time (s): 20.21013116836548
+Memory usage (GB): 0.5141754150390625
+Min Linf norm: 0.02483499050140381
+Min Linf norm: 0.024665331467986107
+Test: 5632/10000 (56%)	Loss: 1.461169, Cross Entropy: 1.461169, Reg: 0.000000
+Elapsed time (s): 18.48666787147522
+Memory usage (GB): 0.5140609741210938
+Min Linf norm: 0.02482113055884838
+Min Linf norm: 0.02477077580988407
+Test: 5888/10000 (58%)	Loss: 1.480827, Cross Entropy: 1.480827, Reg: 0.000000
+Elapsed time (s): 22.30914855003357
+Memory usage (GB): 0.5239715576171875
+Min Linf norm: 0.024717053398489952
+Min Linf norm: 0.024759620428085327
+Test: 6144/10000 (61%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 20.993722438812256
+Memory usage (GB): 0.5141067504882812
+Min Linf norm: 0.02480459213256836
+Min Linf norm: 0.02475232444703579
+Test: 6400/10000 (63%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 18.40385627746582
+Memory usage (GB): 0.5139923095703125
+Min Linf norm: 0.024867990985512733
+Min Linf norm: 0.024842241778969765
+Test: 6656/10000 (66%)	Loss: 1.469098, Cross Entropy: 1.469098, Reg: 0.000000
+Elapsed time (s): 17.15540337562561
+Memory usage (GB): 0.5241851806640625
+Min Linf norm: 0.02460336685180664
+Min Linf norm: 0.024727392941713333
+Test: 6912/10000 (68%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 21.026975631713867
+Memory usage (GB): 0.5140953063964844
+Min Linf norm: 0.024779831990599632
+Min Linf norm: 0.024842560291290283
+Test: 7168/10000 (71%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 19.21601939201355
+Memory usage (GB): 0.5244674682617188
+Min Linf norm: 0.024730613455176353
+Min Linf norm: 0.024738071486353874
+Test: 7424/10000 (73%)	Loss: 1.461161, Cross Entropy: 1.461161, Reg: 0.000000
+Elapsed time (s): 19.278673887252808
+Memory usage (GB): 0.4792747497558594
+Min Linf norm: 0.024875879287719727
+Min Linf norm: 0.024820346385240555
+Test: 7680/10000 (76%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 20.194059133529663
+Memory usage (GB): 0.5141258239746094
+Min Linf norm: 0.02485072612762451
+Min Linf norm: 0.024784302338957787
+Test: 7936/10000 (78%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 19.720978021621704
+Memory usage (GB): 0.5143585205078125
+Min Linf norm: 0.02460259199142456
+Min Linf norm: 0.024783819913864136
+Test: 8192/10000 (81%)	Loss: 1.461159, Cross Entropy: 1.461159, Reg: 0.000000
+Elapsed time (s): 17.333354949951172
+Memory usage (GB): 0.5141181945800781
+Min Linf norm: 0.024738609790802002
+Min Linf norm: 0.024851812049746513
+Test: 8448/10000 (84%)	Loss: 1.468981, Cross Entropy: 1.468981, Reg: 0.000000
+Elapsed time (s): 18.68411684036255
+Memory usage (GB): 0.5137901306152344
+Min Linf norm: 0.024762166664004326
+Min Linf norm: 0.024688808247447014
+Test: 8704/10000 (86%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 21.43459153175354
+Memory usage (GB): 0.51385498046875
+Min Linf norm: 0.02469027414917946
+Min Linf norm: 0.02474045753479004
+Test: 8960/10000 (89%)	Loss: 1.484604, Cross Entropy: 1.484604, Reg: 0.000000
+Elapsed time (s): 21.930333614349365
+Memory usage (GB): 0.5134696960449219
+Min Linf norm: 0.024675806984305382
+Min Linf norm: 0.02475227415561676
+Test: 9216/10000 (91%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 20.070847511291504
+Memory usage (GB): 0.5137290954589844
+Min Linf norm: 0.024733800441026688
+Min Linf norm: 0.024878432974219322
+Test: 9472/10000 (94%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 20.831351041793823
+Memory usage (GB): 0.5141067504882812
+Min Linf norm: 0.02474808692932129
+Min Linf norm: 0.024889765307307243
+Test: 9728/10000 (96%)	Loss: 1.500129, Cross Entropy: 1.500129, Reg: 0.000000
+Elapsed time (s): 16.536228895187378
+Memory usage (GB): 0.540283203125
+Min Linf norm: 0.0246735867112875
+Min Linf norm: 0.024925291538238525
+Test: 1248/10000 (99%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 11.13987684249878
+Memory usage (GB): 0.4964599609375
+Test set: Average loss: 1.4728, Average cross entropy: 1.4728, Average reg: 0.0000, Accuracy: 9883/10000 (99%), Robust accuracy: 9863/9883 (100%)
+
+
+# budget : 0.05
+
+Using cpu
+Using testing batch size for test loader
+Using testing batch size for train loader
+Loading weights
+Initialization done
+Start testing
+Using test loader
+Min Linf norm: 0.04952729493379593
+Test: 0/10000 (0%)	Loss: 1.476760, Cross Entropy: 1.476760, Reg: 0.000000
+Elapsed time (s): 6.954231023788452
+Memory usage (GB): 0.471771240234375
+Min Linf norm: 0.049685437232255936
+Min Linf norm: 0.049563921988010406
+Test: 256/10000 (3%)	Loss: 1.484563, Cross Entropy: 1.484563, Reg: 0.000000
+Elapsed time (s): 17.490994453430176
+Memory usage (GB): 0.4820671081542969
+Min Linf norm: 0.049732208251953125
+Min Linf norm: 0.04955374076962471
+Test: 512/10000 (5%)	Loss: 1.468970, Cross Entropy: 1.468970, Reg: 0.000000
+Elapsed time (s): 16.222257614135742
+Memory usage (GB): 0.46517181396484375
+Min Linf norm: 0.04974569007754326
+Min Linf norm: 0.049396153539419174
+Test: 768/10000 (8%)	Loss: 1.476781, Cross Entropy: 1.476781, Reg: 0.000000
+Elapsed time (s): 16.856056928634644
+Memory usage (GB): 0.4651756286621094
+Min Linf norm: 0.04952484369277954
+Min Linf norm: 0.049634821712970734
+Test: 1024/10000 (10%)	Loss: 1.491720, Cross Entropy: 1.491720, Reg: 0.000000
+Elapsed time (s): 15.00199580192566
+Memory usage (GB): 0.5097694396972656
+Min Linf norm: 0.04980090260505676
+Min Linf norm: 0.04955781251192093
+Test: 1280/10000 (13%)	Loss: 1.476040, Cross Entropy: 1.476040, Reg: 0.000000
+Elapsed time (s): 15.876641988754272
+Memory usage (GB): 0.5276412963867188
+Min Linf norm: 0.049479372799396515
+Min Linf norm: 0.0494825653731823
+Test: 1536/10000 (15%)	Loss: 1.469192, Cross Entropy: 1.469192, Reg: 0.000000
+Elapsed time (s): 14.544676542282104
+Memory usage (GB): 0.5345802307128906
+Min Linf norm: 0.049554139375686646
+Min Linf norm: 0.04959307983517647
+Test: 1792/10000 (18%)	Loss: 1.468975, Cross Entropy: 1.468975, Reg: 0.000000
+Elapsed time (s): 15.229878664016724
+Memory usage (GB): 0.5169792175292969
+Min Linf norm: 0.049790043383836746
+Min Linf norm: 0.0494803786277771
+Test: 2048/10000 (20%)	Loss: 1.515355, Cross Entropy: 1.515355, Reg: 0.000000
+Elapsed time (s): 16.282652378082275
+Memory usage (GB): 0.50006103515625
+Min Linf norm: 0.049395740032196045
+Min Linf norm: 0.04950631409883499
+Test: 2304/10000 (23%)	Loss: 1.480077, Cross Entropy: 1.480077, Reg: 0.000000
+Elapsed time (s): 18.106568813323975
+Memory usage (GB): 0.5345497131347656
+Min Linf norm: 0.0496814139187336
+Min Linf norm: 0.049614157527685165
+Test: 2560/10000 (25%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 15.21025800704956
+Memory usage (GB): 0.5346717834472656
+Min Linf norm: 0.04962163046002388
+Min Linf norm: 0.04958606883883476
+Test: 2816/10000 (28%)	Loss: 1.492358, Cross Entropy: 1.492358, Reg: 0.000000
+Elapsed time (s): 16.42343831062317
+Memory usage (GB): 0.5282058715820312
+Min Linf norm: 0.0496322326362133
+Min Linf norm: 0.04948006197810173
+Test: 3072/10000 (30%)	Loss: 1.468972, Cross Entropy: 1.468972, Reg: 0.000000
+Elapsed time (s): 15.866004943847656
+Memory usage (GB): 0.5455741882324219
+Min Linf norm: 0.04946616291999817
+Min Linf norm: 0.04976874589920044
+Test: 3328/10000 (33%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 15.910811424255371
+Memory usage (GB): 0.5455741882324219
+Min Linf norm: 0.04951935634016991
+Min Linf norm: 0.04961264878511429
+Test: 3584/10000 (35%)	Loss: 1.468797, Cross Entropy: 1.468797, Reg: 0.000000
+Elapsed time (s): 17.808656215667725
+Memory usage (GB): 0.5455741882324219
+Min Linf norm: 0.04931043088436127
+Min Linf norm: 0.04960601404309273
+Test: 3840/10000 (38%)	Loss: 1.476783, Cross Entropy: 1.476783, Reg: 0.000000
+Elapsed time (s): 15.897863626480103
+Memory usage (GB): 0.5455741882324219
+Min Linf norm: 0.04936254024505615
+Min Linf norm: 0.049586206674575806
+Test: 4096/10000 (41%)	Loss: 1.468986, Cross Entropy: 1.468986, Reg: 0.000000
+Elapsed time (s): 16.609866619110107
+Memory usage (GB): 0.5455741882324219
+Min Linf norm: 0.04945826530456543
+Min Linf norm: 0.04973549768328667
+Test: 4352/10000 (43%)	Loss: 1.483675, Cross Entropy: 1.483675, Reg: 0.000000
+Elapsed time (s): 16.57310461997986
+Memory usage (GB): 0.5455741882324219
+Min Linf norm: 0.04979027435183525
+Min Linf norm: 0.04964056611061096
+Test: 4608/10000 (46%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 15.049758434295654
+Memory usage (GB): 0.5624427795410156
+Min Linf norm: 0.04907736927270889
+Min Linf norm: 0.04958976432681084
+Test: 4864/10000 (48%)	Loss: 1.466520, Cross Entropy: 1.466520, Reg: 0.000000
+Elapsed time (s): 15.186257600784302
+Memory usage (GB): 0.5624427795410156
+Min Linf norm: 0.04930202290415764
+Min Linf norm: 0.04893387481570244
+Test: 5120/10000 (51%)	Loss: 1.463296, Cross Entropy: 1.463296, Reg: 0.000000
+Elapsed time (s): 18.310523748397827
+Memory usage (GB): 0.5455436706542969
+Min Linf norm: 0.04951882362365723
+Min Linf norm: 0.049569785594940186
+Test: 5376/10000 (53%)	Loss: 1.462325, Cross Entropy: 1.462325, Reg: 0.000000
+Elapsed time (s): 21.115591764450073
+Memory usage (GB): 0.5452690124511719
+Min Linf norm: 0.04966998100280762
+Min Linf norm: 0.049330662935972214
+Test: 5632/10000 (56%)	Loss: 1.461169, Cross Entropy: 1.461169, Reg: 0.000000
+Elapsed time (s): 15.829204320907593
+Memory usage (GB): 0.5283584594726562
+Min Linf norm: 0.04964226111769676
+Min Linf norm: 0.04954155161976814
+Test: 5888/10000 (58%)	Loss: 1.480827, Cross Entropy: 1.480827, Reg: 0.000000
+Elapsed time (s): 17.57998037338257
+Memory usage (GB): 0.5452003479003906
+Min Linf norm: 0.049434106796979904
+Min Linf norm: 0.049519240856170654
+Test: 6144/10000 (61%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 18.41751527786255
+Memory usage (GB): 0.5280609130859375
+Min Linf norm: 0.04960918426513672
+Min Linf norm: 0.04950464889407158
+Test: 6400/10000 (63%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 18.104004621505737
+Memory usage (GB): 0.5454597473144531
+Min Linf norm: 0.04973598197102547
+Min Linf norm: 0.04968448355793953
+Test: 6656/10000 (66%)	Loss: 1.469098, Cross Entropy: 1.469098, Reg: 0.000000
+Elapsed time (s): 16.523699283599854
+Memory usage (GB): 0.5631370544433594
+Min Linf norm: 0.04920673370361328
+Min Linf norm: 0.049454785883426666
+Test: 6912/10000 (68%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 18.525973081588745
+Memory usage (GB): 0.545623779296875
+Min Linf norm: 0.049559663981199265
+Min Linf norm: 0.049685120582580566
+Test: 7168/10000 (71%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 16.16218066215515
+Memory usage (GB): 0.5456008911132812
+Min Linf norm: 0.04946122691035271
+Min Linf norm: 0.04947614297270775
+Test: 7424/10000 (73%)	Loss: 1.461161, Cross Entropy: 1.461161, Reg: 0.000000
+Elapsed time (s): 16.918382167816162
+Memory usage (GB): 0.5451889038085938
+Min Linf norm: 0.04975181818008423
+Min Linf norm: 0.04964069277048111
+Test: 7680/10000 (76%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 17.72755479812622
+Memory usage (GB): 0.5284156799316406
+Min Linf norm: 0.04970139265060425
+Min Linf norm: 0.049568600952625275
+Test: 7936/10000 (78%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 16.77437114715576
+Memory usage (GB): 0.5454864501953125
+Min Linf norm: 0.04920518398284912
+Min Linf norm: 0.04956766963005066
+Test: 8192/10000 (81%)	Loss: 1.461159, Cross Entropy: 1.461159, Reg: 0.000000
+Elapsed time (s): 15.022238969802856
+Memory usage (GB): 0.5280647277832031
+Min Linf norm: 0.049477219581604004
+Min Linf norm: 0.04970362409949303
+Test: 8448/10000 (84%)	Loss: 1.468981, Cross Entropy: 1.468981, Reg: 0.000000
+Elapsed time (s): 16.353097677230835
+Memory usage (GB): 0.545684814453125
+Min Linf norm: 0.04952433332800865
+Min Linf norm: 0.04937761649489403
+Test: 8704/10000 (86%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 17.78308391571045
+Memory usage (GB): 0.5453872680664062
+Min Linf norm: 0.04938054829835892
+Min Linf norm: 0.04948091506958008
+Test: 8960/10000 (89%)	Loss: 1.484604, Cross Entropy: 1.484604, Reg: 0.000000
+Elapsed time (s): 18.181148290634155
+Memory usage (GB): 0.5453872680664062
+Min Linf norm: 0.04963197931647301
+Min Linf norm: 0.04950454831123352
+Test: 9216/10000 (91%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 16.991801500320435
+Memory usage (GB): 0.5454292297363281
+Min Linf norm: 0.049467600882053375
+Min Linf norm: 0.049756865948438644
+Test: 9472/10000 (94%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 17.112533807754517
+Memory usage (GB): 0.5454673767089844
+Min Linf norm: 0.04949617385864258
+Min Linf norm: 0.049721140414476395
+Test: 9728/10000 (96%)	Loss: 1.500129, Cross Entropy: 1.500129, Reg: 0.000000
+Elapsed time (s): 13.903579950332642
+Memory usage (GB): 0.5618324279785156
+Min Linf norm: 0.049347173422575
+Min Linf norm: 0.04985058307647705
+Test: 1248/10000 (99%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 9.012766599655151
+Memory usage (GB): 0.5459709167480469
+Test set: Average loss: 1.4728, Average cross entropy: 1.4728, Average reg: 0.0000, Accuracy: 9883/10000 (99%), Robust accuracy: 9833/9883 (99%)
+
+
+# budget : 0.075
+
+Using cpu
+Using testing batch size for test loader
+Using testing batch size for train loader
+Loading weights
+Initialization done
+Start testing
+Using test loader
+Min Linf norm: 0.07429094612598419
+Test: 0/10000 (0%)	Loss: 1.476760, Cross Entropy: 1.476760, Reg: 0.000000
+Elapsed time (s): 7.637955665588379
+Memory usage (GB): 0.47635650634765625
+Min Linf norm: 0.07452815771102905
+Min Linf norm: 0.07434588670730591
+Test: 256/10000 (3%)	Loss: 1.484563, Cross Entropy: 1.484563, Reg: 0.000000
+Elapsed time (s): 17.410056352615356
+Memory usage (GB): 0.5042076110839844
+Min Linf norm: 0.07459831237792969
+Min Linf norm: 0.07433061301708221
+Test: 512/10000 (5%)	Loss: 1.468970, Cross Entropy: 1.468970, Reg: 0.000000
+Elapsed time (s): 14.63542127609253
+Memory usage (GB): 0.4870414733886719
+Min Linf norm: 0.07461854070425034
+Min Linf norm: 0.07409422844648361
+Test: 768/10000 (8%)	Loss: 1.476781, Cross Entropy: 1.476781, Reg: 0.000000
+Elapsed time (s): 16.15199589729309
+Memory usage (GB): 0.5051918029785156
+Min Linf norm: 0.0742872953414917
+Min Linf norm: 0.0744522362947464
+Test: 1024/10000 (10%)	Loss: 1.491720, Cross Entropy: 1.491720, Reg: 0.000000
+Elapsed time (s): 14.438221454620361
+Memory usage (GB): 0.5043487548828125
+Min Linf norm: 0.07470136880874634
+Min Linf norm: 0.07433672249317169
+Test: 1280/10000 (13%)	Loss: 1.476040, Cross Entropy: 1.476040, Reg: 0.000000
+Elapsed time (s): 15.474470138549805
+Memory usage (GB): 0.5049324035644531
+Min Linf norm: 0.07421906292438507
+Min Linf norm: 0.07422385364770889
+Test: 1536/10000 (15%)	Loss: 1.469192, Cross Entropy: 1.469192, Reg: 0.000000
+Elapsed time (s): 14.432582139968872
+Memory usage (GB): 0.5222396850585938
+Min Linf norm: 0.07433120906352997
+Min Linf norm: 0.07438962161540985
+Test: 1792/10000 (18%)	Loss: 1.468975, Cross Entropy: 1.468975, Reg: 0.000000
+Elapsed time (s): 13.725939750671387
+Memory usage (GB): 0.5224266052246094
+Min Linf norm: 0.07468506693840027
+Min Linf norm: 0.07422056794166565
+Test: 2048/10000 (20%)	Loss: 1.515355, Cross Entropy: 1.515355, Reg: 0.000000
+Elapsed time (s): 15.062842607498169
+Memory usage (GB): 0.5041885375976562
+Min Linf norm: 0.07409361004829407
+Min Linf norm: 0.07425947487354279
+Test: 2304/10000 (23%)	Loss: 1.480077, Cross Entropy: 1.480077, Reg: 0.000000
+Elapsed time (s): 16.2354896068573
+Memory usage (GB): 0.5230293273925781
+Min Linf norm: 0.07452212274074554
+Min Linf norm: 0.0744212344288826
+Test: 2560/10000 (25%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 14.304025888442993
+Memory usage (GB): 0.48738861083984375
+Min Linf norm: 0.07443244755268097
+Min Linf norm: 0.07437910884618759
+Test: 2816/10000 (28%)	Loss: 1.492358, Cross Entropy: 1.492358, Reg: 0.000000
+Elapsed time (s): 14.740108251571655
+Memory usage (GB): 0.5233306884765625
+Min Linf norm: 0.0744483545422554
+Min Linf norm: 0.07422009855508804
+Test: 3072/10000 (30%)	Loss: 1.468972, Cross Entropy: 1.468972, Reg: 0.000000
+Elapsed time (s): 16.367053508758545
+Memory usage (GB): 0.5222549438476562
+Min Linf norm: 0.07419925928115845
+Min Linf norm: 0.07465311884880066
+Test: 3328/10000 (33%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 15.781549453735352
+Memory usage (GB): 0.5401344299316406
+Min Linf norm: 0.07427903264760971
+Min Linf norm: 0.07441897690296173
+Test: 3584/10000 (35%)	Loss: 1.468797, Cross Entropy: 1.468797, Reg: 0.000000
+Elapsed time (s): 17.142266035079956
+Memory usage (GB): 0.5222511291503906
+Min Linf norm: 0.0739656537771225
+Min Linf norm: 0.07440902292728424
+Test: 3840/10000 (38%)	Loss: 1.476783, Cross Entropy: 1.476783, Reg: 0.000000
+Elapsed time (s): 17.028141021728516
+Memory usage (GB): 0.5224876403808594
+Min Linf norm: 0.07404375076293945
+Min Linf norm: 0.07437929511070251
+Test: 4096/10000 (41%)	Loss: 1.468986, Cross Entropy: 1.468986, Reg: 0.000000
+Elapsed time (s): 16.808732748031616
+Memory usage (GB): 0.5226287841796875
+Min Linf norm: 0.07418739795684814
+Min Linf norm: 0.07411637902259827
+Test: 4352/10000 (43%)	Loss: 1.483675, Cross Entropy: 1.483675, Reg: 0.000000
+Elapsed time (s): 17.77025532722473
+Memory usage (GB): 0.5219955444335938
+Min Linf norm: 0.07468541711568832
+Min Linf norm: 0.07446084916591644
+Test: 4608/10000 (46%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 16.22380518913269
+Memory usage (GB): 0.5224151611328125
+Min Linf norm: 0.07361605763435364
+Min Linf norm: 0.0743846520781517
+Test: 4864/10000 (48%)	Loss: 1.466520, Cross Entropy: 1.466520, Reg: 0.000000
+Elapsed time (s): 15.527029752731323
+Memory usage (GB): 0.5224761962890625
+Min Linf norm: 0.0739530399441719
+Min Linf norm: 0.0734008178114891
+Test: 5120/10000 (51%)	Loss: 1.463296, Cross Entropy: 1.463296, Reg: 0.000000
+Elapsed time (s): 18.860936164855957
+Memory usage (GB): 0.4880790710449219
+Min Linf norm: 0.07427823543548584
+Min Linf norm: 0.07435464859008789
+Test: 5376/10000 (53%)	Loss: 1.462325, Cross Entropy: 1.462325, Reg: 0.000000
+Elapsed time (s): 20.866167783737183
+Memory usage (GB): 0.5225486755371094
+Min Linf norm: 0.07450497150421143
+Min Linf norm: 0.07399599999189377
+Test: 5632/10000 (56%)	Loss: 1.461169, Cross Entropy: 1.461169, Reg: 0.000000
+Elapsed time (s): 14.628926038742065
+Memory usage (GB): 0.5225028991699219
+Min Linf norm: 0.0744633898139
+Min Linf norm: 0.07431232929229736
+Test: 5888/10000 (58%)	Loss: 1.480827, Cross Entropy: 1.480827, Reg: 0.000000
+Elapsed time (s): 15.49784255027771
+Memory usage (GB): 0.52142333984375
+Min Linf norm: 0.0741511657834053
+Min Linf norm: 0.07427886128425598
+Test: 6144/10000 (61%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 16.42704939842224
+Memory usage (GB): 0.48805999755859375
+Min Linf norm: 0.07441377639770508
+Min Linf norm: 0.07425697892904282
+Test: 6400/10000 (63%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 15.338870763778687
+Memory usage (GB): 0.487823486328125
+Min Linf norm: 0.07460397481918335
+Min Linf norm: 0.07452672719955444
+Test: 6656/10000 (66%)	Loss: 1.469098, Cross Entropy: 1.469098, Reg: 0.000000
+Elapsed time (s): 14.414451837539673
+Memory usage (GB): 0.5224418640136719
+Min Linf norm: 0.0738101601600647
+Min Linf norm: 0.0741821825504303
+Test: 6912/10000 (68%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 16.610575437545776
+Memory usage (GB): 0.5056610107421875
+Min Linf norm: 0.07433950155973434
+Min Linf norm: 0.07452766597270966
+Test: 7168/10000 (71%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 15.521944284439087
+Memory usage (GB): 0.5400848388671875
+Min Linf norm: 0.07419184595346451
+Min Linf norm: 0.07421421259641647
+Test: 7424/10000 (73%)	Loss: 1.461161, Cross Entropy: 1.461161, Reg: 0.000000
+Elapsed time (s): 16.019527912139893
+Memory usage (GB): 0.5054130554199219
+Min Linf norm: 0.07462769746780396
+Min Linf norm: 0.07446104288101196
+Test: 7680/10000 (76%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 16.970943689346313
+Memory usage (GB): 0.5055274963378906
+Min Linf norm: 0.07455211877822876
+Min Linf norm: 0.07435290515422821
+Test: 7936/10000 (78%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 15.599244356155396
+Memory usage (GB): 0.5056304931640625
+Min Linf norm: 0.07380780577659607
+Min Linf norm: 0.0743514895439148
+Test: 8192/10000 (81%)	Loss: 1.461159, Cross Entropy: 1.461159, Reg: 0.000000
+Elapsed time (s): 14.28345799446106
+Memory usage (GB): 0.5227088928222656
+Min Linf norm: 0.074215829372406
+Min Linf norm: 0.07455543428659439
+Test: 8448/10000 (84%)	Loss: 1.468981, Cross Entropy: 1.468981, Reg: 0.000000
+Elapsed time (s): 15.464353084564209
+Memory usage (GB): 0.5225639343261719
+Min Linf norm: 0.07428649812936783
+Min Linf norm: 0.07406642287969589
+Test: 8704/10000 (86%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 16.49545168876648
+Memory usage (GB): 0.4878959655761719
+Min Linf norm: 0.07407082617282867
+Min Linf norm: 0.07422137260437012
+Test: 8960/10000 (89%)	Loss: 1.484604, Cross Entropy: 1.484604, Reg: 0.000000
+Elapsed time (s): 17.210304975509644
+Memory usage (GB): 0.5219497680664062
+Min Linf norm: 0.07444796711206436
+Min Linf norm: 0.07425682246685028
+Test: 9216/10000 (91%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 15.931313514709473
+Memory usage (GB): 0.5582122802734375
+Min Linf norm: 0.07420140504837036
+Min Linf norm: 0.07463530451059341
+Test: 9472/10000 (94%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 15.89024543762207
+Memory usage (GB): 0.5578193664550781
+Min Linf norm: 0.07424426078796387
+Min Linf norm: 0.07458171248435974
+Test: 9728/10000 (96%)	Loss: 1.500129, Cross Entropy: 1.500129, Reg: 0.000000
+Elapsed time (s): 12.854176044464111
+Memory usage (GB): 0.5724220275878906
+Min Linf norm: 0.07402076572179794
+Min Linf norm: 0.07477587461471558
+Test: 1248/10000 (99%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 8.627532720565796
+Memory usage (GB): 0.5568809509277344
+Test set: Average loss: 1.4728, Average cross entropy: 1.4728, Average reg: 0.0000, Accuracy: 9883/10000 (99%), Robust accuracy: 9792/9883 (99%)
+
+
+# budget : 0.1
+
+Using cpu
+Using testing batch size for test loader
+Using testing batch size for train loader
+Loading weights
+Initialization done
+Start testing
+Using test loader
+Min Linf norm: 0.09945818036794662
+Test: 0/10000 (0%)	Loss: 1.476760, Cross Entropy: 1.476760, Reg: 0.000000
+Elapsed time (s): 6.539758920669556
+Memory usage (GB): 0.4727058410644531
+Min Linf norm: 0.09937087446451187
+Min Linf norm: 0.09912784397602081
+Test: 256/10000 (3%)	Loss: 1.484563, Cross Entropy: 1.484563, Reg: 0.000000
+Elapsed time (s): 14.943264245986938
+Memory usage (GB): 0.4832496643066406
+Min Linf norm: 0.09946441650390625
+Min Linf norm: 0.09910748153924942
+Test: 512/10000 (5%)	Loss: 1.468970, Cross Entropy: 1.468970, Reg: 0.000000
+Elapsed time (s): 13.429320812225342
+Memory usage (GB): 0.46610260009765625
+Min Linf norm: 0.09949138015508652
+Min Linf norm: 0.09879230707883835
+Test: 768/10000 (8%)	Loss: 1.476781, Cross Entropy: 1.476781, Reg: 0.000000
+Elapsed time (s): 14.245543718338013
+Memory usage (GB): 0.4660987854003906
+Min Linf norm: 0.09904974699020386
+Min Linf norm: 0.09926964342594147
+Test: 1024/10000 (10%)	Loss: 1.491720, Cross Entropy: 1.491720, Reg: 0.000000
+Elapsed time (s): 12.479056119918823
+Memory usage (GB): 0.5109138488769531
+Min Linf norm: 0.09960183501243591
+Min Linf norm: 0.09911562502384186
+Test: 1280/10000 (13%)	Loss: 1.476040, Cross Entropy: 1.476040, Reg: 0.000000
+Elapsed time (s): 14.071996450424194
+Memory usage (GB): 0.528533935546875
+Min Linf norm: 0.09895874559879303
+Min Linf norm: 0.0989651307463646
+Test: 1536/10000 (15%)	Loss: 1.469192, Cross Entropy: 1.469192, Reg: 0.000000
+Elapsed time (s): 13.004144430160522
+Memory usage (GB): 0.5354728698730469
+Min Linf norm: 0.09910827875137329
+Min Linf norm: 0.09918615967035294
+Test: 1792/10000 (18%)	Loss: 1.468975, Cross Entropy: 1.468975, Reg: 0.000000
+Elapsed time (s): 12.513313055038452
+Memory usage (GB): 0.5181236267089844
+Min Linf norm: 0.09958008676767349
+Min Linf norm: 0.0989607572555542
+Test: 2048/10000 (20%)	Loss: 1.515355, Cross Entropy: 1.515355, Reg: 0.000000
+Elapsed time (s): 13.199863195419312
+Memory usage (GB): 0.5012054443359375
+Min Linf norm: 0.09879148006439209
+Min Linf norm: 0.09901262819766998
+Test: 2304/10000 (23%)	Loss: 1.480077, Cross Entropy: 1.480077, Reg: 0.000000
+Elapsed time (s): 13.606837511062622
+Memory usage (GB): 0.5359458923339844
+Min Linf norm: 0.0993628278374672
+Min Linf norm: 0.09865464270114899
+Test: 2560/10000 (25%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 12.523141384124756
+Memory usage (GB): 0.5353126525878906
+Min Linf norm: 0.09924326092004776
+Min Linf norm: 0.09917213767766953
+Test: 2816/10000 (28%)	Loss: 1.492358, Cross Entropy: 1.492358, Reg: 0.000000
+Elapsed time (s): 12.569266557693481
+Memory usage (GB): 0.5293502807617188
+Min Linf norm: 0.0992644652724266
+Min Linf norm: 0.09896012395620346
+Test: 3072/10000 (30%)	Loss: 1.468972, Cross Entropy: 1.468972, Reg: 0.000000
+Elapsed time (s): 13.665820598602295
+Memory usage (GB): 0.5462150573730469
+Min Linf norm: 0.09893235564231873
+Min Linf norm: 0.09953749179840088
+Test: 3328/10000 (33%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 13.030540943145752
+Memory usage (GB): 0.5462150573730469
+Min Linf norm: 0.09903871268033981
+Min Linf norm: 0.09896810352802277
+Test: 3584/10000 (35%)	Loss: 1.468797, Cross Entropy: 1.468797, Reg: 0.000000
+Elapsed time (s): 13.967002153396606
+Memory usage (GB): 0.5462150573730469
+Min Linf norm: 0.09862087666988373
+Min Linf norm: 0.09921202808618546
+Test: 3840/10000 (38%)	Loss: 1.476783, Cross Entropy: 1.476783, Reg: 0.000000
+Elapsed time (s): 13.463950395584106
+Memory usage (GB): 0.5462150573730469
+Min Linf norm: 0.09872502088546753
+Min Linf norm: 0.099172443151474
+Test: 4096/10000 (41%)	Loss: 1.468986, Cross Entropy: 1.468986, Reg: 0.000000
+Elapsed time (s): 14.428172826766968
+Memory usage (GB): 0.5462150573730469
+Min Linf norm: 0.09891653060913086
+Min Linf norm: 0.09882181882858276
+Test: 4352/10000 (43%)	Loss: 1.483675, Cross Entropy: 1.483675, Reg: 0.000000
+Elapsed time (s): 14.139349222183228
+Memory usage (GB): 0.5462150573730469
+Min Linf norm: 0.0995805487036705
+Min Linf norm: 0.09928113222122192
+Test: 4608/10000 (46%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 13.390980958938599
+Memory usage (GB): 0.5630836486816406
+Min Linf norm: 0.09815473854541779
+Min Linf norm: 0.09917952865362167
+Test: 4864/10000 (48%)	Loss: 1.466520, Cross Entropy: 1.466520, Reg: 0.000000
+Elapsed time (s): 13.063067197799683
+Memory usage (GB): 0.5632171630859375
+Min Linf norm: 0.09860404580831528
+Min Linf norm: 0.09786774963140488
+Test: 5120/10000 (51%)	Loss: 1.463296, Cross Entropy: 1.463296, Reg: 0.000000
+Elapsed time (s): 14.64044189453125
+Memory usage (GB): 0.5464057922363281
+Min Linf norm: 0.09864187240600586
+Min Linf norm: 0.09913957118988037
+Test: 5376/10000 (53%)	Loss: 1.462325, Cross Entropy: 1.462325, Reg: 0.000000
+Elapsed time (s): 17.40335726737976
+Memory usage (GB): 0.5470504760742188
+Min Linf norm: 0.09933990240097046
+Min Linf norm: 0.09866132587194443
+Test: 5632/10000 (56%)	Loss: 1.461169, Cross Entropy: 1.461169, Reg: 0.000000
+Elapsed time (s): 12.840202331542969
+Memory usage (GB): 0.5296134948730469
+Min Linf norm: 0.09928452223539352
+Min Linf norm: 0.09908310323953629
+Test: 5888/10000 (58%)	Loss: 1.480827, Cross Entropy: 1.480827, Reg: 0.000000
+Elapsed time (s): 14.229994058609009
+Memory usage (GB): 0.5469512939453125
+Min Linf norm: 0.09886821359395981
+Min Linf norm: 0.09903848171234131
+Test: 6144/10000 (61%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 15.157450675964355
+Memory usage (GB): 0.5298118591308594
+Min Linf norm: 0.09921830892562866
+Min Linf norm: 0.09900929778814316
+Test: 6400/10000 (63%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 14.537685632705688
+Memory usage (GB): 0.5467910766601562
+Min Linf norm: 0.09947196394205093
+Min Linf norm: 0.09936896711587906
+Test: 6656/10000 (66%)	Loss: 1.469098, Cross Entropy: 1.469098, Reg: 0.000000
+Elapsed time (s): 13.156004428863525
+Memory usage (GB): 0.5645866394042969
+Min Linf norm: 0.09816879034042358
+Min Linf norm: 0.09890957176685333
+Test: 6912/10000 (68%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 15.356476783752441
+Memory usage (GB): 0.5468406677246094
+Min Linf norm: 0.09911932796239853
+Min Linf norm: 0.09945061057806015
+Test: 7168/10000 (71%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 14.79071855545044
+Memory usage (GB): 0.54681396484375
+Min Linf norm: 0.09892245382070541
+Min Linf norm: 0.0989522859454155
+Test: 7424/10000 (73%)	Loss: 1.461161, Cross Entropy: 1.461161, Reg: 0.000000
+Elapsed time (s): 14.892970085144043
+Memory usage (GB): 0.546905517578125
+Min Linf norm: 0.09950357675552368
+Min Linf norm: 0.09928138554096222
+Test: 7680/10000 (76%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 15.943851232528687
+Memory usage (GB): 0.5296287536621094
+Min Linf norm: 0.0994027853012085
+Min Linf norm: 0.09913720190525055
+Test: 7936/10000 (78%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 14.418254137039185
+Memory usage (GB): 0.5466995239257812
+Min Linf norm: 0.09841039776802063
+Min Linf norm: 0.09913530945777893
+Test: 8192/10000 (81%)	Loss: 1.461159, Cross Entropy: 1.461159, Reg: 0.000000
+Elapsed time (s): 13.765233755111694
+Memory usage (GB): 0.5297813415527344
+Min Linf norm: 0.09895449876785278
+Min Linf norm: 0.09940724819898605
+Test: 8448/10000 (84%)	Loss: 1.468981, Cross Entropy: 1.468981, Reg: 0.000000
+Elapsed time (s): 14.464537143707275
+Memory usage (GB): 0.5466461181640625
+Min Linf norm: 0.0990486666560173
+Min Linf norm: 0.09875523298978806
+Test: 8704/10000 (86%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 15.106690883636475
+Memory usage (GB): 0.5468521118164062
+Min Linf norm: 0.09876109659671783
+Min Linf norm: 0.09896177053451538
+Test: 8960/10000 (89%)	Loss: 1.484604, Cross Entropy: 1.484604, Reg: 0.000000
+Elapsed time (s): 15.934125900268555
+Memory usage (GB): 0.5468521118164062
+Min Linf norm: 0.09926395863294601
+Min Linf norm: 0.09884475916624069
+Test: 9216/10000 (91%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 14.614887952804565
+Memory usage (GB): 0.5469398498535156
+Min Linf norm: 0.09893520176410675
+Min Linf norm: 0.09951373189687729
+Test: 9472/10000 (94%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 14.983546018600464
+Memory usage (GB): 0.5468406677246094
+Min Linf norm: 0.09899234771728516
+Min Linf norm: 0.09944228082895279
+Test: 9728/10000 (96%)	Loss: 1.500129, Cross Entropy: 1.500129, Reg: 0.000000
+Elapsed time (s): 12.250797748565674
+Memory usage (GB): 0.5632057189941406
+Min Linf norm: 0.09869434684515
+Min Linf norm: 0.0997011661529541
+Test: 1248/10000 (99%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 8.262080907821655
+Memory usage (GB): 0.5475311279296875
+Test set: Average loss: 1.4728, Average cross entropy: 1.4728, Average reg: 0.0000, Accuracy: 9883/10000 (99%), Robust accuracy: 9743/9883 (99%)
+
+
+# budget : 0.125
+
+Using cpu
+Using testing batch size for test loader
+Using testing batch size for train loader
+Loading weights
+Initialization done
+Start testing
+Using test loader
+Min Linf norm: 0.12432272732257843
+Test: 0/10000 (0%)	Loss: 1.476760, Cross Entropy: 1.476760, Reg: 0.000000
+Elapsed time (s): 6.321075439453125
+Memory usage (GB): 0.45705413818359375
+Min Linf norm: 0.12421359121799469
+Min Linf norm: 0.12390980124473572
+Test: 256/10000 (3%)	Loss: 1.484563, Cross Entropy: 1.484563, Reg: 0.000000
+Elapsed time (s): 13.806529760360718
+Memory usage (GB): 0.5444564819335938
+Min Linf norm: 0.12433052062988281
+Min Linf norm: 0.12388435006141663
+Test: 512/10000 (5%)	Loss: 1.468970, Cross Entropy: 1.468970, Reg: 0.000000
+Elapsed time (s): 12.472202062606812
+Memory usage (GB): 0.544708251953125
+Min Linf norm: 0.12433096766471863
+Min Linf norm: 0.12349037826061249
+Test: 768/10000 (8%)	Loss: 1.476781, Cross Entropy: 1.476781, Reg: 0.000000
+Elapsed time (s): 13.969924926757812
+Memory usage (GB): 0.544708251953125
+Min Linf norm: 0.12381213903427124
+Min Linf norm: 0.12408705055713654
+Test: 1024/10000 (10%)	Loss: 1.491720, Cross Entropy: 1.491720, Reg: 0.000000
+Elapsed time (s): 12.497328996658325
+Memory usage (GB): 0.544708251953125
+Min Linf norm: 0.1245022863149643
+Min Linf norm: 0.12389452755451202
+Test: 1280/10000 (13%)	Loss: 1.476040, Cross Entropy: 1.476040, Reg: 0.000000
+Elapsed time (s): 13.615542888641357
+Memory usage (GB): 0.5617523193359375
+Min Linf norm: 0.12369842827320099
+Min Linf norm: 0.12370641529560089
+Test: 1536/10000 (15%)	Loss: 1.469192, Cross Entropy: 1.469192, Reg: 0.000000
+Elapsed time (s): 12.913001298904419
+Memory usage (GB): 0.5618972778320312
+Min Linf norm: 0.12388534843921661
+Min Linf norm: 0.12398269772529602
+Test: 1792/10000 (18%)	Loss: 1.468975, Cross Entropy: 1.468975, Reg: 0.000000
+Elapsed time (s): 12.987163782119751
+Memory usage (GB): 0.5618972778320312
+Min Linf norm: 0.12447510659694672
+Min Linf norm: 0.12370094656944275
+Test: 2048/10000 (20%)	Loss: 1.515355, Cross Entropy: 1.515355, Reg: 0.000000
+Elapsed time (s): 13.013418436050415
+Memory usage (GB): 0.56182861328125
+Min Linf norm: 0.12348935008049011
+Min Linf norm: 0.12376578152179718
+Test: 2304/10000 (23%)	Loss: 1.480077, Cross Entropy: 1.480077, Reg: 0.000000
+Elapsed time (s): 13.473382472991943
+Memory usage (GB): 0.56182861328125
+Min Linf norm: 0.12420353293418884
+Min Linf norm: 0.12331829965114594
+Test: 2560/10000 (25%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 12.337801694869995
+Memory usage (GB): 0.56182861328125
+Min Linf norm: 0.12405407428741455
+Min Linf norm: 0.12396517395973206
+Test: 2816/10000 (28%)	Loss: 1.492358, Cross Entropy: 1.492358, Reg: 0.000000
+Elapsed time (s): 12.409504890441895
+Memory usage (GB): 0.5613822937011719
+Min Linf norm: 0.1240805834531784
+Min Linf norm: 0.12370015680789948
+Test: 3072/10000 (30%)	Loss: 1.468972, Cross Entropy: 1.468972, Reg: 0.000000
+Elapsed time (s): 13.337599277496338
+Memory usage (GB): 0.5447883605957031
+Min Linf norm: 0.12366542220115662
+Min Linf norm: 0.1244218647480011
+Test: 3328/10000 (33%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 12.916686296463013
+Memory usage (GB): 0.5623970031738281
+Min Linf norm: 0.12379838526248932
+Min Linf norm: 0.12371012568473816
+Test: 3584/10000 (35%)	Loss: 1.468797, Cross Entropy: 1.468797, Reg: 0.000000
+Elapsed time (s): 13.6730797290802
+Memory usage (GB): 0.5623970031738281
+Min Linf norm: 0.12327609956264496
+Min Linf norm: 0.12401503324508667
+Test: 3840/10000 (38%)	Loss: 1.476783, Cross Entropy: 1.476783, Reg: 0.000000
+Elapsed time (s): 12.844960927963257
+Memory usage (GB): 0.579620361328125
+Min Linf norm: 0.1234062910079956
+Min Linf norm: 0.12396553158760071
+Test: 4096/10000 (41%)	Loss: 1.468986, Cross Entropy: 1.468986, Reg: 0.000000
+Elapsed time (s): 14.25162959098816
+Memory usage (GB): 0.5798721313476562
+Min Linf norm: 0.12364566326141357
+Min Linf norm: 0.12352728843688965
+Test: 4352/10000 (43%)	Loss: 1.483675, Cross Entropy: 1.483675, Reg: 0.000000
+Elapsed time (s): 13.589131116867065
+Memory usage (GB): 0.5616683959960938
+Min Linf norm: 0.12447568774223328
+Min Linf norm: 0.1241014152765274
+Test: 4608/10000 (46%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 12.431651830673218
+Memory usage (GB): 0.5621719360351562
+Min Linf norm: 0.12269341945648193
+Min Linf norm: 0.12397441267967224
+Test: 4864/10000 (48%)	Loss: 1.466520, Cross Entropy: 1.466520, Reg: 0.000000
+Elapsed time (s): 12.56230878829956
+Memory usage (GB): 0.5621719360351562
+Min Linf norm: 0.12325505912303925
+Min Linf norm: 0.12233468890190125
+Test: 5120/10000 (51%)	Loss: 1.463296, Cross Entropy: 1.463296, Reg: 0.000000
+Elapsed time (s): 13.89789366722107
+Memory usage (GB): 0.5446128845214844
+Min Linf norm: 0.12330234050750732
+Min Linf norm: 0.12392443418502808
+Test: 5376/10000 (53%)	Loss: 1.462325, Cross Entropy: 1.462325, Reg: 0.000000
+Elapsed time (s): 16.209261894226074
+Memory usage (GB): 0.5449371337890625
+Min Linf norm: 0.12417489290237427
+Min Linf norm: 0.12332665920257568
+Test: 5632/10000 (56%)	Loss: 1.461169, Cross Entropy: 1.461169, Reg: 0.000000
+Elapsed time (s): 12.103166818618774
+Memory usage (GB): 0.5448036193847656
+Min Linf norm: 0.12410564720630646
+Min Linf norm: 0.12385387718677521
+Test: 5888/10000 (58%)	Loss: 1.480827, Cross Entropy: 1.480827, Reg: 0.000000
+Elapsed time (s): 13.36842393875122
+Memory usage (GB): 0.5615730285644531
+Min Linf norm: 0.12358526885509491
+Min Linf norm: 0.12379810214042664
+Test: 6144/10000 (61%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 14.466785907745361
+Memory usage (GB): 0.5449142456054688
+Min Linf norm: 0.12402290105819702
+Min Linf norm: 0.1237616240978241
+Test: 6400/10000 (63%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 14.290579557418823
+Memory usage (GB): 0.5448951721191406
+Min Linf norm: 0.12433995306491852
+Min Linf norm: 0.12421120703220367
+Test: 6656/10000 (66%)	Loss: 1.469098, Cross Entropy: 1.469098, Reg: 0.000000
+Elapsed time (s): 13.096475839614868
+Memory usage (GB): 0.5621795654296875
+Min Linf norm: 0.12271098792552948
+Min Linf norm: 0.12363696098327637
+Test: 6912/10000 (68%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 15.66591763496399
+Memory usage (GB): 0.544891357421875
+Min Linf norm: 0.12389916181564331
+Min Linf norm: 0.12425549328327179
+Test: 7168/10000 (71%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 14.634193181991577
+Memory usage (GB): 0.5622520446777344
+Min Linf norm: 0.12365306913852692
+Min Linf norm: 0.12369035184383392
+Test: 7424/10000 (73%)	Loss: 1.461161, Cross Entropy: 1.461161, Reg: 0.000000
+Elapsed time (s): 16.159233808517456
+Memory usage (GB): 0.5447807312011719
+Min Linf norm: 0.12437951564788818
+Min Linf norm: 0.12410172820091248
+Test: 7680/10000 (76%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 17.142571687698364
+Memory usage (GB): 0.54486083984375
+Min Linf norm: 0.12425351142883301
+Min Linf norm: 0.12392149865627289
+Test: 7936/10000 (78%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 14.900952816009521
+Memory usage (GB): 0.54498291015625
+Min Linf norm: 0.12301298975944519
+Min Linf norm: 0.12391915917396545
+Test: 8192/10000 (81%)	Loss: 1.461159, Cross Entropy: 1.461159, Reg: 0.000000
+Elapsed time (s): 14.331457614898682
+Memory usage (GB): 0.5448226928710938
+Min Linf norm: 0.12369310855865479
+Min Linf norm: 0.12425905466079712
+Test: 8448/10000 (84%)	Loss: 1.468981, Cross Entropy: 1.468981, Reg: 0.000000
+Elapsed time (s): 14.841236352920532
+Memory usage (GB): 0.5621910095214844
+Min Linf norm: 0.12381082773208618
+Min Linf norm: 0.12344403564929962
+Test: 8704/10000 (86%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 14.832396030426025
+Memory usage (GB): 0.5449371337890625
+Min Linf norm: 0.123451367020607
+Min Linf norm: 0.12370222806930542
+Test: 8960/10000 (89%)	Loss: 1.484604, Cross Entropy: 1.484604, Reg: 0.000000
+Elapsed time (s): 16.17686915397644
+Memory usage (GB): 0.5612297058105469
+Min Linf norm: 0.12407994270324707
+Min Linf norm: 0.12355594336986542
+Test: 9216/10000 (91%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 15.938154458999634
+Memory usage (GB): 0.5449180603027344
+Min Linf norm: 0.12366899847984314
+Min Linf norm: 0.12439216673374176
+Test: 9472/10000 (94%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 15.324227333068848
+Memory usage (GB): 0.5449333190917969
+Min Linf norm: 0.12374043464660645
+Min Linf norm: 0.12430284917354584
+Test: 9728/10000 (96%)	Loss: 1.500129, Cross Entropy: 1.500129, Reg: 0.000000
+Elapsed time (s): 11.70691466331482
+Memory usage (GB): 0.5610466003417969
+Min Linf norm: 0.12336793541908264
+Min Linf norm: 0.12462645769119263
+Test: 1248/10000 (99%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 7.921801328659058
+Memory usage (GB): 0.5450019836425781
+Test set: Average loss: 1.4728, Average cross entropy: 1.4728, Average reg: 0.0000, Accuracy: 9883/10000 (99%), Robust accuracy: 9686/9883 (98%)
+
+# budget : 0.15
+
+Using cpu
+Using testing batch size for test loader
+Using testing batch size for train loader
+Loading weights
+Initialization done
+Start testing
+Using test loader
+Min Linf norm: 0.14918728172779083
+Test: 0/10000 (0%)	Loss: 1.476760, Cross Entropy: 1.476760, Reg: 0.000000
+Elapsed time (s): 6.316375494003296
+Memory usage (GB): 0.42110443115234375
+Min Linf norm: 0.1490563154220581
+Min Linf norm: 0.14869177341461182
+Test: 256/10000 (3%)	Loss: 1.484563, Cross Entropy: 1.484563, Reg: 0.000000
+Elapsed time (s): 13.525648832321167
+Memory usage (GB): 0.4823951721191406
+Min Linf norm: 0.14919662475585938
+Min Linf norm: 0.14866122603416443
+Test: 512/10000 (5%)	Loss: 1.468970, Cross Entropy: 1.468970, Reg: 0.000000
+Elapsed time (s): 12.176939010620117
+Memory usage (GB): 0.5004234313964844
+Min Linf norm: 0.14919716119766235
+Min Linf norm: 0.14818845689296722
+Test: 768/10000 (8%)	Loss: 1.476781, Cross Entropy: 1.476781, Reg: 0.000000
+Elapsed time (s): 13.864641427993774
+Memory usage (GB): 0.4999351501464844
+Min Linf norm: 0.1485745906829834
+Min Linf norm: 0.1489044725894928
+Test: 1024/10000 (10%)	Loss: 1.491720, Cross Entropy: 1.491720, Reg: 0.000000
+Elapsed time (s): 13.486024379730225
+Memory usage (GB): 0.4827384948730469
+Min Linf norm: 0.14940275251865387
+Min Linf norm: 0.14867344498634338
+Test: 1280/10000 (13%)	Loss: 1.476040, Cross Entropy: 1.476040, Reg: 0.000000
+Elapsed time (s): 14.400078773498535
+Memory usage (GB): 0.5283737182617188
+Min Linf norm: 0.14843812584877014
+Min Linf norm: 0.14844770729541779
+Test: 1536/10000 (15%)	Loss: 1.469192, Cross Entropy: 1.469192, Reg: 0.000000
+Elapsed time (s): 14.86109185218811
+Memory usage (GB): 0.52862548828125
+Min Linf norm: 0.14866241812705994
+Min Linf norm: 0.14864279329776764
+Test: 1792/10000 (18%)	Loss: 1.468975, Cross Entropy: 1.468975, Reg: 0.000000
+Elapsed time (s): 13.210708618164062
+Memory usage (GB): 0.5278511047363281
+Min Linf norm: 0.14937013387680054
+Min Linf norm: 0.1484411358833313
+Test: 2048/10000 (20%)	Loss: 1.515355, Cross Entropy: 1.515355, Reg: 0.000000
+Elapsed time (s): 12.132040023803711
+Memory usage (GB): 0.5157508850097656
+Min Linf norm: 0.14818722009658813
+Min Linf norm: 0.14851894974708557
+Test: 2304/10000 (23%)	Loss: 1.480077, Cross Entropy: 1.480077, Reg: 0.000000
+Elapsed time (s): 12.525245666503906
+Memory usage (GB): 0.5345497131347656
+Min Linf norm: 0.1490442454814911
+Min Linf norm: 0.14798197150230408
+Test: 2560/10000 (25%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 12.894129276275635
+Memory usage (GB): 0.5346946716308594
+Min Linf norm: 0.14886489510536194
+Min Linf norm: 0.14875821769237518
+Test: 2816/10000 (28%)	Loss: 1.492358, Cross Entropy: 1.492358, Reg: 0.000000
+Elapsed time (s): 13.711130380630493
+Memory usage (GB): 0.5271873474121094
+Min Linf norm: 0.1488967090845108
+Min Linf norm: 0.1484401971101761
+Test: 3072/10000 (30%)	Loss: 1.468972, Cross Entropy: 1.468972, Reg: 0.000000
+Elapsed time (s): 14.568012714385986
+Memory usage (GB): 0.528045654296875
+Min Linf norm: 0.1483985185623169
+Min Linf norm: 0.14930623769760132
+Test: 3328/10000 (33%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 13.663105010986328
+Memory usage (GB): 0.5175094604492188
+Min Linf norm: 0.14855806529521942
+Min Linf norm: 0.14845216274261475
+Test: 3584/10000 (35%)	Loss: 1.468797, Cross Entropy: 1.468797, Reg: 0.000000
+Elapsed time (s): 13.644689798355103
+Memory usage (GB): 0.5282440185546875
+Min Linf norm: 0.1479313224554062
+Min Linf norm: 0.14881804585456848
+Test: 3840/10000 (38%)	Loss: 1.476783, Cross Entropy: 1.476783, Reg: 0.000000
+Elapsed time (s): 13.99946117401123
+Memory usage (GB): 0.5279617309570312
+Min Linf norm: 0.1480875015258789
+Min Linf norm: 0.14875862002372742
+Test: 4096/10000 (41%)	Loss: 1.468986, Cross Entropy: 1.468986, Reg: 0.000000
+Elapsed time (s): 14.19131326675415
+Memory usage (GB): 0.5282135009765625
+Min Linf norm: 0.1483747959136963
+Min Linf norm: 0.14823275804519653
+Test: 4352/10000 (43%)	Loss: 1.483675, Cross Entropy: 1.483675, Reg: 0.000000
+Elapsed time (s): 13.109636068344116
+Memory usage (GB): 0.5342025756835938
+Min Linf norm: 0.14937083423137665
+Min Linf norm: 0.14892169833183289
+Test: 4608/10000 (46%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 13.339802742004395
+Memory usage (GB): 0.5177192687988281
+Min Linf norm: 0.14723211526870728
+Min Linf norm: 0.1487693041563034
+Test: 4864/10000 (48%)	Loss: 1.466520, Cross Entropy: 1.466520, Reg: 0.000000
+Elapsed time (s): 12.836852550506592
+Memory usage (GB): 0.5176429748535156
+Min Linf norm: 0.1479060798883438
+Min Linf norm: 0.1468016356229782
+Test: 5120/10000 (51%)	Loss: 1.463296, Cross Entropy: 1.463296, Reg: 0.000000
+Elapsed time (s): 14.107807636260986
+Memory usage (GB): 0.51763916015625
+Min Linf norm: 0.1479628086090088
+Min Linf norm: 0.14870935678482056
+Test: 5376/10000 (53%)	Loss: 1.462325, Cross Entropy: 1.462325, Reg: 0.000000
+Elapsed time (s): 15.883155584335327
+Memory usage (GB): 0.5177345275878906
+Min Linf norm: 0.14900988340377808
+Min Linf norm: 0.14799199998378754
+Test: 5632/10000 (56%)	Loss: 1.461169, Cross Entropy: 1.461169, Reg: 0.000000
+Elapsed time (s): 12.18201208114624
+Memory usage (GB): 0.5179977416992188
+Min Linf norm: 0.1489267796278
+Min Linf norm: 0.14862465858459473
+Test: 5888/10000 (58%)	Loss: 1.480827, Cross Entropy: 1.480827, Reg: 0.000000
+Elapsed time (s): 12.95582389831543
+Memory usage (GB): 0.5277023315429688
+Min Linf norm: 0.1483023315668106
+Min Linf norm: 0.14855772256851196
+Test: 6144/10000 (61%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 14.87843656539917
+Memory usage (GB): 0.5178909301757812
+Min Linf norm: 0.14882749319076538
+Min Linf norm: 0.14851395785808563
+Test: 6400/10000 (63%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 14.56189513206482
+Memory usage (GB): 0.5179061889648438
+Min Linf norm: 0.1492079496383667
+Min Linf norm: 0.14871284365653992
+Test: 6656/10000 (66%)	Loss: 1.469098, Cross Entropy: 1.469098, Reg: 0.000000
+Elapsed time (s): 14.64840030670166
+Memory usage (GB): 0.5278816223144531
+Min Linf norm: 0.14725318551063538
+Min Linf norm: 0.1483643651008606
+Test: 6912/10000 (68%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 14.662179708480835
+Memory usage (GB): 0.5177001953125
+Min Linf norm: 0.1486790031194687
+Min Linf norm: 0.14910659193992615
+Test: 7168/10000 (71%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 13.62436819076538
+Memory usage (GB): 0.5280342102050781
+Min Linf norm: 0.14838369190692902
+Min Linf norm: 0.14842842519283295
+Test: 7424/10000 (73%)	Loss: 1.461161, Cross Entropy: 1.461161, Reg: 0.000000
+Elapsed time (s): 13.574480295181274
+Memory usage (GB): 0.4829864501953125
+Min Linf norm: 0.1492553949356079
+Min Linf norm: 0.14878857135772705
+Test: 7680/10000 (76%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 14.693094253540039
+Memory usage (GB): 0.5179214477539062
+Min Linf norm: 0.14910423755645752
+Min Linf norm: 0.14870581030845642
+Test: 7936/10000 (78%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 13.735664129257202
+Memory usage (GB): 0.51800537109375
+Min Linf norm: 0.14761561155319214
+Min Linf norm: 0.1487029492855072
+Test: 8192/10000 (81%)	Loss: 1.461159, Cross Entropy: 1.461159, Reg: 0.000000
+Elapsed time (s): 13.70201587677002
+Memory usage (GB): 0.5179290771484375
+Min Linf norm: 0.1484317183494568
+Min Linf norm: 0.14911086857318878
+Test: 8448/10000 (84%)	Loss: 1.468981, Cross Entropy: 1.468981, Reg: 0.000000
+Elapsed time (s): 15.746577501296997
+Memory usage (GB): 0.517425537109375
+Min Linf norm: 0.14857299625873566
+Min Linf norm: 0.14813284575939178
+Test: 8704/10000 (86%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 15.705406427383423
+Memory usage (GB): 0.5179252624511719
+Min Linf norm: 0.14814165234565735
+Min Linf norm: 0.14844268560409546
+Test: 8960/10000 (89%)	Loss: 1.484604, Cross Entropy: 1.484604, Reg: 0.000000
+Elapsed time (s): 16.789857387542725
+Memory usage (GB): 0.5171661376953125
+Min Linf norm: 0.14889593422412872
+Min Linf norm: 0.14826713502407074
+Test: 9216/10000 (91%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 15.049073934555054
+Memory usage (GB): 0.5178451538085938
+Min Linf norm: 0.14840281009674072
+Min Linf norm: 0.14927060902118683
+Test: 9472/10000 (94%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 14.523609638214111
+Memory usage (GB): 0.5179100036621094
+Min Linf norm: 0.14848852157592773
+Min Linf norm: 0.14916342496871948
+Test: 9728/10000 (96%)	Loss: 1.500129, Cross Entropy: 1.500129, Reg: 0.000000
+Elapsed time (s): 13.856884717941284
+Memory usage (GB): 0.5436897277832031
+Min Linf norm: 0.1480415314435959
+Min Linf norm: 0.14955174922943115
+Test: 1248/10000 (99%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 8.339111566543579
+Memory usage (GB): 0.4997367858886719
+Test set: Average loss: 1.4728, Average cross entropy: 1.4728, Average reg: 0.0000, Accuracy: 9883/10000 (99%), Robust accuracy: 9610/9883 (97%)
+
+
+# budget : 0.175
+
+Using cpu
+Using testing batch size for test loader
+Using testing batch size for train loader
+Loading weights
+Initialization done
+Start testing
+Using test loader
+Min Linf norm: 0.17405182123184204
+Test: 0/10000 (0%)	Loss: 1.476760, Cross Entropy: 1.476760, Reg: 0.000000
+Elapsed time (s): 5.899009704589844
+Memory usage (GB): 0.43878936767578125
+Min Linf norm: 0.17389902472496033
+Min Linf norm: 0.17347371578216553
+Test: 256/10000 (3%)	Loss: 1.484563, Cross Entropy: 1.484563, Reg: 0.000000
+Elapsed time (s): 12.669095039367676
+Memory usage (GB): 0.49718475341796875
+Min Linf norm: 0.17406266927719116
+Min Linf norm: 0.17343808710575104
+Test: 512/10000 (5%)	Loss: 1.468970, Cross Entropy: 1.468970, Reg: 0.000000
+Elapsed time (s): 12.548574209213257
+Memory usage (GB): 0.4871711730957031
+Min Linf norm: 0.17406335473060608
+Min Linf norm: 0.17288652062416077
+Test: 768/10000 (8%)	Loss: 1.476781, Cross Entropy: 1.476781, Reg: 0.000000
+Elapsed time (s): 13.520670652389526
+Memory usage (GB): 0.5037612915039062
+Min Linf norm: 0.17333698272705078
+Min Linf norm: 0.17372186481952667
+Test: 1024/10000 (10%)	Loss: 1.491720, Cross Entropy: 1.491720, Reg: 0.000000
+Elapsed time (s): 13.224857807159424
+Memory usage (GB): 0.5202445983886719
+Min Linf norm: 0.17430320382118225
+Min Linf norm: 0.17345233261585236
+Test: 1280/10000 (13%)	Loss: 1.476040, Cross Entropy: 1.476040, Reg: 0.000000
+Elapsed time (s): 13.691750049591064
+Memory usage (GB): 0.5207481384277344
+Min Linf norm: 0.1741861253976822
+Min Linf norm: 0.1731889843940735
+Test: 1536/10000 (15%)	Loss: 1.469192, Cross Entropy: 1.469192, Reg: 0.000000
+Elapsed time (s): 13.489885568618774
+Memory usage (GB): 0.5209999084472656
+Min Linf norm: 0.17343948781490326
+Min Linf norm: 0.17341658473014832
+Test: 1792/10000 (18%)	Loss: 1.468975, Cross Entropy: 1.468975, Reg: 0.000000
+Elapsed time (s): 14.84093952178955
+Memory usage (GB): 0.5209999084472656
+Min Linf norm: 0.17426514625549316
+Min Linf norm: 0.17318132519721985
+Test: 2048/10000 (20%)	Loss: 1.515355, Cross Entropy: 1.515355, Reg: 0.000000
+Elapsed time (s): 12.427082300186157
+Memory usage (GB): 0.5357894897460938
+Min Linf norm: 0.17288509011268616
+Min Linf norm: 0.17327208817005157
+Test: 2304/10000 (23%)	Loss: 1.480077, Cross Entropy: 1.480077, Reg: 0.000000
+Elapsed time (s): 12.702063083648682
+Memory usage (GB): 0.5365447998046875
+Min Linf norm: 0.17367158830165863
+Min Linf norm: 0.17264561355113983
+Test: 2560/10000 (25%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 12.880245208740234
+Memory usage (GB): 0.5367965698242188
+Min Linf norm: 0.17367570102214813
+Min Linf norm: 0.17355124652385712
+Test: 2816/10000 (28%)	Loss: 1.492358, Cross Entropy: 1.492358, Reg: 0.000000
+Elapsed time (s): 11.510456323623657
+Memory usage (GB): 0.5369529724121094
+Min Linf norm: 0.173712819814682
+Min Linf norm: 0.1731802225112915
+Test: 3072/10000 (30%)	Loss: 1.468972, Cross Entropy: 1.468972, Reg: 0.000000
+Elapsed time (s): 12.538740396499634
+Memory usage (GB): 0.5535697937011719
+Min Linf norm: 0.17313158512115479
+Min Linf norm: 0.17419061064720154
+Test: 3328/10000 (33%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 12.887844800949097
+Memory usage (GB): 0.5535697937011719
+Min Linf norm: 0.17331773042678833
+Min Linf norm: 0.17319416999816895
+Test: 3584/10000 (35%)	Loss: 1.468797, Cross Entropy: 1.468797, Reg: 0.000000
+Elapsed time (s): 12.589433193206787
+Memory usage (GB): 0.5535697937011719
+Min Linf norm: 0.17258651554584503
+Min Linf norm: 0.1736210435628891
+Test: 3840/10000 (38%)	Loss: 1.476783, Cross Entropy: 1.476783, Reg: 0.000000
+Elapsed time (s): 13.639144659042358
+Memory usage (GB): 0.5535697937011719
+Min Linf norm: 0.17276877164840698
+Min Linf norm: 0.17355170845985413
+Test: 4096/10000 (41%)	Loss: 1.468986, Cross Entropy: 1.468986, Reg: 0.000000
+Elapsed time (s): 13.35860562324524
+Memory usage (GB): 0.5535697937011719
+Min Linf norm: 0.173103928565979
+Min Linf norm: 0.17293819785118103
+Test: 4352/10000 (43%)	Loss: 1.483675, Cross Entropy: 1.483675, Reg: 0.000000
+Elapsed time (s): 12.896719932556152
+Memory usage (GB): 0.5535697937011719
+Min Linf norm: 0.17426596581935883
+Min Linf norm: 0.17374198138713837
+Test: 4608/10000 (46%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 12.011932611465454
+Memory usage (GB): 0.5535697937011719
+Min Linf norm: 0.17177078127861023
+Min Linf norm: 0.17356418073177338
+Test: 4864/10000 (48%)	Loss: 1.466520, Cross Entropy: 1.466520, Reg: 0.000000
+Elapsed time (s): 12.16000247001648
+Memory usage (GB): 0.5535697937011719
+Min Linf norm: 0.17255708575248718
+Min Linf norm: 0.17126856744289398
+Test: 5120/10000 (51%)	Loss: 1.463296, Cross Entropy: 1.463296, Reg: 0.000000
+Elapsed time (s): 13.280672311782837
+Memory usage (GB): 0.5198135375976562
+Min Linf norm: 0.17262327671051025
+Min Linf norm: 0.17349421977996826
+Test: 5376/10000 (53%)	Loss: 1.462325, Cross Entropy: 1.462325, Reg: 0.000000
+Elapsed time (s): 15.77980351448059
+Memory usage (GB): 0.5370407104492188
+Min Linf norm: 0.1738448441028595
+Min Linf norm: 0.1726573258638382
+Test: 5632/10000 (56%)	Loss: 1.461169, Cross Entropy: 1.461169, Reg: 0.000000
+Elapsed time (s): 11.467977285385132
+Memory usage (GB): 0.537017822265625
+Min Linf norm: 0.17374789714813232
+Min Linf norm: 0.17339542508125305
+Test: 5888/10000 (58%)	Loss: 1.480827, Cross Entropy: 1.480827, Reg: 0.000000
+Elapsed time (s): 12.524047136306763
+Memory usage (GB): 0.5537490844726562
+Min Linf norm: 0.1730193793773651
+Min Linf norm: 0.1733173429965973
+Test: 6144/10000 (61%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 14.584838390350342
+Memory usage (GB): 0.5369720458984375
+Min Linf norm: 0.17363208532333374
+Min Linf norm: 0.17326627671718597
+Test: 6400/10000 (63%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 15.035248279571533
+Memory usage (GB): 0.5373001098632812
+Min Linf norm: 0.1740759313106537
+Min Linf norm: 0.17349831759929657
+Test: 6656/10000 (66%)	Loss: 1.469098, Cross Entropy: 1.469098, Reg: 0.000000
+Elapsed time (s): 12.225884675979614
+Memory usage (GB): 0.5373001098632812
+Min Linf norm: 0.17179538309574127
+Min Linf norm: 0.17309173941612244
+Test: 6912/10000 (68%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 13.53683614730835
+Memory usage (GB): 0.5371170043945312
+Min Linf norm: 0.17345882952213287
+Min Linf norm: 0.1739576905965805
+Test: 7168/10000 (71%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 13.18953275680542
+Memory usage (GB): 0.5370979309082031
+Min Linf norm: 0.17311429977416992
+Min Linf norm: 0.17316648364067078
+Test: 7424/10000 (73%)	Loss: 1.461161, Cross Entropy: 1.461161, Reg: 0.000000
+Elapsed time (s): 12.805092334747314
+Memory usage (GB): 0.5368232727050781
+Min Linf norm: 0.1741313338279724
+Min Linf norm: 0.1735866665840149
+Test: 7680/10000 (76%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 14.09507966041565
+Memory usage (GB): 0.5370826721191406
+Min Linf norm: 0.17395490407943726
+Min Linf norm: 0.17349009215831757
+Test: 7936/10000 (78%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 13.029581546783447
+Memory usage (GB): 0.5368080139160156
+Min Linf norm: 0.1722182035446167
+Min Linf norm: 0.17348679900169373
+Test: 8192/10000 (81%)	Loss: 1.461159, Cross Entropy: 1.461159, Reg: 0.000000
+Elapsed time (s): 12.37807583808899
+Memory usage (GB): 0.5369529724121094
+Min Linf norm: 0.1731703281402588
+Min Linf norm: 0.17396266758441925
+Test: 8448/10000 (84%)	Loss: 1.468981, Cross Entropy: 1.468981, Reg: 0.000000
+Elapsed time (s): 13.588814735412598
+Memory usage (GB): 0.5369529724121094
+Min Linf norm: 0.17333514988422394
+Min Linf norm: 0.17282164096832275
+Test: 8704/10000 (86%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 14.407175302505493
+Memory usage (GB): 0.53741455078125
+Min Linf norm: 0.17283190786838531
+Min Linf norm: 0.1731831431388855
+Test: 8960/10000 (89%)	Loss: 1.484604, Cross Entropy: 1.484604, Reg: 0.000000
+Elapsed time (s): 15.61861252784729
+Memory usage (GB): 0.553680419921875
+Min Linf norm: 0.17371191084384918
+Min Linf norm: 0.17297831177711487
+Test: 9216/10000 (91%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 15.406007528305054
+Memory usage (GB): 0.5370864868164062
+Min Linf norm: 0.17313659191131592
+Min Linf norm: 0.1741490364074707
+Test: 9472/10000 (94%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 15.128546714782715
+Memory usage (GB): 0.5370750427246094
+Min Linf norm: 0.17323654890060425
+Min Linf norm: 0.17402398586273193
+Test: 9728/10000 (96%)	Loss: 1.500129, Cross Entropy: 1.500129, Reg: 0.000000
+Elapsed time (s): 12.883051633834839
+Memory usage (GB): 0.5536842346191406
+Min Linf norm: 0.17271511256694794
+Min Linf norm: 0.1744770109653473
+Test: 1248/10000 (99%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 7.644201755523682
+Memory usage (GB): 0.5370368957519531
+Test set: Average loss: 1.4728, Average cross entropy: 1.4728, Average reg: 0.0000, Accuracy: 9883/10000 (99%), Robust accuracy: 9540/9883 (97%)
+
+
+# budget : 0.2
+
+Using cpu
+Using testing batch size for test loader
+Using testing batch size for train loader
+Loading weights
+Initialization done
+Start testing
+Using test loader
+Min Linf norm: 0.19891636073589325
+Test: 0/10000 (0%)	Loss: 1.476760, Cross Entropy: 1.476760, Reg: 0.000000
+Elapsed time (s): 5.621256113052368
+Memory usage (GB): 0.43683624267578125
+Min Linf norm: 0.19874174892902374
+Min Linf norm: 0.19825568795204163
+Test: 256/10000 (3%)	Loss: 1.484563, Cross Entropy: 1.484563, Reg: 0.000000
+Elapsed time (s): 12.55706238746643
+Memory usage (GB): 0.5095252990722656
+Min Linf norm: 0.1989288330078125
+Min Linf norm: 0.19821496307849884
+Test: 512/10000 (5%)	Loss: 1.468970, Cross Entropy: 1.468970, Reg: 0.000000
+Elapsed time (s): 12.796236276626587
+Memory usage (GB): 0.5278816223144531
+Min Linf norm: 0.1989295482635498
+Min Linf norm: 0.1975846141576767
+Test: 768/10000 (8%)	Loss: 1.476781, Cross Entropy: 1.476781, Reg: 0.000000
+Elapsed time (s): 14.34884524345398
+Memory usage (GB): 0.5101547241210938
+Min Linf norm: 0.19855590164661407
+Min Linf norm: 0.19845354557037354
+Test: 1024/10000 (10%)	Loss: 1.491720, Cross Entropy: 1.491720, Reg: 0.000000
+Elapsed time (s): 13.101208209991455
+Memory usage (GB): 0.5033111572265625
+Min Linf norm: 0.19920365512371063
+Min Linf norm: 0.19823125004768372
+Test: 1280/10000 (13%)	Loss: 1.476040, Cross Entropy: 1.476040, Reg: 0.000000
+Elapsed time (s): 13.6730477809906
+Memory usage (GB): 0.5112533569335938
+Min Linf norm: 0.19906985759735107
+Min Linf norm: 0.1979302614927292
+Test: 1536/10000 (15%)	Loss: 1.469192, Cross Entropy: 1.469192, Reg: 0.000000
+Elapsed time (s): 13.02006983757019
+Memory usage (GB): 0.5459938049316406
+Min Linf norm: 0.19821655750274658
+Min Linf norm: 0.198190376162529
+Test: 1792/10000 (18%)	Loss: 1.468975, Cross Entropy: 1.468975, Reg: 0.000000
+Elapsed time (s): 12.176059484481812
+Memory usage (GB): 0.4934806823730469
+Min Linf norm: 0.19916017353534698
+Min Linf norm: 0.1979215145111084
+Test: 2048/10000 (20%)	Loss: 1.515355, Cross Entropy: 1.515355, Reg: 0.000000
+Elapsed time (s): 12.264352083206177
+Memory usage (GB): 0.5283775329589844
+Min Linf norm: 0.19758296012878418
+Min Linf norm: 0.19802525639533997
+Test: 2304/10000 (23%)	Loss: 1.480077, Cross Entropy: 1.480077, Reg: 0.000000
+Elapsed time (s): 12.095295429229736
+Memory usage (GB): 0.5103111267089844
+Min Linf norm: 0.19848182797431946
+Min Linf norm: 0.19730928540229797
+Test: 2560/10000 (25%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 12.715142965316772
+Memory usage (GB): 0.49369049072265625
+Min Linf norm: 0.19848652184009552
+Min Linf norm: 0.19834427535533905
+Test: 2816/10000 (28%)	Loss: 1.492358, Cross Entropy: 1.492358, Reg: 0.000000
+Elapsed time (s): 11.164093971252441
+Memory usage (GB): 0.5553817749023438
+Min Linf norm: 0.1985289305448532
+Min Linf norm: 0.19792024791240692
+Test: 3072/10000 (30%)	Loss: 1.468972, Cross Entropy: 1.468972, Reg: 0.000000
+Elapsed time (s): 12.2243013381958
+Memory usage (GB): 0.5563888549804688
+Min Linf norm: 0.19786468148231506
+Min Linf norm: 0.19907498359680176
+Test: 3328/10000 (33%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 12.124351978302002
+Memory usage (GB): 0.5563888549804688
+Min Linf norm: 0.19807742536067963
+Min Linf norm: 0.19793620705604553
+Test: 3584/10000 (35%)	Loss: 1.468797, Cross Entropy: 1.468797, Reg: 0.000000
+Elapsed time (s): 12.406296014785767
+Memory usage (GB): 0.5563888549804688
+Min Linf norm: 0.19724173843860626
+Min Linf norm: 0.1984240561723709
+Test: 3840/10000 (38%)	Loss: 1.476783, Cross Entropy: 1.476783, Reg: 0.000000
+Elapsed time (s): 11.917394876480103
+Memory usage (GB): 0.5563888549804688
+Min Linf norm: 0.19745004177093506
+Min Linf norm: 0.19834479689598083
+Test: 4096/10000 (41%)	Loss: 1.468986, Cross Entropy: 1.468986, Reg: 0.000000
+Elapsed time (s): 13.072612524032593
+Memory usage (GB): 0.5563888549804688
+Min Linf norm: 0.19783306121826172
+Min Linf norm: 0.19764366745948792
+Test: 4352/10000 (43%)	Loss: 1.483675, Cross Entropy: 1.483675, Reg: 0.000000
+Elapsed time (s): 12.600138902664185
+Memory usage (GB): 0.5563888549804688
+Min Linf norm: 0.199161097407341
+Min Linf norm: 0.19856226444244385
+Test: 4608/10000 (46%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 11.913649082183838
+Memory usage (GB): 0.5565185546875
+Min Linf norm: 0.19630947709083557
+Min Linf norm: 0.19835905730724335
+Test: 4864/10000 (48%)	Loss: 1.466520, Cross Entropy: 1.466520, Reg: 0.000000
+Elapsed time (s): 13.006081819534302
+Memory usage (GB): 0.5565185546875
+Min Linf norm: 0.19720809161663055
+Min Linf norm: 0.19573549926280975
+Test: 5120/10000 (51%)	Loss: 1.463296, Cross Entropy: 1.463296, Reg: 0.000000
+Elapsed time (s): 13.398226976394653
+Memory usage (GB): 0.5217857360839844
+Min Linf norm: 0.19728374481201172
+Min Linf norm: 0.19827908277511597
+Test: 5376/10000 (53%)	Loss: 1.462325, Cross Entropy: 1.462325, Reg: 0.000000
+Elapsed time (s): 14.61517858505249
+Memory usage (GB): 0.5389862060546875
+Min Linf norm: 0.1986798346042633
+Min Linf norm: 0.19732265174388885
+Test: 5632/10000 (56%)	Loss: 1.461169, Cross Entropy: 1.461169, Reg: 0.000000
+Elapsed time (s): 11.797678709030151
+Memory usage (GB): 0.5388259887695312
+Min Linf norm: 0.19856904447078705
+Min Linf norm: 0.19816620647907257
+Test: 5888/10000 (58%)	Loss: 1.480827, Cross Entropy: 1.480827, Reg: 0.000000
+Elapsed time (s): 12.396765947341919
+Memory usage (GB): 0.5388259887695312
+Min Linf norm: 0.19773642718791962
+Min Linf norm: 0.19807696342468262
+Test: 6144/10000 (61%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 13.404264450073242
+Memory usage (GB): 0.5391502380371094
+Min Linf norm: 0.1984366774559021
+Min Linf norm: 0.19801859557628632
+Test: 6400/10000 (63%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 13.240584373474121
+Memory usage (GB): 0.5388755798339844
+Min Linf norm: 0.19894392788410187
+Min Linf norm: 0.19828379154205322
+Test: 6656/10000 (66%)	Loss: 1.469098, Cross Entropy: 1.469098, Reg: 0.000000
+Elapsed time (s): 12.585785388946533
+Memory usage (GB): 0.5388755798339844
+Min Linf norm: 0.19633758068084717
+Min Linf norm: 0.19781914353370667
+Test: 6912/10000 (68%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 13.402540922164917
+Memory usage (GB): 0.5388755798339844
+Min Linf norm: 0.19823865592479706
+Min Linf norm: 0.19880878925323486
+Test: 7168/10000 (71%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 14.904767513275146
+Memory usage (GB): 0.5564308166503906
+Min Linf norm: 0.19784490764141083
+Min Linf norm: 0.197904571890831
+Test: 7424/10000 (73%)	Loss: 1.461161, Cross Entropy: 1.461161, Reg: 0.000000
+Elapsed time (s): 12.759292364120483
+Memory usage (GB): 0.5389633178710938
+Min Linf norm: 0.19900721311569214
+Min Linf norm: 0.19838476181030273
+Test: 7680/10000 (76%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 13.293808937072754
+Memory usage (GB): 0.5389060974121094
+Min Linf norm: 0.19880563020706177
+Min Linf norm: 0.1982744038105011
+Test: 7936/10000 (78%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 12.685919046401978
+Memory usage (GB): 0.5394058227539062
+Min Linf norm: 0.19682079553604126
+Min Linf norm: 0.19827064871788025
+Test: 8192/10000 (81%)	Loss: 1.461159, Cross Entropy: 1.461159, Reg: 0.000000
+Elapsed time (s): 12.64307713508606
+Memory usage (GB): 0.5390853881835938
+Min Linf norm: 0.1979089379310608
+Min Linf norm: 0.1988144963979721
+Test: 8448/10000 (84%)	Loss: 1.468981, Cross Entropy: 1.468981, Reg: 0.000000
+Elapsed time (s): 15.337883710861206
+Memory usage (GB): 0.5567092895507812
+Min Linf norm: 0.1980973333120346
+Min Linf norm: 0.1975104659795761
+Test: 8704/10000 (86%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 15.23731255531311
+Memory usage (GB): 0.5390510559082031
+Min Linf norm: 0.19752219319343567
+Min Linf norm: 0.19792360067367554
+Test: 8960/10000 (89%)	Loss: 1.484604, Cross Entropy: 1.484604, Reg: 0.000000
+Elapsed time (s): 16.451478958129883
+Memory usage (GB): 0.5391731262207031
+Min Linf norm: 0.19852791726589203
+Min Linf norm: 0.19768951833248138
+Test: 9216/10000 (91%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 13.65783429145813
+Memory usage (GB): 0.5390205383300781
+Min Linf norm: 0.1978704035282135
+Min Linf norm: 0.19902746379375458
+Test: 9472/10000 (94%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 14.690929412841797
+Memory usage (GB): 0.5389633178710938
+Min Linf norm: 0.19798463582992554
+Min Linf norm: 0.19888456165790558
+Test: 9728/10000 (96%)	Loss: 1.500129, Cross Entropy: 1.500129, Reg: 0.000000
+Elapsed time (s): 12.586609840393066
+Memory usage (GB): 0.555328369140625
+Min Linf norm: 0.1973886936903
+Min Linf norm: 0.1994023323059082
+Test: 1248/10000 (99%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 7.910629034042358
+Memory usage (GB): 0.5398788452148438
+Test set: Average loss: 1.4728, Average cross entropy: 1.4728, Average reg: 0.0000, Accuracy: 9883/10000 (99%), Robust accuracy: 9448/9883 (96%)
+
+
+# budget : 0.225
+
+Using cpu
+Using testing batch size for test loader
+Using testing batch size for train loader
+Loading weights
+Initialization done
+Start testing
+Using test loader
+Min Linf norm: 0.22378090023994446
+Test: 0/10000 (0%)	Loss: 1.476760, Cross Entropy: 1.476760, Reg: 0.000000
+Elapsed time (s): 6.004562616348267
+Memory usage (GB): 0.46086883544921875
+Min Linf norm: 0.22358445823192596
+Min Linf norm: 0.22303763031959534
+Test: 256/10000 (3%)	Loss: 1.484563, Cross Entropy: 1.484563, Reg: 0.000000
+Elapsed time (s): 12.50995945930481
+Memory usage (GB): 0.5312004089355469
+Min Linf norm: 0.2237948775291443
+Min Linf norm: 0.22299182415008545
+Test: 512/10000 (5%)	Loss: 1.468970, Cross Entropy: 1.468970, Reg: 0.000000
+Elapsed time (s): 12.193598508834839
+Memory usage (GB): 0.5312385559082031
+Min Linf norm: 0.22379574179649353
+Min Linf norm: 0.22228267788887024
+Test: 768/10000 (8%)	Loss: 1.476781, Cross Entropy: 1.476781, Reg: 0.000000
+Elapsed time (s): 11.864599227905273
+Memory usage (GB): 0.5312385559082031
+Min Linf norm: 0.2233753800392151
+Min Linf norm: 0.22326022386550903
+Test: 1024/10000 (10%)	Loss: 1.491720, Cross Entropy: 1.491720, Reg: 0.000000
+Elapsed time (s): 10.916616201400757
+Memory usage (GB): 0.5312385559082031
+Min Linf norm: 0.224104106426239
+Min Linf norm: 0.2230101376771927
+Test: 1280/10000 (13%)	Loss: 1.476040, Cross Entropy: 1.476040, Reg: 0.000000
+Elapsed time (s): 11.600775003433228
+Memory usage (GB): 0.5312385559082031
+Min Linf norm: 0.22395358979701996
+Min Linf norm: 0.2226715385913849
+Test: 1536/10000 (15%)	Loss: 1.469192, Cross Entropy: 1.469192, Reg: 0.000000
+Elapsed time (s): 11.730827331542969
+Memory usage (GB): 0.5312385559082031
+Min Linf norm: 0.2229936271905899
+Min Linf norm: 0.22296416759490967
+Test: 1792/10000 (18%)	Loss: 1.468975, Cross Entropy: 1.468975, Reg: 0.000000
+Elapsed time (s): 12.115101099014282
+Memory usage (GB): 0.5312385559082031
+Min Linf norm: 0.2240551859140396
+Min Linf norm: 0.22266170382499695
+Test: 2048/10000 (20%)	Loss: 1.515355, Cross Entropy: 1.515355, Reg: 0.000000
+Elapsed time (s): 12.802673101425171
+Memory usage (GB): 0.5314865112304688
+Min Linf norm: 0.2222808301448822
+Min Linf norm: 0.22277839481830597
+Test: 2304/10000 (23%)	Loss: 1.480077, Cross Entropy: 1.480077, Reg: 0.000000
+Elapsed time (s): 11.801832437515259
+Memory usage (GB): 0.5307273864746094
+Min Linf norm: 0.2232920378446579
+Min Linf norm: 0.22197292745113373
+Test: 2560/10000 (25%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 11.29557991027832
+Memory usage (GB): 0.5314178466796875
+Min Linf norm: 0.2232973277568817
+Min Linf norm: 0.22313730418682098
+Test: 2816/10000 (28%)	Loss: 1.492358, Cross Entropy: 1.492358, Reg: 0.000000
+Elapsed time (s): 11.362140417098999
+Memory usage (GB): 0.530609130859375
+Min Linf norm: 0.22334504127502441
+Min Linf norm: 0.22266027331352234
+Test: 3072/10000 (30%)	Loss: 1.468972, Cross Entropy: 1.468972, Reg: 0.000000
+Elapsed time (s): 13.077131748199463
+Memory usage (GB): 0.5317802429199219
+Min Linf norm: 0.2224990725517273
+Min Linf norm: 0.22395935654640198
+Test: 3328/10000 (33%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 12.12696647644043
+Memory usage (GB): 0.5313911437988281
+Min Linf norm: 0.22283709049224854
+Min Linf norm: 0.22267821431159973
+Test: 3584/10000 (35%)	Loss: 1.468797, Cross Entropy: 1.468797, Reg: 0.000000
+Elapsed time (s): 11.533480882644653
+Memory usage (GB): 0.5489234924316406
+Min Linf norm: 0.2218969315290451
+Min Linf norm: 0.22322705388069153
+Test: 3840/10000 (38%)	Loss: 1.476783, Cross Entropy: 1.476783, Reg: 0.000000
+Elapsed time (s): 12.54260778427124
+Memory usage (GB): 0.5491752624511719
+Min Linf norm: 0.22213131189346313
+Min Linf norm: 0.22313794493675232
+Test: 4096/10000 (41%)	Loss: 1.468986, Cross Entropy: 1.468986, Reg: 0.000000
+Elapsed time (s): 12.063385248184204
+Memory usage (GB): 0.5312652587890625
+Min Linf norm: 0.22256219387054443
+Min Linf norm: 0.2223491072654724
+Test: 4352/10000 (43%)	Loss: 1.483675, Cross Entropy: 1.483675, Reg: 0.000000
+Elapsed time (s): 13.916558742523193
+Memory usage (GB): 0.5311851501464844
+Min Linf norm: 0.22405622899532318
+Min Linf norm: 0.22338254749774933
+Test: 4608/10000 (46%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 13.411720037460327
+Memory usage (GB): 0.5315437316894531
+Min Linf norm: 0.22084814310073853
+Min Linf norm: 0.22315393388271332
+Test: 4864/10000 (48%)	Loss: 1.466520, Cross Entropy: 1.466520, Reg: 0.000000
+Elapsed time (s): 12.511470317840576
+Memory usage (GB): 0.5666275024414062
+Min Linf norm: 0.22185909748077393
+Min Linf norm: 0.22020243108272552
+Test: 5120/10000 (51%)	Loss: 1.463296, Cross Entropy: 1.463296, Reg: 0.000000
+Elapsed time (s): 14.66434621810913
+Memory usage (GB): 0.5142707824707031
+Min Linf norm: 0.22194421291351318
+Min Linf norm: 0.22306400537490845
+Test: 5376/10000 (53%)	Loss: 1.462325, Cross Entropy: 1.462325, Reg: 0.000000
+Elapsed time (s): 16.170324087142944
+Memory usage (GB): 0.5495338439941406
+Min Linf norm: 0.22351479530334473
+Min Linf norm: 0.22198797762393951
+Test: 5632/10000 (56%)	Loss: 1.461169, Cross Entropy: 1.461169, Reg: 0.000000
+Elapsed time (s): 12.942490100860596
+Memory usage (GB): 0.5489768981933594
+Min Linf norm: 0.22339016199111938
+Min Linf norm: 0.2229369729757309
+Test: 5888/10000 (58%)	Loss: 1.480827, Cross Entropy: 1.480827, Reg: 0.000000
+Elapsed time (s): 13.405945539474487
+Memory usage (GB): 0.5314407348632812
+Min Linf norm: 0.22245347499847412
+Min Linf norm: 0.22283658385276794
+Test: 6144/10000 (61%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 15.630457162857056
+Memory usage (GB): 0.5141220092773438
+Min Linf norm: 0.22324120998382568
+Min Linf norm: 0.22277091443538666
+Test: 6400/10000 (63%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 13.919666290283203
+Memory usage (GB): 0.5141220092773438
+Min Linf norm: 0.22381190955638885
+Min Linf norm: 0.22358016669750214
+Test: 6656/10000 (66%)	Loss: 1.469098, Cross Entropy: 1.469098, Reg: 0.000000
+Elapsed time (s): 11.89753532409668
+Memory usage (GB): 0.531829833984375
+Min Linf norm: 0.22087977826595306
+Min Linf norm: 0.2225465178489685
+Test: 6912/10000 (68%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 13.715609550476074
+Memory usage (GB): 0.5491523742675781
+Min Linf norm: 0.22301848232746124
+Min Linf norm: 0.22365988790988922
+Test: 7168/10000 (71%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 13.016147375106812
+Memory usage (GB): 0.5315971374511719
+Min Linf norm: 0.22257551550865173
+Min Linf norm: 0.22264263033866882
+Test: 7424/10000 (73%)	Loss: 1.461161, Cross Entropy: 1.461161, Reg: 0.000000
+Elapsed time (s): 12.942247867584229
+Memory usage (GB): 0.5319175720214844
+Min Linf norm: 0.22388309240341187
+Min Linf norm: 0.22318285703659058
+Test: 7680/10000 (76%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 13.64778757095337
+Memory usage (GB): 0.5142822265625
+Min Linf norm: 0.2236562967300415
+Min Linf norm: 0.22305868566036224
+Test: 7936/10000 (78%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 13.137104034423828
+Memory usage (GB): 0.5494384765625
+Min Linf norm: 0.22142338752746582
+Min Linf norm: 0.223054438829422
+Test: 8192/10000 (81%)	Loss: 1.461159, Cross Entropy: 1.461159, Reg: 0.000000
+Elapsed time (s): 12.31609582901001
+Memory usage (GB): 0.5489921569824219
+Min Linf norm: 0.2226475477218628
+Min Linf norm: 0.22366629540920258
+Test: 8448/10000 (84%)	Loss: 1.468981, Cross Entropy: 1.468981, Reg: 0.000000
+Elapsed time (s): 12.53168535232544
+Memory usage (GB): 0.5492439270019531
+Min Linf norm: 0.2228594869375229
+Min Linf norm: 0.22219926118850708
+Test: 8704/10000 (86%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 12.223400831222534
+Memory usage (GB): 0.5145492553710938
+Min Linf norm: 0.22221244871616364
+Min Linf norm: 0.22266405820846558
+Test: 8960/10000 (89%)	Loss: 1.484604, Cross Entropy: 1.484604, Reg: 0.000000
+Elapsed time (s): 12.938630819320679
+Memory usage (GB): 0.5312461853027344
+Min Linf norm: 0.2233438938856125
+Min Linf norm: 0.2224006950855255
+Test: 9216/10000 (91%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 12.430359363555908
+Memory usage (GB): 0.5142364501953125
+Min Linf norm: 0.22221210598945618
+Min Linf norm: 0.22390589118003845
+Test: 9472/10000 (94%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 12.735961675643921
+Memory usage (GB): 0.5144805908203125
+Min Linf norm: 0.22273272275924683
+Min Linf norm: 0.22374512255191803
+Test: 9728/10000 (96%)	Loss: 1.500129, Cross Entropy: 1.500129, Reg: 0.000000
+Elapsed time (s): 10.48729133605957
+Memory usage (GB): 0.546966552734375
+Min Linf norm: 0.22206227481365204
+Min Linf norm: 0.22432759404182434
+Test: 1248/10000 (99%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 6.733976125717163
+Memory usage (GB): 0.5492515563964844
+Test set: Average loss: 1.4728, Average cross entropy: 1.4728, Average reg: 0.0000, Accuracy: 9883/10000 (99%), Robust accuracy: 9272/9883 (94%)
+
+# budget : 0.25
+
+Using cpu
+Using testing batch size for test loader
+Using testing batch size for train loader
+Loading weights
+Initialization done
+Start testing
+Using test loader
+Min Linf norm: 0.24864545464515686
+Test: 0/10000 (0%)	Loss: 1.476760, Cross Entropy: 1.476760, Reg: 0.000000
+Elapsed time (s): 5.405431032180786
+Memory usage (GB): 0.4702949523925781
+Min Linf norm: 0.24842718243598938
+Min Linf norm: 0.24781960248947144
+Test: 256/10000 (3%)	Loss: 1.484563, Cross Entropy: 1.484563, Reg: 0.000000
+Elapsed time (s): 11.879799604415894
+Memory usage (GB): 0.4706993103027344
+Min Linf norm: 0.24866098165512085
+Min Linf norm: 0.24776870012283325
+Test: 512/10000 (5%)	Loss: 1.468970, Cross Entropy: 1.468970, Reg: 0.000000
+Elapsed time (s): 10.913936138153076
+Memory usage (GB): 0.5052833557128906
+Min Linf norm: 0.24866193532943726
+Min Linf norm: 0.24698075652122498
+Test: 768/10000 (8%)	Loss: 1.476781, Cross Entropy: 1.476781, Reg: 0.000000
+Elapsed time (s): 11.500291347503662
+Memory usage (GB): 0.5220985412597656
+Min Linf norm: 0.2481948733329773
+Min Linf norm: 0.2480669617652893
+Test: 1024/10000 (10%)	Loss: 1.491720, Cross Entropy: 1.491720, Reg: 0.000000
+Elapsed time (s): 12.714025497436523
+Memory usage (GB): 0.5213890075683594
+Min Linf norm: 0.2490045726299286
+Min Linf norm: 0.24778905510902405
+Test: 1280/10000 (13%)	Loss: 1.476040, Cross Entropy: 1.476040, Reg: 0.000000
+Elapsed time (s): 14.932129383087158
+Memory usage (GB): 0.5218696594238281
+Min Linf norm: 0.24883732199668884
+Min Linf norm: 0.24741283059120178
+Test: 1536/10000 (15%)	Loss: 1.469192, Cross Entropy: 1.469192, Reg: 0.000000
+Elapsed time (s): 10.961461067199707
+Memory usage (GB): 0.5223312377929688
+Min Linf norm: 0.24777069687843323
+Min Linf norm: 0.24773797392845154
+Test: 1792/10000 (18%)	Loss: 1.468975, Cross Entropy: 1.468975, Reg: 0.000000
+Elapsed time (s): 10.838802576065063
+Memory usage (GB): 0.5222206115722656
+Min Linf norm: 0.24895021319389343
+Min Linf norm: 0.2474018931388855
+Test: 2048/10000 (20%)	Loss: 1.515355, Cross Entropy: 1.515355, Reg: 0.000000
+Elapsed time (s): 11.495314359664917
+Memory usage (GB): 0.5222892761230469
+Min Linf norm: 0.24697870016098022
+Min Linf norm: 0.24753156304359436
+Test: 2304/10000 (23%)	Loss: 1.480077, Cross Entropy: 1.480077, Reg: 0.000000
+Elapsed time (s): 13.476226568222046
+Memory usage (GB): 0.5218162536621094
+Min Linf norm: 0.24810227751731873
+Min Linf norm: 0.24663659930229187
+Test: 2560/10000 (25%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 13.331770896911621
+Memory usage (GB): 0.5224151611328125
+Min Linf norm: 0.2481081485748291
+Min Linf norm: 0.2479303479194641
+Test: 2816/10000 (28%)	Loss: 1.492358, Cross Entropy: 1.492358, Reg: 0.000000
+Elapsed time (s): 13.036489963531494
+Memory usage (GB): 0.5401687622070312
+Min Linf norm: 0.2481611669063568
+Min Linf norm: 0.24740031361579895
+Test: 3072/10000 (30%)	Loss: 1.468972, Cross Entropy: 1.468972, Reg: 0.000000
+Elapsed time (s): 12.078616857528687
+Memory usage (GB): 0.5401687622070312
+Min Linf norm: 0.2472211718559265
+Min Linf norm: 0.2488437294960022
+Test: 3328/10000 (33%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 12.75261378288269
+Memory usage (GB): 0.5401687622070312
+Min Linf norm: 0.24759677052497864
+Min Linf norm: 0.24742025136947632
+Test: 3584/10000 (35%)	Loss: 1.468797, Cross Entropy: 1.468797, Reg: 0.000000
+Elapsed time (s): 13.227854490280151
+Memory usage (GB): 0.5401687622070312
+Min Linf norm: 0.24655215442180634
+Min Linf norm: 0.24803006649017334
+Test: 3840/10000 (38%)	Loss: 1.476783, Cross Entropy: 1.476783, Reg: 0.000000
+Elapsed time (s): 11.37009882926941
+Memory usage (GB): 0.5401687622070312
+Min Linf norm: 0.2468125820159912
+Min Linf norm: 0.24793103337287903
+Test: 4096/10000 (41%)	Loss: 1.468986, Cross Entropy: 1.468986, Reg: 0.000000
+Elapsed time (s): 14.756768226623535
+Memory usage (GB): 0.5572891235351562
+Min Linf norm: 0.24729132652282715
+Min Linf norm: 0.2470545768737793
+Test: 4352/10000 (43%)	Loss: 1.483675, Cross Entropy: 1.483675, Reg: 0.000000
+Elapsed time (s): 14.745497465133667
+Memory usage (GB): 0.5572891235351562
+Min Linf norm: 0.24895137548446655
+Min Linf norm: 0.2482028305530548
+Test: 4608/10000 (46%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 13.689204931259155
+Memory usage (GB): 0.5572891235351562
+Min Linf norm: 0.24538683891296387
+Min Linf norm: 0.24794882535934448
+Test: 4864/10000 (48%)	Loss: 1.466520, Cross Entropy: 1.466520, Reg: 0.000000
+Elapsed time (s): 13.723195314407349
+Memory usage (GB): 0.5572891235351562
+Min Linf norm: 0.2465101182460785
+Min Linf norm: 0.2446693778038025
+Test: 5120/10000 (51%)	Loss: 1.463296, Cross Entropy: 1.463296, Reg: 0.000000
+Elapsed time (s): 14.227271318435669
+Memory usage (GB): 0.5402145385742188
+Min Linf norm: 0.24660468101501465
+Min Linf norm: 0.24784886837005615
+Test: 5376/10000 (53%)	Loss: 1.462325, Cross Entropy: 1.462325, Reg: 0.000000
+Elapsed time (s): 12.738279342651367
+Memory usage (GB): 0.5401458740234375
+Min Linf norm: 0.24834978580474854
+Min Linf norm: 0.24665331840515137
+Test: 5632/10000 (56%)	Loss: 1.461169, Cross Entropy: 1.461169, Reg: 0.000000
+Elapsed time (s): 11.266030550003052
+Memory usage (GB): 0.539947509765625
+Min Linf norm: 0.24821129441261292
+Min Linf norm: 0.24770775437355042
+Test: 5888/10000 (58%)	Loss: 1.480827, Cross Entropy: 1.480827, Reg: 0.000000
+Elapsed time (s): 11.29949402809143
+Memory usage (GB): 0.54010009765625
+Min Linf norm: 0.24717053771018982
+Min Linf norm: 0.24759620428085327
+Test: 6144/10000 (61%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 12.38944387435913
+Memory usage (GB): 0.5398178100585938
+Min Linf norm: 0.24804580211639404
+Min Linf norm: 0.24799779057502747
+Test: 6400/10000 (63%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 14.263670682907104
+Memory usage (GB): 0.540283203125
+Min Linf norm: 0.24867990612983704
+Min Linf norm: 0.24842241406440735
+Test: 6656/10000 (66%)	Loss: 1.469098, Cross Entropy: 1.469098, Reg: 0.000000
+Elapsed time (s): 13.909169435501099
+Memory usage (GB): 0.540283203125
+Min Linf norm: 0.24542197585105896
+Min Linf norm: 0.24727392196655273
+Test: 6912/10000 (68%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 15.06932520866394
+Memory usage (GB): 0.539947509765625
+Min Linf norm: 0.24779832363128662
+Min Linf norm: 0.24851098656654358
+Test: 7168/10000 (71%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 13.019920587539673
+Memory usage (GB): 0.5401229858398438
+Min Linf norm: 0.24730613827705383
+Min Linf norm: 0.24738070368766785
+Test: 7424/10000 (73%)	Loss: 1.461161, Cross Entropy: 1.461161, Reg: 0.000000
+Elapsed time (s): 14.823637962341309
+Memory usage (GB): 0.5400848388671875
+Min Linf norm: 0.2487589716911316
+Min Linf norm: 0.24798095226287842
+Test: 7680/10000 (76%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 13.88375997543335
+Memory usage (GB): 0.5398635864257812
+Min Linf norm: 0.24850702285766602
+Min Linf norm: 0.24784299731254578
+Test: 7936/10000 (78%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 12.220125913619995
+Memory usage (GB): 0.5400314331054688
+Min Linf norm: 0.24602597951889038
+Min Linf norm: 0.24783828854560852
+Test: 8192/10000 (81%)	Loss: 1.461159, Cross Entropy: 1.461159, Reg: 0.000000
+Elapsed time (s): 13.98583197593689
+Memory usage (GB): 0.540313720703125
+Min Linf norm: 0.2473861575126648
+Min Linf norm: 0.24851810932159424
+Test: 8448/10000 (84%)	Loss: 1.468981, Cross Entropy: 1.468981, Reg: 0.000000
+Elapsed time (s): 11.62921929359436
+Memory usage (GB): 0.55743408203125
+Min Linf norm: 0.24762165546417236
+Min Linf norm: 0.24688807129859924
+Test: 8704/10000 (86%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 11.851520538330078
+Memory usage (GB): 0.5401992797851562
+Min Linf norm: 0.246902734041214
+Min Linf norm: 0.24740451574325562
+Test: 8960/10000 (89%)	Loss: 1.484604, Cross Entropy: 1.484604, Reg: 0.000000
+Elapsed time (s): 12.84594178199768
+Memory usage (GB): 0.5401458740234375
+Min Linf norm: 0.24815988540649414
+Min Linf norm: 0.24711188673973083
+Test: 9216/10000 (91%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 12.072548627853394
+Memory usage (GB): 0.5400848388671875
+Min Linf norm: 0.24690234661102295
+Min Linf norm: 0.24878433346748352
+Test: 9472/10000 (94%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 12.034058570861816
+Memory usage (GB): 0.5399093627929688
+Min Linf norm: 0.24748080968856812
+Min Linf norm: 0.24860569834709167
+Test: 9728/10000 (96%)	Loss: 1.500129, Cross Entropy: 1.500129, Reg: 0.000000
+Elapsed time (s): 10.454729557037354
+Memory usage (GB): 0.5401611328125
+Min Linf norm: 0.24673587083816528
+Min Linf norm: 0.24925288558006287
+Test: 1248/10000 (99%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 6.639653205871582
+Memory usage (GB): 0.5408782958984375
+Test set: Average loss: 1.4728, Average cross entropy: 1.4728, Average reg: 0.0000, Accuracy: 9883/10000 (99%), Robust accuracy: 8973/9883 (91%)
+
+# budget : 0.275
+
+Using cpu
+Using testing batch size for test loader
+Using testing batch size for train loader
+Loading weights
+Initialization done
+Start testing
+Using test loader
+Min Linf norm: 0.27351000905036926
+Test: 0/10000 (0%)	Loss: 1.476760, Cross Entropy: 1.476760, Reg: 0.000000
+Elapsed time (s): 5.235581159591675
+Memory usage (GB): 0.4592933654785156
+Min Linf norm: 0.2732698917388916
+Min Linf norm: 0.27260157465934753
+Test: 256/10000 (3%)	Loss: 1.484563, Cross Entropy: 1.484563, Reg: 0.000000
+Elapsed time (s): 11.377996921539307
+Memory usage (GB): 0.5215530395507812
+Min Linf norm: 0.2735270857810974
+Min Linf norm: 0.27254557609558105
+Test: 512/10000 (5%)	Loss: 1.468970, Cross Entropy: 1.468970, Reg: 0.000000
+Elapsed time (s): 11.444957733154297
+Memory usage (GB): 0.5223960876464844
+Min Linf norm: 0.273528128862381
+Min Linf norm: 0.2716788351535797
+Test: 768/10000 (8%)	Loss: 1.476781, Cross Entropy: 1.476781, Reg: 0.000000
+Elapsed time (s): 10.939351558685303
+Memory usage (GB): 0.5217781066894531
+Min Linf norm: 0.2730143666267395
+Min Linf norm: 0.2728736400604248
+Test: 1024/10000 (10%)	Loss: 1.491720, Cross Entropy: 1.491720, Reg: 0.000000
+Elapsed time (s): 10.31787896156311
+Memory usage (GB): 0.5555152893066406
+Min Linf norm: 0.27287790179252625
+Min Linf norm: 0.2725679576396942
+Test: 1280/10000 (13%)	Loss: 1.476040, Cross Entropy: 1.476040, Reg: 0.000000
+Elapsed time (s): 10.245743989944458
+Memory usage (GB): 0.5389442443847656
+Min Linf norm: 0.2737210690975189
+Min Linf norm: 0.2721541225910187
+Test: 1536/10000 (15%)	Loss: 1.469192, Cross Entropy: 1.469192, Reg: 0.000000
+Elapsed time (s): 10.323751449584961
+Memory usage (GB): 0.5564231872558594
+Min Linf norm: 0.27254778146743774
+Min Linf norm: 0.2725117802619934
+Test: 1792/10000 (18%)	Loss: 1.468975, Cross Entropy: 1.468975, Reg: 0.000000
+Elapsed time (s): 10.238433599472046
+Memory usage (GB): 0.5565757751464844
+Min Linf norm: 0.273960143327713
+Min Linf norm: 0.27270978689193726
+Test: 2048/10000 (20%)	Loss: 1.515355, Cross Entropy: 1.515355, Reg: 0.000000
+Elapsed time (s): 10.366698503494263
+Memory usage (GB): 0.5566787719726562
+Min Linf norm: 0.27167657017707825
+Min Linf norm: 0.27228471636772156
+Test: 2304/10000 (23%)	Loss: 1.480077, Cross Entropy: 1.480077, Reg: 0.000000
+Elapsed time (s): 10.616698980331421
+Memory usage (GB): 0.5562286376953125
+Min Linf norm: 0.27291250228881836
+Min Linf norm: 0.2713002562522888
+Test: 2560/10000 (25%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 10.457417488098145
+Memory usage (GB): 0.5566215515136719
+Min Linf norm: 0.2729189693927765
+Min Linf norm: 0.27272337675094604
+Test: 2816/10000 (28%)	Loss: 1.492358, Cross Entropy: 1.492358, Reg: 0.000000
+Elapsed time (s): 10.247033834457397
+Memory usage (GB): 0.5557212829589844
+Min Linf norm: 0.2729772925376892
+Min Linf norm: 0.27214035391807556
+Test: 3072/10000 (30%)	Loss: 1.468972, Cross Entropy: 1.468972, Reg: 0.000000
+Elapsed time (s): 11.023197889328003
+Memory usage (GB): 0.5564765930175781
+Min Linf norm: 0.2719433307647705
+Min Linf norm: 0.2737281024456024
+Test: 3328/10000 (33%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 10.409406900405884
+Memory usage (GB): 0.5566558837890625
+Min Linf norm: 0.27235645055770874
+Min Linf norm: 0.27315691113471985
+Test: 3584/10000 (35%)	Loss: 1.468797, Cross Entropy: 1.468797, Reg: 0.000000
+Elapsed time (s): 10.362754821777344
+Memory usage (GB): 0.5566558837890625
+Min Linf norm: 0.27120739221572876
+Min Linf norm: 0.27283307909965515
+Test: 3840/10000 (38%)	Loss: 1.476783, Cross Entropy: 1.476783, Reg: 0.000000
+Elapsed time (s): 10.038161277770996
+Memory usage (GB): 0.5566558837890625
+Min Linf norm: 0.2714937925338745
+Min Linf norm: 0.27272412180900574
+Test: 4096/10000 (41%)	Loss: 1.468986, Cross Entropy: 1.468986, Reg: 0.000000
+Elapsed time (s): 10.652026653289795
+Memory usage (GB): 0.5566558837890625
+Min Linf norm: 0.27202045917510986
+Min Linf norm: 0.2717600464820862
+Test: 4352/10000 (43%)	Loss: 1.483675, Cross Entropy: 1.483675, Reg: 0.000000
+Elapsed time (s): 10.779762983322144
+Memory usage (GB): 0.5566558837890625
+Min Linf norm: 0.27384650707244873
+Min Linf norm: 0.2730231285095215
+Test: 4608/10000 (46%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 10.594346523284912
+Memory usage (GB): 0.5566558837890625
+Min Linf norm: 0.2699255347251892
+Min Linf norm: 0.27274370193481445
+Test: 4864/10000 (48%)	Loss: 1.466520, Cross Entropy: 1.466520, Reg: 0.000000
+Elapsed time (s): 10.535637855529785
+Memory usage (GB): 0.5566558837890625
+Min Linf norm: 0.27116113901138306
+Min Linf norm: 0.26913630962371826
+Test: 5120/10000 (51%)	Loss: 1.463296, Cross Entropy: 1.463296, Reg: 0.000000
+Elapsed time (s): 11.41505217552185
+Memory usage (GB): 0.5391273498535156
+Min Linf norm: 0.2712651491165161
+Min Linf norm: 0.27263373136520386
+Test: 5376/10000 (53%)	Loss: 1.462325, Cross Entropy: 1.462325, Reg: 0.000000
+Elapsed time (s): 11.9048433303833
+Memory usage (GB): 0.5393257141113281
+Min Linf norm: 0.27318477630615234
+Min Linf norm: 0.271318644285202
+Test: 5632/10000 (56%)	Loss: 1.461169, Cross Entropy: 1.461169, Reg: 0.000000
+Elapsed time (s): 10.992895364761353
+Memory usage (GB): 0.5390968322753906
+Min Linf norm: 0.27303242683410645
+Min Linf norm: 0.27247852087020874
+Test: 5888/10000 (58%)	Loss: 1.480827, Cross Entropy: 1.480827, Reg: 0.000000
+Elapsed time (s): 10.886491775512695
+Memory usage (GB): 0.5562400817871094
+Min Linf norm: 0.2718876004219055
+Min Linf norm: 0.2723558247089386
+Test: 6144/10000 (61%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 11.984256029129028
+Memory usage (GB): 0.5391616821289062
+Min Linf norm: 0.2728503942489624
+Min Linf norm: 0.2727975845336914
+Test: 6400/10000 (63%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 11.48400592803955
+Memory usage (GB): 0.539276123046875
+Min Linf norm: 0.273547887802124
+Min Linf norm: 0.27326464653015137
+Test: 6656/10000 (66%)	Loss: 1.469098, Cross Entropy: 1.469098, Reg: 0.000000
+Elapsed time (s): 10.829405546188354
+Memory usage (GB): 0.5566482543945312
+Min Linf norm: 0.26996418833732605
+Min Linf norm: 0.27200132608413696
+Test: 6912/10000 (68%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 11.363780736923218
+Memory usage (GB): 0.5389556884765625
+Min Linf norm: 0.2725781500339508
+Min Linf norm: 0.27336210012435913
+Test: 7168/10000 (71%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 11.185594081878662
+Memory usage (GB): 0.5565338134765625
+Min Linf norm: 0.27203676104545593
+Min Linf norm: 0.27211877703666687
+Test: 7424/10000 (73%)	Loss: 1.461161, Cross Entropy: 1.461161, Reg: 0.000000
+Elapsed time (s): 10.951364517211914
+Memory usage (GB): 0.5391769409179688
+Min Linf norm: 0.2736349105834961
+Min Linf norm: 0.27277904748916626
+Test: 7680/10000 (76%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 11.543013572692871
+Memory usage (GB): 0.53924560546875
+Min Linf norm: 0.27335768938064575
+Min Linf norm: 0.2726272940635681
+Test: 7936/10000 (78%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 11.253841161727905
+Memory usage (GB): 0.5391082763671875
+Min Linf norm: 0.27062857151031494
+Min Linf norm: 0.27262207865715027
+Test: 8192/10000 (81%)	Loss: 1.461159, Cross Entropy: 1.461159, Reg: 0.000000
+Elapsed time (s): 10.947471380233765
+Memory usage (GB): 0.5390777587890625
+Min Linf norm: 0.2721248269081116
+Min Linf norm: 0.2733699381351471
+Test: 8448/10000 (84%)	Loss: 1.468981, Cross Entropy: 1.468981, Reg: 0.000000
+Elapsed time (s): 11.062731504440308
+Memory usage (GB): 0.55670166015625
+Min Linf norm: 0.27238383889198303
+Min Linf norm: 0.2715768814086914
+Test: 8704/10000 (86%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 11.320377111434937
+Memory usage (GB): 0.5390625
+Min Linf norm: 0.27159300446510315
+Min Linf norm: 0.27214497327804565
+Test: 8960/10000 (89%)	Loss: 1.484604, Cross Entropy: 1.484604, Reg: 0.000000
+Elapsed time (s): 11.419785737991333
+Memory usage (GB): 0.5561370849609375
+Min Linf norm: 0.272975891828537
+Min Linf norm: 0.27182307839393616
+Test: 9216/10000 (91%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 11.337949752807617
+Memory usage (GB): 0.5390090942382812
+Min Linf norm: 0.2715925872325897
+Min Linf norm: 0.2738058567047119
+Test: 9472/10000 (94%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 11.468082666397095
+Memory usage (GB): 0.5392379760742188
+Min Linf norm: 0.2722288966178894
+Min Linf norm: 0.2734662592411041
+Test: 9728/10000 (96%)	Loss: 1.500129, Cross Entropy: 1.500129, Reg: 0.000000
+Elapsed time (s): 10.03951358795166
+Memory usage (GB): 0.5722198486328125
+Min Linf norm: 0.27140945196151733
+Min Linf norm: 0.2741781771183014
+Test: 1248/10000 (99%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 6.208949089050293
+Memory usage (GB): 0.5568962097167969
+Test set: Average loss: 1.4728, Average cross entropy: 1.4728, Average reg: 0.0000, Accuracy: 9883/10000 (99%), Robust accuracy: 8412/9883 (85%)
+
+
+# budget : 0.3
+
+Using cpu
+Using testing batch size for test loader
+Using testing batch size for train loader
+Loading weights
+Initialization done
+Start testing
+Using test loader
+Min Linf norm: 0.29838135838508606
+Test: 0/10000 (0%)	Loss: 1.476760, Cross Entropy: 1.476760, Reg: 0.000000
+Elapsed time (s): 5.246333360671997
+Memory usage (GB): 0.450103759765625
+Min Linf norm: 0.2981126308441162
+Min Linf norm: 0.29738354682922363
+Test: 256/10000 (3%)	Loss: 1.484563, Cross Entropy: 1.484563, Reg: 0.000000
+Elapsed time (s): 10.932369470596313
+Memory usage (GB): 0.48525238037109375
+Min Linf norm: 0.298393189907074
+Min Linf norm: 0.29732245206832886
+Test: 512/10000 (5%)	Loss: 1.468970, Cross Entropy: 1.468970, Reg: 0.000000
+Elapsed time (s): 10.174186944961548
+Memory usage (GB): 0.5030403137207031
+Min Linf norm: 0.2983943223953247
+Min Linf norm: 0.29637691378593445
+Test: 768/10000 (8%)	Loss: 1.476781, Cross Entropy: 1.476781, Reg: 0.000000
+Elapsed time (s): 10.624594688415527
+Memory usage (GB): 0.5032501220703125
+Min Linf norm: 0.2978338599205017
+Min Linf norm: 0.2976803183555603
+Test: 1024/10000 (10%)	Loss: 1.491720, Cross Entropy: 1.491720, Reg: 0.000000
+Elapsed time (s): 9.965678930282593
+Memory usage (GB): 0.4673805236816406
+Min Linf norm: 0.2976849675178528
+Min Linf norm: 0.29734688997268677
+Test: 1280/10000 (13%)	Loss: 1.476040, Cross Entropy: 1.476040, Reg: 0.000000
+Elapsed time (s): 9.840575933456421
+Memory usage (GB): 0.5027732849121094
+Min Linf norm: 0.2986047863960266
+Min Linf norm: 0.29689541459083557
+Test: 1536/10000 (15%)	Loss: 1.469192, Cross Entropy: 1.469192, Reg: 0.000000
+Elapsed time (s): 9.941938400268555
+Memory usage (GB): 0.5207328796386719
+Min Linf norm: 0.2973248362541199
+Min Linf norm: 0.2972855865955353
+Test: 1792/10000 (18%)	Loss: 1.468975, Cross Entropy: 1.468975, Reg: 0.000000
+Elapsed time (s): 9.881963729858398
+Memory usage (GB): 0.502899169921875
+Min Linf norm: 0.2976818382740021
+Min Linf norm: 0.2975016236305237
+Test: 2048/10000 (20%)	Loss: 1.515355, Cross Entropy: 1.515355, Reg: 0.000000
+Elapsed time (s): 10.177932024002075
+Memory usage (GB): 0.4863090515136719
+Min Linf norm: 0.29637444019317627
+Min Linf norm: 0.29703789949417114
+Test: 2304/10000 (23%)	Loss: 1.480077, Cross Entropy: 1.480077, Reg: 0.000000
+Elapsed time (s): 10.552772760391235
+Memory usage (GB): 0.5029182434082031
+Min Linf norm: 0.2977227568626404
+Min Linf norm: 0.29596394300460815
+Test: 2560/10000 (25%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 10.342096328735352
+Memory usage (GB): 0.502960205078125
+Min Linf norm: 0.2977297902107239
+Min Linf norm: 0.29751643538475037
+Test: 2816/10000 (28%)	Loss: 1.492358, Cross Entropy: 1.492358, Reg: 0.000000
+Elapsed time (s): 10.809033155441284
+Memory usage (GB): 0.5019874572753906
+Min Linf norm: 0.2981715202331543
+Min Linf norm: 0.2968803942203522
+Test: 3072/10000 (30%)	Loss: 1.468972, Cross Entropy: 1.468972, Reg: 0.000000
+Elapsed time (s): 10.779170036315918
+Memory usage (GB): 0.5032234191894531
+Min Linf norm: 0.2966654896736145
+Min Linf norm: 0.29861247539520264
+Test: 3328/10000 (33%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 10.175668478012085
+Memory usage (GB): 0.5134620666503906
+Min Linf norm: 0.29711613059043884
+Min Linf norm: 0.298073410987854
+Test: 3584/10000 (35%)	Loss: 1.468797, Cross Entropy: 1.468797, Reg: 0.000000
+Elapsed time (s): 10.131192922592163
+Memory usage (GB): 0.5030860900878906
+Min Linf norm: 0.29626697301864624
+Min Linf norm: 0.29763609170913696
+Test: 3840/10000 (38%)	Loss: 1.476783, Cross Entropy: 1.476783, Reg: 0.000000
+Elapsed time (s): 9.82089352607727
+Memory usage (GB): 0.5132179260253906
+Min Linf norm: 0.2961750626564026
+Min Linf norm: 0.2975172698497772
+Test: 4096/10000 (41%)	Loss: 1.468986, Cross Entropy: 1.468986, Reg: 0.000000
+Elapsed time (s): 10.30716347694397
+Memory usage (GB): 0.5138130187988281
+Min Linf norm: 0.2967495918273926
+Min Linf norm: 0.29646551609039307
+Test: 4352/10000 (43%)	Loss: 1.483675, Cross Entropy: 1.483675, Reg: 0.000000
+Elapsed time (s): 10.508756637573242
+Memory usage (GB): 0.5197792053222656
+Min Linf norm: 0.2987416684627533
+Min Linf norm: 0.29784339666366577
+Test: 4608/10000 (46%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 10.128711700439453
+Memory usage (GB): 0.5205039978027344
+Min Linf norm: 0.29446423053741455
+Min Linf norm: 0.2975386083126068
+Test: 4864/10000 (48%)	Loss: 1.466520, Cross Entropy: 1.466520, Reg: 0.000000
+Elapsed time (s): 10.205585241317749
+Memory usage (GB): 0.5206069946289062
+Min Linf norm: 0.2958121597766876
+Min Linf norm: 0.2936032712459564
+Test: 5120/10000 (51%)	Loss: 1.463296, Cross Entropy: 1.463296, Reg: 0.000000
+Elapsed time (s): 11.142021894454956
+Memory usage (GB): 0.4962806701660156
+Min Linf norm: 0.2959256172180176
+Min Linf norm: 0.29741865396499634
+Test: 5376/10000 (53%)	Loss: 1.462325, Cross Entropy: 1.462325, Reg: 0.000000
+Elapsed time (s): 11.18280577659607
+Memory usage (GB): 0.4963798522949219
+Min Linf norm: 0.29801976680755615
+Min Linf norm: 0.2959839999675751
+Test: 5632/10000 (56%)	Loss: 1.461169, Cross Entropy: 1.461169, Reg: 0.000000
+Elapsed time (s): 11.745362043380737
+Memory usage (GB): 0.4959297180175781
+Min Linf norm: 0.2978535592556
+Min Linf norm: 0.29724931716918945
+Test: 5888/10000 (58%)	Loss: 1.480827, Cross Entropy: 1.480827, Reg: 0.000000
+Elapsed time (s): 10.384414196014404
+Memory usage (GB): 0.5022506713867188
+Min Linf norm: 0.2966046631336212
+Min Linf norm: 0.2951858639717102
+Test: 6144/10000 (61%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 13.038345336914062
+Memory usage (GB): 0.4961395263671875
+Min Linf norm: 0.29765498638153076
+Min Linf norm: 0.29759734869003296
+Test: 6400/10000 (63%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 11.375129699707031
+Memory usage (GB): 0.4963226318359375
+Min Linf norm: 0.2984158992767334
+Min Linf norm: 0.2981069087982178
+Test: 6656/10000 (66%)	Loss: 1.469098, Cross Entropy: 1.469098, Reg: 0.000000
+Elapsed time (s): 11.543989896774292
+Memory usage (GB): 0.5136260986328125
+Min Linf norm: 0.29450637102127075
+Min Linf norm: 0.2980797588825226
+Test: 6912/10000 (68%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 13.210283756256104
+Memory usage (GB): 0.4961433410644531
+Min Linf norm: 0.2973580062389374
+Min Linf norm: 0.29820165038108826
+Test: 7168/10000 (71%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 11.75669264793396
+Memory usage (GB): 0.5136528015136719
+Min Linf norm: 0.29676738381385803
+Min Linf norm: 0.2968568503856659
+Test: 7424/10000 (73%)	Loss: 1.461161, Cross Entropy: 1.461161, Reg: 0.000000
+Elapsed time (s): 12.557126522064209
+Memory usage (GB): 0.49614715576171875
+Min Linf norm: 0.2985108494758606
+Min Linf norm: 0.2975771427154541
+Test: 7680/10000 (76%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 11.676707744598389
+Memory usage (GB): 0.49608612060546875
+Min Linf norm: 0.29820841550827026
+Min Linf norm: 0.29741162061691284
+Test: 7936/10000 (78%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 11.297470569610596
+Memory usage (GB): 0.4960174560546875
+Min Linf norm: 0.2952311933040619
+Min Linf norm: 0.2974059283733368
+Test: 8192/10000 (81%)	Loss: 1.461159, Cross Entropy: 1.461159, Reg: 0.000000
+Elapsed time (s): 10.814618587493896
+Memory usage (GB): 0.4961395263671875
+Min Linf norm: 0.2968634366989136
+Min Linf norm: 0.29822173714637756
+Test: 8448/10000 (84%)	Loss: 1.468981, Cross Entropy: 1.468981, Reg: 0.000000
+Elapsed time (s): 10.818312883377075
+Memory usage (GB): 0.520599365234375
+Min Linf norm: 0.2971459925174713
+Min Linf norm: 0.29626569151878357
+Test: 8704/10000 (86%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 11.365949153900146
+Memory usage (GB): 0.4963569641113281
+Min Linf norm: 0.2962833046913147
+Min Linf norm: 0.2968854308128357
+Test: 8960/10000 (89%)	Loss: 1.484604, Cross Entropy: 1.484604, Reg: 0.000000
+Elapsed time (s): 10.858145952224731
+Memory usage (GB): 0.5024681091308594
+Min Linf norm: 0.29779186844825745
+Min Linf norm: 0.2965342700481415
+Test: 9216/10000 (91%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 11.179974555969238
+Memory usage (GB): 0.49629974365234375
+Min Linf norm: 0.2962828278541565
+Min Linf norm: 0.2986973226070404
+Test: 9472/10000 (94%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 11.08341932296753
+Memory usage (GB): 0.4962310791015625
+Min Linf norm: 0.2969769835472107
+Min Linf norm: 0.29832684993743896
+Test: 9728/10000 (96%)	Loss: 1.500129, Cross Entropy: 1.500129, Reg: 0.000000
+Elapsed time (s): 9.79959750175476
+Memory usage (GB): 0.5291519165039062
+Min Linf norm: 0.2960830628871918
+Min Linf norm: 0.2991034686565399
+Test: 1248/10000 (99%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 5.8005781173706055
+Memory usage (GB): 0.5137863159179688
+Test set: Average loss: 1.4728, Average cross entropy: 1.4728, Average reg: 0.0000, Accuracy: 9883/10000 (99%), Robust accuracy: 7112/9883 (72%)
+
+# budget : 0.325
+
+Using cpu
+Using testing batch size for test loader
+Using testing batch size for train loader
+Loading weights
+Initialization done
+Start testing
+Using test loader
+Min Linf norm: 0.32324644923210144
+Test: 0/10000 (0%)	Loss: 1.476760, Cross Entropy: 1.476760, Reg: 0.000000
+Elapsed time (s): 4.910323858261108
+Memory usage (GB): 0.4606971740722656
+Min Linf norm: 0.32295534014701843
+Min Linf norm: 0.32216545939445496
+Test: 256/10000 (3%)	Loss: 1.484563, Cross Entropy: 1.484563, Reg: 0.000000
+Elapsed time (s): 10.47697639465332
+Memory usage (GB): 0.5056533813476562
+Min Linf norm: 0.32325929403305054
+Min Linf norm: 0.3220992982387543
+Test: 512/10000 (5%)	Loss: 1.468970, Cross Entropy: 1.468970, Reg: 0.000000
+Elapsed time (s): 10.032957553863525
+Memory usage (GB): 0.523468017578125
+Min Linf norm: 0.32326051592826843
+Min Linf norm: 0.3210749626159668
+Test: 768/10000 (8%)	Loss: 1.476781, Cross Entropy: 1.476781, Reg: 0.000000
+Elapsed time (s): 10.43494200706482
+Memory usage (GB): 0.523468017578125
+Min Linf norm: 0.32265332341194153
+Min Linf norm: 0.3224869966506958
+Test: 1024/10000 (10%)	Loss: 1.491720, Cross Entropy: 1.491720, Reg: 0.000000
+Elapsed time (s): 9.48546576499939
+Memory usage (GB): 0.5063018798828125
+Min Linf norm: 0.3224920332431793
+Min Linf norm: 0.32212576270103455
+Test: 1280/10000 (13%)	Loss: 1.476040, Cross Entropy: 1.476040, Reg: 0.000000
+Elapsed time (s): 9.663410902023315
+Memory usage (GB): 0.5408668518066406
+Min Linf norm: 0.3234885036945343
+Min Linf norm: 0.3216366767883301
+Test: 1536/10000 (15%)	Loss: 1.469192, Cross Entropy: 1.469192, Reg: 0.000000
+Elapsed time (s): 9.619204044342041
+Memory usage (GB): 0.5408363342285156
+Min Linf norm: 0.322101891040802
+Min Linf norm: 0.32205936312675476
+Test: 1792/10000 (18%)	Loss: 1.468975, Cross Entropy: 1.468975, Reg: 0.000000
+Elapsed time (s): 9.778678178787231
+Memory usage (GB): 0.5585098266601562
+Min Linf norm: 0.3224886357784271
+Min Linf norm: 0.32229334115982056
+Test: 2048/10000 (20%)	Loss: 1.515355, Cross Entropy: 1.515355, Reg: 0.000000
+Elapsed time (s): 9.901599645614624
+Memory usage (GB): 0.5065727233886719
+Min Linf norm: 0.3210723102092743
+Min Linf norm: 0.3217923045158386
+Test: 2304/10000 (23%)	Loss: 1.480077, Cross Entropy: 1.480077, Reg: 0.000000
+Elapsed time (s): 10.168879747390747
+Memory usage (GB): 0.54144287109375
+Min Linf norm: 0.3225329518318176
+Min Linf norm: 0.3206275701522827
+Test: 2560/10000 (25%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 10.057302713394165
+Memory usage (GB): 0.5588111877441406
+Min Linf norm: 0.3225405812263489
+Min Linf norm: 0.3223094344139099
+Test: 2816/10000 (28%)	Loss: 1.492358, Cross Entropy: 1.492358, Reg: 0.000000
+Elapsed time (s): 9.777597665786743
+Memory usage (GB): 0.5239906311035156
+Min Linf norm: 0.3230191469192505
+Min Linf norm: 0.3216204047203064
+Test: 3072/10000 (30%)	Loss: 1.468972, Cross Entropy: 1.468972, Reg: 0.000000
+Elapsed time (s): 10.23372197151184
+Memory usage (GB): 0.5410575866699219
+Min Linf norm: 0.3213875889778137
+Min Linf norm: 0.32349684834480286
+Test: 3328/10000 (33%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 10.06537389755249
+Memory usage (GB): 0.5411376953125
+Min Linf norm: 0.32187578082084656
+Min Linf norm: 0.3229128122329712
+Test: 3584/10000 (35%)	Loss: 1.468797, Cross Entropy: 1.468797, Reg: 0.000000
+Elapsed time (s): 10.108259916305542
+Memory usage (GB): 0.5411376953125
+Min Linf norm: 0.32095587253570557
+Min Linf norm: 0.3224390745162964
+Test: 3840/10000 (38%)	Loss: 1.476783, Cross Entropy: 1.476783, Reg: 0.000000
+Elapsed time (s): 9.763116598129272
+Memory usage (GB): 0.5231475830078125
+Min Linf norm: 0.32085633277893066
+Min Linf norm: 0.32231029868125916
+Test: 4096/10000 (41%)	Loss: 1.468986, Cross Entropy: 1.468986, Reg: 0.000000
+Elapsed time (s): 9.85329532623291
+Memory usage (GB): 0.5410537719726562
+Min Linf norm: 0.3214787244796753
+Min Linf norm: 0.3211709260940552
+Test: 4352/10000 (43%)	Loss: 1.483675, Cross Entropy: 1.483675, Reg: 0.000000
+Elapsed time (s): 10.194734811782837
+Memory usage (GB): 0.5234413146972656
+Min Linf norm: 0.3236367702484131
+Min Linf norm: 0.32266366481781006
+Test: 4608/10000 (46%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 9.832701444625854
+Memory usage (GB): 0.5412216186523438
+Min Linf norm: 0.3190028667449951
+Min Linf norm: 0.3223334550857544
+Test: 4864/10000 (48%)	Loss: 1.466520, Cross Entropy: 1.466520, Reg: 0.000000
+Elapsed time (s): 9.81002950668335
+Memory usage (GB): 0.5409965515136719
+Min Linf norm: 0.321362167596817
+Min Linf norm: 0.3180701732635498
+Test: 5120/10000 (51%)	Loss: 1.463296, Cross Entropy: 1.463296, Reg: 0.000000
+Elapsed time (s): 10.947590589523315
+Memory usage (GB): 0.5240592956542969
+Min Linf norm: 0.32187238335609436
+Min Linf norm: 0.32220351696014404
+Test: 5376/10000 (53%)	Loss: 1.462325, Cross Entropy: 1.462325, Reg: 0.000000
+Elapsed time (s): 10.70620322227478
+Memory usage (GB): 0.5415840148925781
+Min Linf norm: 0.3228546977043152
+Min Linf norm: 0.32064929604530334
+Test: 5632/10000 (56%)	Loss: 1.461169, Cross Entropy: 1.461169, Reg: 0.000000
+Elapsed time (s): 10.423580169677734
+Memory usage (GB): 0.5413055419921875
+Min Linf norm: 0.3226746618747711
+Min Linf norm: 0.3220200836658478
+Test: 5888/10000 (58%)	Loss: 1.480827, Cross Entropy: 1.480827, Reg: 0.000000
+Elapsed time (s): 9.929071187973022
+Memory usage (GB): 0.5232467651367188
+Min Linf norm: 0.3213216960430145
+Min Linf norm: 0.31978467106819153
+Test: 6144/10000 (61%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 10.931973934173584
+Memory usage (GB): 0.5411186218261719
+Min Linf norm: 0.32270896434783936
+Min Linf norm: 0.3223971128463745
+Test: 6400/10000 (63%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 10.718125581741333
+Memory usage (GB): 0.5413246154785156
+Min Linf norm: 0.3232838809490204
+Min Linf norm: 0.3229491412639618
+Test: 6656/10000 (66%)	Loss: 1.469098, Cross Entropy: 1.469098, Reg: 0.000000
+Elapsed time (s): 10.00676941871643
+Memory usage (GB): 0.5408744812011719
+Min Linf norm: 0.31904855370521545
+Min Linf norm: 0.32291972637176514
+Test: 6912/10000 (68%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 10.941526889801025
+Memory usage (GB): 0.5417442321777344
+Min Linf norm: 0.3221378028392792
+Min Linf norm: 0.3230517506599426
+Test: 7168/10000 (71%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 10.799516201019287
+Memory usage (GB): 0.5765304565429688
+Min Linf norm: 0.32329726219177246
+Min Linf norm: 0.32159489393234253
+Test: 7424/10000 (73%)	Loss: 1.461161, Cross Entropy: 1.461161, Reg: 0.000000
+Elapsed time (s): 10.41648244857788
+Memory usage (GB): 0.5063819885253906
+Min Linf norm: 0.3233867287635803
+Min Linf norm: 0.32237523794174194
+Test: 7680/10000 (76%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 11.286771535873413
+Memory usage (GB): 0.5239372253417969
+Min Linf norm: 0.3230591416358948
+Min Linf norm: 0.3221958875656128
+Test: 7936/10000 (78%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 10.692095756530762
+Memory usage (GB): 0.5588150024414062
+Min Linf norm: 0.32111653685569763
+Min Linf norm: 0.3221897780895233
+Test: 8192/10000 (81%)	Loss: 1.461159, Cross Entropy: 1.461159, Reg: 0.000000
+Elapsed time (s): 10.342627763748169
+Memory usage (GB): 0.5238227844238281
+Min Linf norm: 0.32266753911972046
+Min Linf norm: 0.3231864273548126
+Test: 8448/10000 (84%)	Loss: 1.468981, Cross Entropy: 1.468981, Reg: 0.000000
+Elapsed time (s): 10.70516037940979
+Memory usage (GB): 0.5416984558105469
+Min Linf norm: 0.3219081461429596
+Min Linf norm: 0.32095447182655334
+Test: 8704/10000 (86%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 10.99583125114441
+Memory usage (GB): 0.5241203308105469
+Min Linf norm: 0.32097354531288147
+Min Linf norm: 0.32162582874298096
+Test: 8960/10000 (89%)	Loss: 1.484604, Cross Entropy: 1.484604, Reg: 0.000000
+Elapsed time (s): 10.430484771728516
+Memory usage (GB): 0.5228805541992188
+Min Linf norm: 0.3226078450679779
+Min Linf norm: 0.3212454319000244
+Test: 9216/10000 (91%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 10.731529951095581
+Memory usage (GB): 0.5065116882324219
+Min Linf norm: 0.3209730386734009
+Min Linf norm: 0.3235887289047241
+Test: 9472/10000 (94%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 10.37311053276062
+Memory usage (GB): 0.5413436889648438
+Min Linf norm: 0.3217250108718872
+Min Linf norm: 0.3231874108314514
+Test: 9728/10000 (96%)	Loss: 1.500129, Cross Entropy: 1.500129, Reg: 0.000000
+Elapsed time (s): 9.452893733978271
+Memory usage (GB): 0.5394096374511719
+Min Linf norm: 0.32075661420822144
+Min Linf norm: 0.3242323398590088
+Test: 1248/10000 (99%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 5.9508056640625
+Memory usage (GB): 0.48921966552734375
+Test set: Average loss: 1.4728, Average cross entropy: 1.4728, Average reg: 0.0000, Accuracy: 9883/10000 (99%), Robust accuracy: 5385/9883 (54%)
+
+
+# budget : 0.35
+
+Using cpu
+Using testing batch size for test loader
+Using testing batch size for train loader
+Loading weights
+Initialization done
+Start testing
+Using test loader
+Min Linf norm: 0.34837716817855835
+Test: 0/10000 (0%)	Loss: 1.476760, Cross Entropy: 1.476760, Reg: 0.000000
+Elapsed time (s): 4.9428870677948
+Memory usage (GB): 0.4683380126953125
+Min Linf norm: 0.34858107566833496
+Min Linf norm: 0.3491019904613495
+Test: 256/10000 (3%)	Loss: 1.484563, Cross Entropy: 1.484563, Reg: 0.000000
+Elapsed time (s): 10.128124713897705
+Memory usage (GB): 0.4962158203125
+Min Linf norm: 0.3481253981590271
+Min Linf norm: 0.3468761742115021
+Test: 512/10000 (5%)	Loss: 1.468970, Cross Entropy: 1.468970, Reg: 0.000000
+Elapsed time (s): 9.885892391204834
+Memory usage (GB): 0.5135536193847656
+Min Linf norm: 0.3490891456604004
+Min Linf norm: 0.34577304124832153
+Test: 768/10000 (8%)	Loss: 1.476781, Cross Entropy: 1.476781, Reg: 0.000000
+Elapsed time (s): 11.544820785522461
+Memory usage (GB): 0.478668212890625
+Min Linf norm: 0.34747281670570374
+Min Linf norm: 0.3472937047481537
+Test: 1024/10000 (10%)	Loss: 1.491720, Cross Entropy: 1.491720, Reg: 0.000000
+Elapsed time (s): 10.269017219543457
+Memory usage (GB): 0.5120086669921875
+Min Linf norm: 0.34646064043045044
+Min Linf norm: 0.3469046652317047
+Test: 1280/10000 (13%)	Loss: 1.476040, Cross Entropy: 1.476040, Reg: 0.000000
+Elapsed time (s): 10.100891828536987
+Memory usage (GB): 0.546539306640625
+Min Linf norm: 0.3483722507953644
+Min Linf norm: 0.346377968788147
+Test: 1536/10000 (15%)	Loss: 1.469192, Cross Entropy: 1.469192, Reg: 0.000000
+Elapsed time (s): 10.1159827709198
+Memory usage (GB): 0.546966552734375
+Min Linf norm: 0.3468789756298065
+Min Linf norm: 0.34683316946029663
+Test: 1792/10000 (18%)	Loss: 1.468975, Cross Entropy: 1.468975, Reg: 0.000000
+Elapsed time (s): 10.162989616394043
+Memory usage (GB): 0.5470046997070312
+Min Linf norm: 0.34729546308517456
+Min Linf norm: 0.347085177898407
+Test: 2048/10000 (20%)	Loss: 1.515355, Cross Entropy: 1.515355, Reg: 0.000000
+Elapsed time (s): 10.542061805725098
+Memory usage (GB): 0.5470085144042969
+Min Linf norm: 0.3457701802253723
+Min Linf norm: 0.346545547246933
+Test: 2304/10000 (23%)	Loss: 1.480077, Cross Entropy: 1.480077, Reg: 0.000000
+Elapsed time (s): 9.975264072418213
+Memory usage (GB): 0.5293121337890625
+Min Linf norm: 0.34734317660331726
+Min Linf norm: 0.34529122710227966
+Test: 2560/10000 (25%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 9.880410432815552
+Memory usage (GB): 0.529571533203125
+Min Linf norm: 0.34735140204429626
+Min Linf norm: 0.34710249304771423
+Test: 2816/10000 (28%)	Loss: 1.492358, Cross Entropy: 1.492358, Reg: 0.000000
+Elapsed time (s): 10.845563173294067
+Memory usage (GB): 0.5473861694335938
+Min Linf norm: 0.3478667736053467
+Min Linf norm: 0.346360445022583
+Test: 3072/10000 (30%)	Loss: 1.468972, Cross Entropy: 1.468972, Reg: 0.000000
+Elapsed time (s): 10.037883758544922
+Memory usage (GB): 0.5472984313964844
+Min Linf norm: 0.34610968828201294
+Min Linf norm: 0.3483812212944031
+Test: 3328/10000 (33%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 10.271532535552979
+Memory usage (GB): 0.5474090576171875
+Min Linf norm: 0.3469197452068329
+Min Linf norm: 0.34775227308273315
+Test: 3584/10000 (35%)	Loss: 1.468797, Cross Entropy: 1.468797, Reg: 0.000000
+Elapsed time (s): 10.177407503128052
+Memory usage (GB): 0.5472030639648438
+Min Linf norm: 0.3456448018550873
+Min Linf norm: 0.3472420871257782
+Test: 3840/10000 (38%)	Loss: 1.476783, Cross Entropy: 1.476783, Reg: 0.000000
+Elapsed time (s): 9.847076416015625
+Memory usage (GB): 0.5467872619628906
+Min Linf norm: 0.34553754329681396
+Min Linf norm: 0.34710344672203064
+Test: 4096/10000 (41%)	Loss: 1.468986, Cross Entropy: 1.468986, Reg: 0.000000
+Elapsed time (s): 9.715373277664185
+Memory usage (GB): 0.5470466613769531
+Min Linf norm: 0.346207857131958
+Min Linf norm: 0.34587639570236206
+Test: 4352/10000 (43%)	Loss: 1.483675, Cross Entropy: 1.483675, Reg: 0.000000
+Elapsed time (s): 11.142914533615112
+Memory usage (GB): 0.5464057922363281
+Min Linf norm: 0.34853193163871765
+Min Linf norm: 0.34748396277427673
+Test: 4608/10000 (46%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 9.840596914291382
+Memory usage (GB): 0.5470314025878906
+Min Linf norm: 0.34750986099243164
+Min Linf norm: 0.34712836146354675
+Test: 4864/10000 (48%)	Loss: 1.466520, Cross Entropy: 1.466520, Reg: 0.000000
+Elapsed time (s): 9.709779262542725
+Memory usage (GB): 0.54736328125
+Min Linf norm: 0.3460823595523834
+Min Linf norm: 0.34253713488578796
+Test: 5120/10000 (51%)	Loss: 1.463296, Cross Entropy: 1.463296, Reg: 0.000000
+Elapsed time (s): 10.734859704971313
+Memory usage (GB): 0.5648422241210938
+Min Linf norm: 0.346631795167923
+Min Linf norm: 0.34698837995529175
+Test: 5376/10000 (53%)	Loss: 1.462325, Cross Entropy: 1.462325, Reg: 0.000000
+Elapsed time (s): 10.649086236953735
+Memory usage (GB): 0.5300369262695312
+Min Linf norm: 0.347689688205719
+Min Linf norm: 0.3453146517276764
+Test: 5632/10000 (56%)	Loss: 1.461169, Cross Entropy: 1.461169, Reg: 0.000000
+Elapsed time (s): 10.544220924377441
+Memory usage (GB): 0.5822715759277344
+Min Linf norm: 0.34749579429626465
+Min Linf norm: 0.3467908501625061
+Test: 5888/10000 (58%)	Loss: 1.480827, Cross Entropy: 1.480827, Reg: 0.000000
+Elapsed time (s): 10.455097675323486
+Memory usage (GB): 0.5474662780761719
+Min Linf norm: 0.3460387587547302
+Min Linf norm: 0.34438350796699524
+Test: 6144/10000 (61%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 11.179011821746826
+Memory usage (GB): 0.5299606323242188
+Min Linf norm: 0.3475326895713806
+Min Linf norm: 0.3478661775588989
+Test: 6400/10000 (63%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 11.132302045822144
+Memory usage (GB): 0.5477371215820312
+Min Linf norm: 0.3485747277736664
+Min Linf norm: 0.3477913737297058
+Test: 6656/10000 (66%)	Loss: 1.469098, Cross Entropy: 1.469098, Reg: 0.000000
+Elapsed time (s): 11.575917482376099
+Memory usage (GB): 0.5651092529296875
+Min Linf norm: 0.34359076619148254
+Min Linf norm: 0.3477596938610077
+Test: 6912/10000 (68%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 11.006058692932129
+Memory usage (GB): 0.52978515625
+Min Linf norm: 0.34691765904426575
+Min Linf norm: 0.3479019105434418
+Test: 7168/10000 (71%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 10.87294602394104
+Memory usage (GB): 0.5650787353515625
+Min Linf norm: 0.34778302907943726
+Min Linf norm: 0.34633296728134155
+Test: 7424/10000 (73%)	Loss: 1.461161, Cross Entropy: 1.461161, Reg: 0.000000
+Elapsed time (s): 10.653770208358765
+Memory usage (GB): 0.5299758911132812
+Min Linf norm: 0.34826260805130005
+Min Linf norm: 0.3471733331680298
+Test: 7680/10000 (76%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 11.232340574264526
+Memory usage (GB): 0.5648078918457031
+Min Linf norm: 0.3481559753417969
+Min Linf norm: 0.34698018431663513
+Test: 7936/10000 (78%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 11.100944757461548
+Memory usage (GB): 0.5298233032226562
+Min Linf norm: 0.346829354763031
+Min Linf norm: 0.34697362780570984
+Test: 8192/10000 (81%)	Loss: 1.461159, Cross Entropy: 1.461159, Reg: 0.000000
+Elapsed time (s): 10.696099758148193
+Memory usage (GB): 0.5646934509277344
+Min Linf norm: 0.347488135099411
+Min Linf norm: 0.3480469286441803
+Test: 8448/10000 (84%)	Loss: 1.468981, Cross Entropy: 1.468981, Reg: 0.000000
+Elapsed time (s): 10.376668214797974
+Memory usage (GB): 0.5295639038085938
+Min Linf norm: 0.3466702997684479
+Min Linf norm: 0.3456432819366455
+Test: 8704/10000 (86%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 10.891728639602661
+Memory usage (GB): 0.54766845703125
+Min Linf norm: 0.34566381573677063
+Min Linf norm: 0.346366286277771
+Test: 8960/10000 (89%)	Loss: 1.484604, Cross Entropy: 1.484604, Reg: 0.000000
+Elapsed time (s): 10.23008394241333
+Memory usage (GB): 0.5462799072265625
+Min Linf norm: 0.34742382168769836
+Min Linf norm: 0.34595662355422974
+Test: 9216/10000 (91%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 10.780093908309937
+Memory usage (GB): 0.5298881530761719
+Min Linf norm: 0.34566327929496765
+Min Linf norm: 0.3484801948070526
+Test: 9472/10000 (94%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 10.456098318099976
+Memory usage (GB): 0.5476264953613281
+Min Linf norm: 0.3464730978012085
+Min Linf norm: 0.34804797172546387
+Test: 9728/10000 (96%)	Loss: 1.500129, Cross Entropy: 1.500129, Reg: 0.000000
+Elapsed time (s): 9.615882873535156
+Memory usage (GB): 0.5810279846191406
+Min Linf norm: 0.3454302251338959
+Min Linf norm: 0.34917324781417847
+Test: 1248/10000 (99%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 7.970847845077515
+Memory usage (GB): 0.5999336242675781
+Test set: Average loss: 1.4728, Average cross entropy: 1.4728, Average reg: 0.0000, Accuracy: 9883/10000 (99%), Robust accuracy: 3923/9883 (40%)
+
+
+# budget : 0.375
+
+Using cpu
+Using testing batch size for test loader
+Using testing batch size for train loader
+Loading weights
+Initialization done
+Start testing
+Using test loader
+Min Linf norm: 0.37348318099975586
+Test: 0/10000 (0%)	Loss: 1.476760, Cross Entropy: 1.476760, Reg: 0.000000
+Elapsed time (s): 5.3306498527526855
+Memory usage (GB): 0.4653511047363281
+Min Linf norm: 0.3734797239303589
+Min Linf norm: 0.37403786182403564
+Test: 256/10000 (3%)	Loss: 1.484563, Cross Entropy: 1.484563, Reg: 0.000000
+Elapsed time (s): 10.328744411468506
+Memory usage (GB): 0.5101394653320312
+Min Linf norm: 0.3715357482433319
+Min Linf norm: 0.3716530501842499
+Test: 512/10000 (5%)	Loss: 1.468970, Cross Entropy: 1.468970, Reg: 0.000000
+Elapsed time (s): 11.159167766571045
+Memory usage (GB): 0.5278396606445312
+Min Linf norm: 0.37402409315109253
+Min Linf norm: 0.37257295846939087
+Test: 768/10000 (8%)	Loss: 1.476781, Cross Entropy: 1.476781, Reg: 0.000000
+Elapsed time (s): 11.344548463821411
+Memory usage (GB): 0.5278396606445312
+Min Linf norm: 0.3739304542541504
+Min Linf norm: 0.3721004128456116
+Test: 1024/10000 (10%)	Loss: 1.491720, Cross Entropy: 1.491720, Reg: 0.000000
+Elapsed time (s): 11.067319631576538
+Memory usage (GB): 0.5109710693359375
+Min Linf norm: 0.3710152506828308
+Min Linf norm: 0.37252992391586304
+Test: 1280/10000 (13%)	Loss: 1.476040, Cross Entropy: 1.476040, Reg: 0.000000
+Elapsed time (s): 11.063155174255371
+Memory usage (GB): 0.5455360412597656
+Min Linf norm: 0.37325596809387207
+Min Linf norm: 0.37111926078796387
+Test: 1536/10000 (15%)	Loss: 1.469192, Cross Entropy: 1.469192, Reg: 0.000000
+Elapsed time (s): 11.199887752532959
+Memory usage (GB): 0.5455055236816406
+Min Linf norm: 0.37165606021881104
+Min Linf norm: 0.37194809317588806
+Test: 1792/10000 (18%)	Loss: 1.468975, Cross Entropy: 1.468975, Reg: 0.000000
+Elapsed time (s): 11.998430013656616
+Memory usage (GB): 0.5633659362792969
+Min Linf norm: 0.37376904487609863
+Min Linf norm: 0.3738187253475189
+Test: 2048/10000 (20%)	Loss: 1.515355, Cross Entropy: 1.515355, Reg: 0.000000
+Elapsed time (s): 11.695358276367188
+Memory usage (GB): 0.5112419128417969
+Min Linf norm: 0.37046805024147034
+Min Linf norm: 0.37129881978034973
+Test: 2304/10000 (23%)	Loss: 1.480077, Cross Entropy: 1.480077, Reg: 0.000000
+Elapsed time (s): 13.286087989807129
+Memory usage (GB): 0.5463638305664062
+Min Linf norm: 0.3721534013748169
+Min Linf norm: 0.3699548840522766
+Test: 2560/10000 (25%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 12.505247116088867
+Memory usage (GB): 0.5637321472167969
+Min Linf norm: 0.37340953946113586
+Min Linf norm: 0.37189552187919617
+Test: 2816/10000 (28%)	Loss: 1.492358, Cross Entropy: 1.492358, Reg: 0.000000
+Elapsed time (s): 10.58417296409607
+Memory usage (GB): 0.5287895202636719
+Min Linf norm: 0.37271440029144287
+Min Linf norm: 0.3711004853248596
+Test: 3072/10000 (30%)	Loss: 1.468972, Cross Entropy: 1.468972, Reg: 0.000000
+Elapsed time (s): 10.27477502822876
+Memory usage (GB): 0.5454254150390625
+Min Linf norm: 0.37099626660346985
+Min Linf norm: 0.37091973423957825
+Test: 3328/10000 (33%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 11.377127647399902
+Memory usage (GB): 0.5458145141601562
+Min Linf norm: 0.371699720621109
+Min Linf norm: 0.3725917339324951
+Test: 3584/10000 (35%)	Loss: 1.468797, Cross Entropy: 1.468797, Reg: 0.000000
+Elapsed time (s): 12.247320175170898
+Memory usage (GB): 0.5456733703613281
+Min Linf norm: 0.3735910654067993
+Min Linf norm: 0.37204509973526
+Test: 3840/10000 (38%)	Loss: 1.476783, Cross Entropy: 1.476783, Reg: 0.000000
+Elapsed time (s): 11.76431655883789
+Memory usage (GB): 0.527862548828125
+Min Linf norm: 0.37021881341934204
+Min Linf norm: 0.3728187382221222
+Test: 4096/10000 (41%)	Loss: 1.468986, Cross Entropy: 1.468986, Reg: 0.000000
+Elapsed time (s): 11.198275566101074
+Memory usage (GB): 0.5457725524902344
+Min Linf norm: 0.3709369897842407
+Min Linf norm: 0.37058186531066895
+Test: 4352/10000 (43%)	Loss: 1.483675, Cross Entropy: 1.483675, Reg: 0.000000
+Elapsed time (s): 11.83437728881836
+Memory usage (GB): 0.5282173156738281
+Min Linf norm: 0.37342706322669983
+Min Linf norm: 0.3723042607307434
+Test: 4608/10000 (46%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 11.26563572883606
+Memory usage (GB): 0.5460357666015625
+Min Linf norm: 0.37233200669288635
+Min Linf norm: 0.3719232380390167
+Test: 4864/10000 (48%)	Loss: 1.466520, Cross Entropy: 1.466520, Reg: 0.000000
+Elapsed time (s): 11.286845684051514
+Memory usage (GB): 0.5456161499023438
+Min Linf norm: 0.37080252170562744
+Min Linf norm: 0.36700406670570374
+Test: 5120/10000 (51%)	Loss: 1.463296, Cross Entropy: 1.463296, Reg: 0.000000
+Elapsed time (s): 12.312538385391235
+Memory usage (GB): 0.5287208557128906
+Min Linf norm: 0.371391236782074
+Min Linf norm: 0.3718574047088623
+Test: 5376/10000 (53%)	Loss: 1.462325, Cross Entropy: 1.462325, Reg: 0.000000
+Elapsed time (s): 12.365599870681763
+Memory usage (GB): 0.5462455749511719
+Min Linf norm: 0.3725246787071228
+Min Linf norm: 0.36997997760772705
+Test: 5632/10000 (56%)	Loss: 1.461169, Cross Entropy: 1.461169, Reg: 0.000000
+Elapsed time (s): 11.738404750823975
+Memory usage (GB): 0.5462188720703125
+Min Linf norm: 0.37231695652008057
+Min Linf norm: 0.3715616464614868
+Test: 5888/10000 (58%)	Loss: 1.480827, Cross Entropy: 1.480827, Reg: 0.000000
+Elapsed time (s): 11.473666906356812
+Memory usage (GB): 0.5280952453613281
+Min Linf norm: 0.37075579166412354
+Min Linf norm: 0.36898231506347656
+Test: 6144/10000 (61%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 12.792089939117432
+Memory usage (GB): 0.5459671020507812
+Min Linf norm: 0.3715379238128662
+Min Linf norm: 0.37271377444267273
+Test: 6400/10000 (63%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 12.247042179107666
+Memory usage (GB): 0.5460624694824219
+Min Linf norm: 0.3734729290008545
+Min Linf norm: 0.3726336359977722
+Test: 6656/10000 (66%)	Loss: 1.469098, Cross Entropy: 1.469098, Reg: 0.000000
+Elapsed time (s): 11.503931045532227
+Memory usage (GB): 0.5460014343261719
+Min Linf norm: 0.36813294887542725
+Min Linf norm: 0.37259969115257263
+Test: 6912/10000 (68%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 13.136001110076904
+Memory usage (GB): 0.5468978881835938
+Min Linf norm: 0.37169748544692993
+Min Linf norm: 0.37275204062461853
+Test: 7168/10000 (71%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 12.501644611358643
+Memory usage (GB): 0.5816841125488281
+Min Linf norm: 0.3726246953010559
+Min Linf norm: 0.3710710406303406
+Test: 7424/10000 (73%)	Loss: 1.461161, Cross Entropy: 1.461161, Reg: 0.000000
+Elapsed time (s): 11.737085580825806
+Memory usage (GB): 0.51153564453125
+Min Linf norm: 0.3731384873390198
+Min Linf norm: 0.3719714283943176
+Test: 7680/10000 (76%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 12.229166269302368
+Memory usage (GB): 0.5292778015136719
+Min Linf norm: 0.3730242848396301
+Min Linf norm: 0.3718101978302002
+Test: 7936/10000 (78%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 12.30539846420288
+Memory usage (GB): 0.5641555786132812
+Min Linf norm: 0.3720383048057556
+Min Linf norm: 0.37175747752189636
+Test: 8192/10000 (81%)	Loss: 1.461159, Cross Entropy: 1.461159, Reg: 0.000000
+Elapsed time (s): 11.574026107788086
+Memory usage (GB): 0.5294151306152344
+Min Linf norm: 0.37230873107910156
+Min Linf norm: 0.372907429933548
+Test: 8448/10000 (84%)	Loss: 1.468981, Cross Entropy: 1.468981, Reg: 0.000000
+Elapsed time (s): 11.650701522827148
+Memory usage (GB): 0.5467872619628906
+Min Linf norm: 0.37143248319625854
+Min Linf norm: 0.37033212184906006
+Test: 8704/10000 (86%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 12.38415813446045
+Memory usage (GB): 0.5292739868164062
+Min Linf norm: 0.3703541159629822
+Min Linf norm: 0.37110674381256104
+Test: 8960/10000 (89%)	Loss: 1.484604, Cross Entropy: 1.484604, Reg: 0.000000
+Elapsed time (s): 11.993221521377563
+Memory usage (GB): 0.5278739929199219
+Min Linf norm: 0.3722398281097412
+Min Linf norm: 0.37066781520843506
+Test: 9216/10000 (91%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 12.224449634552002
+Memory usage (GB): 0.511474609375
+Min Linf norm: 0.3703535199165344
+Min Linf norm: 0.3733716309070587
+Test: 9472/10000 (94%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 11.74176812171936
+Memory usage (GB): 0.5463066101074219
+Min Linf norm: 0.3712211847305298
+Min Linf norm: 0.3729085326194763
+Test: 9728/10000 (96%)	Loss: 1.500129, Cross Entropy: 1.500129, Reg: 0.000000
+Elapsed time (s): 10.707196474075317
+Memory usage (GB): 0.5444869995117188
+Min Linf norm: 0.3701038062572479
+Min Linf norm: 0.3741142153739929
+Test: 1248/10000 (99%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 6.806087017059326
+Memory usage (GB): 0.49434661865234375
+Test set: Average loss: 1.4728, Average cross entropy: 1.4728, Average reg: 0.0000, Accuracy: 9883/10000 (99%), Robust accuracy: 2546/9883 (26%)
+
+# budget : 0.4
+
+Using cpu
+Using testing batch size for test loader
+Using testing batch size for train loader
+Loading weights
+Initialization done
+Start testing
+Using test loader
+Min Linf norm: 0.3983820378780365
+Test: 0/10000 (0%)	Loss: 1.476760, Cross Entropy: 1.476760, Reg: 0.000000
+Elapsed time (s): 5.091261386871338
+Memory usage (GB): 0.4728546142578125
+Min Linf norm: 0.3983783721923828
+Min Linf norm: 0.3989737033843994
+Test: 256/10000 (3%)	Loss: 1.484563, Cross Entropy: 1.484563, Reg: 0.000000
+Elapsed time (s): 10.658891677856445
+Memory usage (GB): 0.5003471374511719
+Min Linf norm: 0.39630481600761414
+Min Linf norm: 0.3964299261569977
+Test: 512/10000 (5%)	Loss: 1.468970, Cross Entropy: 1.468970, Reg: 0.000000
+Elapsed time (s): 10.616169929504395
+Memory usage (GB): 0.5183143615722656
+Min Linf norm: 0.3989590108394623
+Min Linf norm: 0.39901161193847656
+Test: 768/10000 (8%)	Loss: 1.476781, Cross Entropy: 1.476781, Reg: 0.000000
+Elapsed time (s): 10.705742359161377
+Memory usage (GB): 0.4828948974609375
+Min Linf norm: 0.3988591730594635
+Min Linf norm: 0.39690709114074707
+Test: 1024/10000 (10%)	Loss: 1.491720, Cross Entropy: 1.491720, Reg: 0.000000
+Elapsed time (s): 11.437021970748901
+Memory usage (GB): 0.5166168212890625
+Min Linf norm: 0.39574962854385376
+Min Linf norm: 0.3973652422428131
+Test: 1280/10000 (13%)	Loss: 1.476040, Cross Entropy: 1.476040, Reg: 0.000000
+Elapsed time (s): 11.072912454605103
+Memory usage (GB): 0.5511474609375
+Min Linf norm: 0.39813971519470215
+Min Linf norm: 0.3958605229854584
+Test: 1536/10000 (15%)	Loss: 1.469192, Cross Entropy: 1.469192, Reg: 0.000000
+Elapsed time (s): 11.207254886627197
+Memory usage (GB): 0.55157470703125
+Min Linf norm: 0.39643311500549316
+Min Linf norm: 0.39674463868141174
+Test: 1792/10000 (18%)	Loss: 1.468975, Cross Entropy: 1.468975, Reg: 0.000000
+Elapsed time (s): 10.7254638671875
+Memory usage (GB): 0.5516128540039062
+Min Linf norm: 0.39904895424842834
+Min Linf norm: 0.3987400233745575
+Test: 2048/10000 (20%)	Loss: 1.515355, Cross Entropy: 1.515355, Reg: 0.000000
+Elapsed time (s): 10.836010217666626
+Memory usage (GB): 0.5514297485351562
+Min Linf norm: 0.39516592025756836
+Min Linf norm: 0.3960520923137665
+Test: 2304/10000 (23%)	Loss: 1.480077, Cross Entropy: 1.480077, Reg: 0.000000
+Elapsed time (s): 10.9660964012146
+Memory usage (GB): 0.5337448120117188
+Min Linf norm: 0.3969636559486389
+Min Linf norm: 0.39461857080459595
+Test: 2560/10000 (25%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 10.756402015686035
+Memory usage (GB): 0.5340499877929688
+Min Linf norm: 0.3983035087585449
+Min Linf norm: 0.3966885507106781
+Test: 2816/10000 (28%)	Loss: 1.492358, Cross Entropy: 1.492358, Reg: 0.000000
+Elapsed time (s): 10.77297592163086
+Memory usage (GB): 0.55218505859375
+Min Linf norm: 0.39756202697753906
+Min Linf norm: 0.39584049582481384
+Test: 3072/10000 (30%)	Loss: 1.468972, Cross Entropy: 1.468972, Reg: 0.000000
+Elapsed time (s): 11.087354183197021
+Memory usage (GB): 0.5516586303710938
+Min Linf norm: 0.3957293629646301
+Min Linf norm: 0.3996601700782776
+Test: 3328/10000 (33%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 10.649383068084717
+Memory usage (GB): 0.5520057678222656
+Min Linf norm: 0.39647969603538513
+Min Linf norm: 0.3974311947822571
+Test: 3584/10000 (35%)	Loss: 1.468797, Cross Entropy: 1.468797, Reg: 0.000000
+Elapsed time (s): 10.661155223846436
+Memory usage (GB): 0.5515480041503906
+Min Linf norm: 0.3990950286388397
+Min Linf norm: 0.3968481123447418
+Test: 3840/10000 (38%)	Loss: 1.476783, Cross Entropy: 1.476783, Reg: 0.000000
+Elapsed time (s): 10.0148446559906
+Memory usage (GB): 0.5516357421875
+Min Linf norm: 0.3949000835418701
+Min Linf norm: 0.3976733386516571
+Test: 4096/10000 (41%)	Loss: 1.468986, Cross Entropy: 1.468986, Reg: 0.000000
+Elapsed time (s): 9.691543817520142
+Memory usage (GB): 0.5515365600585938
+Min Linf norm: 0.39566612243652344
+Min Linf norm: 0.39528733491897583
+Test: 4352/10000 (43%)	Loss: 1.483675, Cross Entropy: 1.483675, Reg: 0.000000
+Elapsed time (s): 9.716080665588379
+Memory usage (GB): 0.5509414672851562
+Min Linf norm: 0.39970073103904724
+Min Linf norm: 0.3971245288848877
+Test: 4608/10000 (46%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 9.627219200134277
+Memory usage (GB): 0.5515670776367188
+Min Linf norm: 0.39715415239334106
+Min Linf norm: 0.3967181146144867
+Test: 4864/10000 (48%)	Loss: 1.466520, Cross Entropy: 1.466520, Reg: 0.000000
+Elapsed time (s): 9.405908823013306
+Memory usage (GB): 0.5516586303710938
+Min Linf norm: 0.39552268385887146
+Min Linf norm: 0.3971181809902191
+Test: 5120/10000 (51%)	Loss: 1.463296, Cross Entropy: 1.463296, Reg: 0.000000
+Elapsed time (s): 9.936392784118652
+Memory usage (GB): 0.5693893432617188
+Min Linf norm: 0.3961506485939026
+Min Linf norm: 0.3966479003429413
+Test: 5376/10000 (53%)	Loss: 1.462325, Cross Entropy: 1.462325, Reg: 0.000000
+Elapsed time (s): 10.063460350036621
+Memory usage (GB): 0.5342941284179688
+Min Linf norm: 0.3973596692085266
+Min Linf norm: 0.3946453034877777
+Test: 5632/10000 (56%)	Loss: 1.461169, Cross Entropy: 1.461169, Reg: 0.000000
+Elapsed time (s): 9.837864875793457
+Memory usage (GB): 0.5868644714355469
+Min Linf norm: 0.3971380889415741
+Min Linf norm: 0.3988741636276245
+Test: 5888/10000 (58%)	Loss: 1.480827, Cross Entropy: 1.480827, Reg: 0.000000
+Elapsed time (s): 10.150025367736816
+Memory usage (GB): 0.5521507263183594
+Min Linf norm: 0.39547285437583923
+Min Linf norm: 0.3935811519622803
+Test: 6144/10000 (61%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 11.416611671447754
+Memory usage (GB): 0.5344810485839844
+Min Linf norm: 0.3971802592277527
+Min Linf norm: 0.39756137132644653
+Test: 6400/10000 (63%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 10.612325668334961
+Memory usage (GB): 0.5522193908691406
+Min Linf norm: 0.3983711302280426
+Min Linf norm: 0.39747586846351624
+Test: 6656/10000 (66%)	Loss: 1.469098, Cross Entropy: 1.469098, Reg: 0.000000
+Elapsed time (s): 9.62308669090271
+Memory usage (GB): 0.5695266723632812
+Min Linf norm: 0.39267516136169434
+Min Linf norm: 0.3974396884441376
+Test: 6912/10000 (68%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 10.346577644348145
+Memory usage (GB): 0.5345497131347656
+Min Linf norm: 0.3964773118495941
+Min Linf norm: 0.3976175785064697
+Test: 7168/10000 (71%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 11.103754043579102
+Memory usage (GB): 0.5695686340332031
+Min Linf norm: 0.3974663317203522
+Min Linf norm: 0.395809143781662
+Test: 7424/10000 (73%)	Loss: 1.461161, Cross Entropy: 1.461161, Reg: 0.000000
+Elapsed time (s): 10.072151184082031
+Memory usage (GB): 0.5344047546386719
+Min Linf norm: 0.3980143666267395
+Min Linf norm: 0.39676952362060547
+Test: 7680/10000 (76%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 10.047890186309814
+Memory usage (GB): 0.5692367553710938
+Min Linf norm: 0.3978925943374634
+Min Linf norm: 0.3965975344181061
+Test: 7936/10000 (78%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 10.347349405288696
+Memory usage (GB): 0.5342750549316406
+Min Linf norm: 0.3968408703804016
+Min Linf norm: 0.3965412676334381
+Test: 8192/10000 (81%)	Loss: 1.461159, Cross Entropy: 1.461159, Reg: 0.000000
+Elapsed time (s): 9.826608896255493
+Memory usage (GB): 0.5691452026367188
+Min Linf norm: 0.3971292972564697
+Min Linf norm: 0.39776793122291565
+Test: 8448/10000 (84%)	Loss: 1.468981, Cross Entropy: 1.468981, Reg: 0.000000
+Elapsed time (s): 9.994388103485107
+Memory usage (GB): 0.5339546203613281
+Min Linf norm: 0.3961946666240692
+Min Linf norm: 0.3950209319591522
+Test: 8704/10000 (86%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 10.093430042266846
+Memory usage (GB): 0.5519866943359375
+Min Linf norm: 0.39504438638687134
+Min Linf norm: 0.3958471715450287
+Test: 8960/10000 (89%)	Loss: 1.484604, Cross Entropy: 1.484604, Reg: 0.000000
+Elapsed time (s): 10.136351823806763
+Memory usage (GB): 0.5511894226074219
+Min Linf norm: 0.39705583453178406
+Min Linf norm: 0.39537903666496277
+Test: 9216/10000 (91%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 10.235010623931885
+Memory usage (GB): 0.5347442626953125
+Min Linf norm: 0.3950437605381012
+Min Linf norm: 0.39865708351135254
+Test: 9472/10000 (94%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 10.388109922409058
+Memory usage (GB): 0.5519790649414062
+Min Linf norm: 0.3959692716598511
+Min Linf norm: 0.39776912331581116
+Test: 9728/10000 (96%)	Loss: 1.500129, Cross Entropy: 1.500129, Reg: 0.000000
+Elapsed time (s): 9.29900050163269
+Memory usage (GB): 0.58563232421875
+Min Linf norm: 0.3947773873806
+Min Linf norm: 0.3990551829338074
+Test: 1248/10000 (99%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 5.497167348861694
+Memory usage (GB): 0.6043281555175781
+Test set: Average loss: 1.4728, Average cross entropy: 1.4728, Average reg: 0.0000, Accuracy: 9883/10000 (99%), Robust accuracy: 1626/9883 (16%)
+
+
+# budget : 0.425
+
+Using cpu
+Using testing batch size for test loader
+Using testing batch size for train loader
+Loading weights
+Initialization done
+Start testing
+Using test loader
+Min Linf norm: 0.42353349924087524
+Test: 0/10000 (0%)	Loss: 1.476760, Cross Entropy: 1.476760, Reg: 0.000000
+Elapsed time (s): 4.984569072723389
+Memory usage (GB): 0.481201171875
+Min Linf norm: 0.42327702045440674
+Min Linf norm: 0.42390957474708557
+Test: 256/10000 (3%)	Loss: 1.484563, Cross Entropy: 1.484563, Reg: 0.000000
+Elapsed time (s): 9.72227430343628
+Memory usage (GB): 0.5268440246582031
+Min Linf norm: 0.421073853969574
+Min Linf norm: 0.42341524362564087
+Test: 512/10000 (5%)	Loss: 1.468970, Cross Entropy: 1.468970, Reg: 0.000000
+Elapsed time (s): 9.844871282577515
+Memory usage (GB): 0.5444679260253906
+Min Linf norm: 0.4238939583301544
+Min Linf norm: 0.42394983768463135
+Test: 768/10000 (8%)	Loss: 1.476781, Cross Entropy: 1.476781, Reg: 0.000000
+Elapsed time (s): 9.629186630249023
+Memory usage (GB): 0.5266990661621094
+Min Linf norm: 0.4237878620624542
+Min Linf norm: 0.42430025339126587
+Test: 1024/10000 (10%)	Loss: 1.491720, Cross Entropy: 1.491720, Reg: 0.000000
+Elapsed time (s): 9.470222473144531
+Memory usage (GB): 0.5274810791015625
+Min Linf norm: 0.4235447347164154
+Min Linf norm: 0.42325255274772644
+Test: 1280/10000 (13%)	Loss: 1.476040, Cross Entropy: 1.476040, Reg: 0.000000
+Elapsed time (s): 9.708420753479004
+Memory usage (GB): 0.509613037109375
+Min Linf norm: 0.4234895706176758
+Min Linf norm: 0.42060181498527527
+Test: 1536/10000 (15%)	Loss: 1.469192, Cross Entropy: 1.469192, Reg: 0.000000
+Elapsed time (s): 10.377052307128906
+Memory usage (GB): 0.5274887084960938
+Min Linf norm: 0.42368918657302856
+Min Linf norm: 0.4215411841869354
+Test: 1792/10000 (18%)	Loss: 1.468975, Cross Entropy: 1.468975, Reg: 0.000000
+Elapsed time (s): 9.454465866088867
+Memory usage (GB): 0.5270500183105469
+Min Linf norm: 0.4248057007789612
+Min Linf norm: 0.4236612617969513
+Test: 2048/10000 (20%)	Loss: 1.515355, Cross Entropy: 1.515355, Reg: 0.000000
+Elapsed time (s): 9.892505645751953
+Memory usage (GB): 0.5087814331054688
+Min Linf norm: 0.4198637902736664
+Min Linf norm: 0.4237777888774872
+Test: 2304/10000 (23%)	Loss: 1.480077, Cross Entropy: 1.480077, Reg: 0.000000
+Elapsed time (s): 11.943592071533203
+Memory usage (GB): 0.5263862609863281
+Min Linf norm: 0.42177388072013855
+Min Linf norm: 0.4192822277545929
+Test: 2560/10000 (25%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 11.61605715751648
+Memory usage (GB): 0.54449462890625
+Min Linf norm: 0.423197478055954
+Min Linf norm: 0.4214816093444824
+Test: 2816/10000 (28%)	Loss: 1.492358, Cross Entropy: 1.492358, Reg: 0.000000
+Elapsed time (s): 11.886487007141113
+Memory usage (GB): 0.5270118713378906
+Min Linf norm: 0.42270591855049133
+Min Linf norm: 0.42058053612709045
+Test: 3072/10000 (30%)	Loss: 1.468972, Cross Entropy: 1.468972, Reg: 0.000000
+Elapsed time (s): 14.345213174819946
+Memory usage (GB): 0.5275382995605469
+Min Linf norm: 0.4204624593257904
+Min Linf norm: 0.4248359203338623
+Test: 3328/10000 (33%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 11.786418914794922
+Memory usage (GB): 0.5271492004394531
+Min Linf norm: 0.42125970125198364
+Min Linf norm: 0.42227065563201904
+Test: 3584/10000 (35%)	Loss: 1.468797, Cross Entropy: 1.468797, Reg: 0.000000
+Elapsed time (s): 12.614268779754639
+Memory usage (GB): 0.54486083984375
+Min Linf norm: 0.42403846979141235
+Min Linf norm: 0.42165112495422363
+Test: 3840/10000 (38%)	Loss: 1.476783, Cross Entropy: 1.476783, Reg: 0.000000
+Elapsed time (s): 12.154282093048096
+Memory usage (GB): 0.5267524719238281
+Min Linf norm: 0.42500001192092896
+Min Linf norm: 0.42252790927886963
+Test: 4096/10000 (41%)	Loss: 1.468986, Cross Entropy: 1.468986, Reg: 0.000000
+Elapsed time (s): 12.810238361358643
+Memory usage (GB): 0.5269546508789062
+Min Linf norm: 0.4246317744255066
+Min Linf norm: 0.4199928045272827
+Test: 4352/10000 (43%)	Loss: 1.483675, Cross Entropy: 1.483675, Reg: 0.000000
+Elapsed time (s): 11.429478168487549
+Memory usage (GB): 0.5269279479980469
+Min Linf norm: 0.42468205094337463
+Min Linf norm: 0.42194482684135437
+Test: 4608/10000 (46%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 10.240674495697021
+Memory usage (GB): 0.5094566345214844
+Min Linf norm: 0.4219762980937958
+Min Linf norm: 0.42151302099227905
+Test: 4864/10000 (48%)	Loss: 1.466520, Cross Entropy: 1.466520, Reg: 0.000000
+Elapsed time (s): 10.50619125366211
+Memory usage (GB): 0.5271224975585938
+Min Linf norm: 0.42024287581443787
+Min Linf norm: 0.42425256967544556
+Test: 5120/10000 (51%)	Loss: 1.463296, Cross Entropy: 1.463296, Reg: 0.000000
+Elapsed time (s): 11.738535404205322
+Memory usage (GB): 0.57989501953125
+Min Linf norm: 0.4225059151649475
+Min Linf norm: 0.42143839597702026
+Test: 5376/10000 (53%)	Loss: 1.462325, Cross Entropy: 1.462325, Reg: 0.000000
+Elapsed time (s): 14.64484691619873
+Memory usage (GB): 0.5098838806152344
+Min Linf norm: 0.4221946597099304
+Min Linf norm: 0.41931065917015076
+Test: 5632/10000 (56%)	Loss: 1.461169, Cross Entropy: 1.461169, Reg: 0.000000
+Elapsed time (s): 14.675839185714722
+Memory usage (GB): 0.5100936889648438
+Min Linf norm: 0.4219592213630676
+Min Linf norm: 0.42380380630493164
+Test: 5888/10000 (58%)	Loss: 1.480827, Cross Entropy: 1.480827, Reg: 0.000000
+Elapsed time (s): 11.439722299575806
+Memory usage (GB): 0.5275688171386719
+Min Linf norm: 0.42322465777397156
+Min Linf norm: 0.418179988861084
+Test: 6144/10000 (61%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 10.601949214935303
+Memory usage (GB): 0.5449142456054688
+Min Linf norm: 0.4230618476867676
+Min Linf norm: 0.42240896821022034
+Test: 6400/10000 (63%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 11.584815502166748
+Memory usage (GB): 0.5274734497070312
+Min Linf norm: 0.42372792959213257
+Min Linf norm: 0.4228198528289795
+Test: 6656/10000 (66%)	Loss: 1.469098, Cross Entropy: 1.469098, Reg: 0.000000
+Elapsed time (s): 10.398134231567383
+Memory usage (GB): 0.5439910888671875
+Min Linf norm: 0.4212661385536194
+Min Linf norm: 0.4222796559333801
+Test: 6912/10000 (68%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 10.458858728408813
+Memory usage (GB): 0.5264205932617188
+Min Linf norm: 0.42174506187438965
+Min Linf norm: 0.4224686920642853
+Test: 7168/10000 (71%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 10.277961254119873
+Memory usage (GB): 0.543975830078125
+Min Linf norm: 0.42230796813964844
+Min Linf norm: 0.420547217130661
+Test: 7424/10000 (73%)	Loss: 1.461161, Cross Entropy: 1.461161, Reg: 0.000000
+Elapsed time (s): 9.914308309555054
+Memory usage (GB): 0.5612983703613281
+Min Linf norm: 0.42180386185646057
+Min Linf norm: 0.4215676188468933
+Test: 7680/10000 (76%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 11.448922634124756
+Memory usage (GB): 0.5309677124023438
+Min Linf norm: 0.423845112323761
+Min Linf norm: 0.42138487100601196
+Test: 7936/10000 (78%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 12.975439071655273
+Memory usage (GB): 0.4958915710449219
+Min Linf norm: 0.4216434359550476
+Min Linf norm: 0.42132505774497986
+Test: 8192/10000 (81%)	Loss: 1.461159, Cross Entropy: 1.461159, Reg: 0.000000
+Elapsed time (s): 11.787826538085938
+Memory usage (GB): 0.5135498046875
+Min Linf norm: 0.4219498932361603
+Min Linf norm: 0.4226284623146057
+Test: 8448/10000 (84%)	Loss: 1.468981, Cross Entropy: 1.468981, Reg: 0.000000
+Elapsed time (s): 10.992336988449097
+Memory usage (GB): 0.498046875
+Min Linf norm: 0.4209568202495575
+Min Linf norm: 0.4201318919658661
+Test: 8704/10000 (86%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 10.390015125274658
+Memory usage (GB): 0.4979820251464844
+Min Linf norm: 0.4204866588115692
+Min Linf norm: 0.4205876290798187
+Test: 8960/10000 (89%)	Loss: 1.484604, Cross Entropy: 1.484604, Reg: 0.000000
+Elapsed time (s): 9.96707534790039
+Memory usage (GB): 0.4976387023925781
+Min Linf norm: 0.4218718111515045
+Min Linf norm: 0.4207886755466461
+Test: 9216/10000 (91%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 10.448811292648315
+Memory usage (GB): 0.5329055786132812
+Min Linf norm: 0.4207722544670105
+Min Linf norm: 0.42406028509140015
+Test: 9472/10000 (94%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 10.342534303665161
+Memory usage (GB): 0.4802703857421875
+Min Linf norm: 0.42071735858917236
+Min Linf norm: 0.4226296842098236
+Test: 9728/10000 (96%)	Loss: 1.500129, Cross Entropy: 1.500129, Reg: 0.000000
+Elapsed time (s): 9.602944374084473
+Memory usage (GB): 0.5137367248535156
+Min Linf norm: 0.4194509983062744
+Min Linf norm: 0.4239961504936218
+Test: 1248/10000 (99%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 5.6804022789001465
+Memory usage (GB): 0.47995758056640625
+Test set: Average loss: 1.4728, Average cross entropy: 1.4728, Average reg: 0.0000, Accuracy: 9883/10000 (99%), Robust accuracy: 1020/9883 (10%)
+
+
+# budget : 0.45
+
+Using cpu
+Using testing batch size for test loader
+Using testing batch size for train loader
+Loading weights
+Initialization done
+Start testing
+Using test loader
+Min Linf norm: 0.44844719767570496
+Test: 0/10000 (0%)	Loss: 1.476760, Cross Entropy: 1.476760, Reg: 0.000000
+Elapsed time (s): 5.113819360733032
+Memory usage (GB): 0.47466278076171875
+Min Linf norm: 0.44817566871643066
+Min Linf norm: 0.44884541630744934
+Test: 256/10000 (3%)	Loss: 1.484563, Cross Entropy: 1.484563, Reg: 0.000000
+Elapsed time (s): 10.073138952255249
+Memory usage (GB): 0.5369682312011719
+Min Linf norm: 0.4458428919315338
+Min Linf norm: 0.44861018657684326
+Test: 512/10000 (5%)	Loss: 1.468970, Cross Entropy: 1.468970, Reg: 0.000000
+Elapsed time (s): 11.199371576309204
+Memory usage (GB): 0.53753662109375
+Min Linf norm: 0.44882887601852417
+Min Linf norm: 0.4490521550178528
+Test: 768/10000 (8%)	Loss: 1.476781, Cross Entropy: 1.476781, Reg: 0.000000
+Elapsed time (s): 10.492890119552612
+Memory usage (GB): 0.5369949340820312
+Min Linf norm: 0.44871655106544495
+Min Linf norm: 0.449314683675766
+Test: 1024/10000 (10%)	Loss: 1.491720, Cross Entropy: 1.491720, Reg: 0.000000
+Elapsed time (s): 10.833641767501831
+Memory usage (GB): 0.5369949340820312
+Min Linf norm: 0.44881701469421387
+Min Linf norm: 0.44814974069595337
+Test: 1280/10000 (13%)	Loss: 1.476040, Cross Entropy: 1.476040, Reg: 0.000000
+Elapsed time (s): 11.757537603378296
+Memory usage (GB): 0.5372467041015625
+Min Linf norm: 0.44957876205444336
+Min Linf norm: 0.446867972612381
+Test: 1536/10000 (15%)	Loss: 1.469192, Cross Entropy: 1.469192, Reg: 0.000000
+Elapsed time (s): 10.308784008026123
+Memory usage (GB): 0.5374984741210938
+Min Linf norm: 0.4486120641231537
+Min Linf norm: 0.4463376998901367
+Test: 1792/10000 (18%)	Loss: 1.468975, Cross Entropy: 1.468975, Reg: 0.000000
+Elapsed time (s): 9.628728151321411
+Memory usage (GB): 0.5374984741210938
+Min Linf norm: 0.4497942626476288
+Min Linf norm: 0.44970622658729553
+Test: 2048/10000 (20%)	Loss: 1.515355, Cross Entropy: 1.515355, Reg: 0.000000
+Elapsed time (s): 10.68678331375122
+Memory usage (GB): 0.5374984741210938
+Min Linf norm: 0.4445616602897644
+Min Linf norm: 0.44870588183403015
+Test: 2304/10000 (23%)	Loss: 1.480077, Cross Entropy: 1.480077, Reg: 0.000000
+Elapsed time (s): 10.626348495483398
+Memory usage (GB): 0.5374984741210938
+Min Linf norm: 0.44872719049453735
+Min Linf norm: 0.44870513677597046
+Test: 2560/10000 (25%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 10.713375329971313
+Memory usage (GB): 0.5374984741210938
+Min Linf norm: 0.4488803744316101
+Min Linf norm: 0.44627460837364197
+Test: 2816/10000 (28%)	Loss: 1.492358, Cross Entropy: 1.492358, Reg: 0.000000
+Elapsed time (s): 10.720644474029541
+Memory usage (GB): 0.5306739807128906
+Min Linf norm: 0.44757094979286194
+Min Linf norm: 0.4453205466270447
+Test: 3072/10000 (30%)	Loss: 1.468972, Cross Entropy: 1.468972, Reg: 0.000000
+Elapsed time (s): 10.698554039001465
+Memory usage (GB): 0.5479164123535156
+Min Linf norm: 0.44890296459198
+Min Linf norm: 0.4498262405395508
+Test: 3328/10000 (33%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 9.778388261795044
+Memory usage (GB): 0.5479164123535156
+Min Linf norm: 0.4460396468639374
+Min Linf norm: 0.44711005687713623
+Test: 3584/10000 (35%)	Loss: 1.468797, Cross Entropy: 1.468797, Reg: 0.000000
+Elapsed time (s): 9.954931020736694
+Memory usage (GB): 0.5479164123535156
+Min Linf norm: 0.4489818811416626
+Min Linf norm: 0.44645410776138306
+Test: 3840/10000 (38%)	Loss: 1.476783, Cross Entropy: 1.476783, Reg: 0.000000
+Elapsed time (s): 9.991765975952148
+Memory usage (GB): 0.5479164123535156
+Min Linf norm: 0.44999998807907104
+Min Linf norm: 0.44946420192718506
+Test: 4096/10000 (41%)	Loss: 1.468986, Cross Entropy: 1.468986, Reg: 0.000000
+Elapsed time (s): 10.190809726715088
+Memory usage (GB): 0.5479164123535156
+Min Linf norm: 0.44999998807907104
+Min Linf norm: 0.4446982145309448
+Test: 4352/10000 (43%)	Loss: 1.483675, Cross Entropy: 1.483675, Reg: 0.000000
+Elapsed time (s): 9.86254358291626
+Memory usage (GB): 0.5479164123535156
+Min Linf norm: 0.44966331124305725
+Min Linf norm: 0.4496985077857971
+Test: 4608/10000 (46%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 9.806841135025024
+Memory usage (GB): 0.5479164123535156
+Min Linf norm: 0.4467983841896057
+Min Linf norm: 0.44630786776542664
+Test: 4864/10000 (48%)	Loss: 1.466520, Cross Entropy: 1.466520, Reg: 0.000000
+Elapsed time (s): 9.707481861114502
+Memory usage (GB): 0.5479164123535156
+Min Linf norm: 0.4461727440357208
+Min Linf norm: 0.44929853081703186
+Test: 5120/10000 (51%)	Loss: 1.463296, Cross Entropy: 1.463296, Reg: 0.000000
+Elapsed time (s): 10.108513116836548
+Memory usage (GB): 0.5307579040527344
+Min Linf norm: 0.44735920429229736
+Min Linf norm: 0.44622886180877686
+Test: 5376/10000 (53%)	Loss: 1.462325, Cross Entropy: 1.462325, Reg: 0.000000
+Elapsed time (s): 10.130686044692993
+Memory usage (GB): 0.5306205749511719
+Min Linf norm: 0.44702959060668945
+Min Linf norm: 0.44397595524787903
+Test: 5632/10000 (56%)	Loss: 1.461169, Cross Entropy: 1.461169, Reg: 0.000000
+Elapsed time (s): 10.467865705490112
+Memory usage (GB): 0.5307540893554688
+Min Linf norm: 0.4476551413536072
+Min Linf norm: 0.4491000473499298
+Test: 5888/10000 (58%)	Loss: 1.480827, Cross Entropy: 1.480827, Reg: 0.000000
+Elapsed time (s): 10.066597700119019
+Memory usage (GB): 0.5305061340332031
+Min Linf norm: 0.44827741384506226
+Min Linf norm: 0.4427788257598877
+Test: 6144/10000 (61%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 10.20029878616333
+Memory usage (GB): 0.5307998657226562
+Min Linf norm: 0.4480116069316864
+Min Linf norm: 0.44725650548934937
+Test: 6400/10000 (63%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 10.445154666900635
+Memory usage (GB): 0.5308303833007812
+Min Linf norm: 0.44996264576911926
+Min Linf norm: 0.44769155979156494
+Test: 6656/10000 (66%)	Loss: 1.469098, Cross Entropy: 1.469098, Reg: 0.000000
+Elapsed time (s): 9.906702280044556
+Memory usage (GB): 0.547698974609375
+Min Linf norm: 0.44604647159576416
+Min Linf norm: 0.4471196234226227
+Test: 6912/10000 (68%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 10.048752069473267
+Memory usage (GB): 0.530303955078125
+Min Linf norm: 0.4465535581111908
+Min Linf norm: 0.448804646730423
+Test: 7168/10000 (71%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 10.535494327545166
+Memory usage (GB): 0.5480804443359375
+Min Linf norm: 0.4471496045589447
+Min Linf norm: 0.44528526067733765
+Test: 7424/10000 (73%)	Loss: 1.461161, Cross Entropy: 1.461161, Reg: 0.000000
+Elapsed time (s): 12.134727954864502
+Memory usage (GB): 0.5306587219238281
+Min Linf norm: 0.4466158449649811
+Min Linf norm: 0.44636571407318115
+Test: 7680/10000 (76%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 12.240351438522339
+Memory usage (GB): 0.5306129455566406
+Min Linf norm: 0.4487771987915039
+Min Linf norm: 0.4468306303024292
+Test: 7936/10000 (78%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 10.270564556121826
+Memory usage (GB): 0.5303153991699219
+Min Linf norm: 0.44719380140304565
+Min Linf norm: 0.4461089074611664
+Test: 8192/10000 (81%)	Loss: 1.461159, Cross Entropy: 1.461159, Reg: 0.000000
+Elapsed time (s): 10.352198123931885
+Memory usage (GB): 0.5306282043457031
+Min Linf norm: 0.44677045941352844
+Min Linf norm: 0.4474889039993286
+Test: 8448/10000 (84%)	Loss: 1.468981, Cross Entropy: 1.468981, Reg: 0.000000
+Elapsed time (s): 10.066247940063477
+Memory usage (GB): 0.5480003356933594
+Min Linf norm: 0.4492979645729065
+Min Linf norm: 0.4479978382587433
+Test: 8704/10000 (86%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 10.095678567886353
+Memory usage (GB): 0.5304985046386719
+Min Linf norm: 0.4452211558818817
+Min Linf norm: 0.4453280568122864
+Test: 8960/10000 (89%)	Loss: 1.484604, Cross Entropy: 1.484604, Reg: 0.000000
+Elapsed time (s): 10.233884572982788
+Memory usage (GB): 0.5307273864746094
+Min Linf norm: 0.446687787771225
+Min Linf norm: 0.4455409348011017
+Test: 9216/10000 (91%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 10.379076480865479
+Memory usage (GB): 0.5304298400878906
+Min Linf norm: 0.44552353024482727
+Min Linf norm: 0.4490049481391907
+Test: 9472/10000 (94%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 10.333904504776001
+Memory usage (GB): 0.5306358337402344
+Min Linf norm: 0.44810566306114197
+Min Linf norm: 0.44749024510383606
+Test: 9728/10000 (96%)	Loss: 1.500129, Cross Entropy: 1.500129, Reg: 0.000000
+Elapsed time (s): 9.80356216430664
+Memory usage (GB): 0.5308876037597656
+Min Linf norm: 0.4441245496273041
+Min Linf norm: 0.44999998807907104
+Test: 1248/10000 (99%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 5.7432098388671875
+Memory usage (GB): 0.53125
+Test set: Average loss: 1.4728, Average cross entropy: 1.4728, Average reg: 0.0000, Accuracy: 9883/10000 (99%), Robust accuracy: 647/9883 (7%)
+
+# budget : 0.475
+
+Using cpu
+Using testing batch size for test loader
+Using testing batch size for train loader
+Loading weights
+Initialization done
+Start testing
+Using test loader
+Min Linf norm: 0.47336095571517944
+Test: 0/10000 (0%)	Loss: 1.476760, Cross Entropy: 1.476760, Reg: 0.000000
+Elapsed time (s): 5.215780735015869
+Memory usage (GB): 0.4612846374511719
+Min Linf norm: 0.4730743169784546
+Min Linf norm: 0.4737812578678131
+Test: 256/10000 (3%)	Loss: 1.484563, Cross Entropy: 1.484563, Reg: 0.000000
+Elapsed time (s): 10.292935371398926
+Memory usage (GB): 0.5234298706054688
+Min Linf norm: 0.47061192989349365
+Min Linf norm: 0.47418636083602905
+Test: 512/10000 (5%)	Loss: 1.468970, Cross Entropy: 1.468970, Reg: 0.000000
+Elapsed time (s): 10.040413618087769
+Memory usage (GB): 0.5063133239746094
+Min Linf norm: 0.47476375102996826
+Min Linf norm: 0.4739995002746582
+Test: 768/10000 (8%)	Loss: 1.476781, Cross Entropy: 1.476781, Reg: 0.000000
+Elapsed time (s): 10.040204286575317
+Memory usage (GB): 0.5234336853027344
+Min Linf norm: 0.47364526987075806
+Min Linf norm: 0.4742766320705414
+Test: 1024/10000 (10%)	Loss: 1.491720, Cross Entropy: 1.491720, Reg: 0.000000
+Elapsed time (s): 9.744590520858765
+Memory usage (GB): 0.5236854553222656
+Min Linf norm: 0.47405147552490234
+Min Linf norm: 0.4730469584465027
+Test: 1280/10000 (13%)	Loss: 1.476040, Cross Entropy: 1.476040, Reg: 0.000000
+Elapsed time (s): 9.742737293243408
+Memory usage (GB): 0.5236854553222656
+Min Linf norm: 0.47489064931869507
+Min Linf norm: 0.4716939926147461
+Test: 1536/10000 (15%)	Loss: 1.469192, Cross Entropy: 1.469192, Reg: 0.000000
+Elapsed time (s): 10.520285844802856
+Memory usage (GB): 0.5239372253417969
+Min Linf norm: 0.4735349416732788
+Min Linf norm: 0.4711342453956604
+Test: 1792/10000 (18%)	Loss: 1.468975, Cross Entropy: 1.468975, Reg: 0.000000
+Elapsed time (s): 9.802939176559448
+Memory usage (GB): 0.5239372253417969
+Min Linf norm: 0.4747828543186188
+Min Linf norm: 0.4749999940395355
+Test: 2048/10000 (20%)	Loss: 1.515355, Cross Entropy: 1.515355, Reg: 0.000000
+Elapsed time (s): 10.036170482635498
+Memory usage (GB): 0.5239372253417969
+Min Linf norm: 0.47381919622421265
+Min Linf norm: 0.4736339747905731
+Test: 2304/10000 (23%)	Loss: 1.480077, Cross Entropy: 1.480077, Reg: 0.000000
+Elapsed time (s): 10.086431980133057
+Memory usage (GB): 0.5239372253417969
+Min Linf norm: 0.47365647554397583
+Min Linf norm: 0.47363319993019104
+Test: 2560/10000 (25%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 10.316797733306885
+Memory usage (GB): 0.5239372253417969
+Min Linf norm: 0.47381818294525146
+Min Linf norm: 0.4710676670074463
+Test: 2816/10000 (28%)	Loss: 1.492358, Cross Entropy: 1.492358, Reg: 0.000000
+Elapsed time (s): 9.776851415634155
+Memory usage (GB): 0.5065994262695312
+Min Linf norm: 0.4739396572113037
+Min Linf norm: 0.4700605869293213
+Test: 3072/10000 (30%)	Loss: 1.468972, Cross Entropy: 1.468972, Reg: 0.000000
+Elapsed time (s): 10.519553899765015
+Memory usage (GB): 0.5242233276367188
+Min Linf norm: 0.4738420248031616
+Min Linf norm: 0.47481659054756165
+Test: 3328/10000 (33%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 9.87771224975586
+Memory usage (GB): 0.5242233276367188
+Min Linf norm: 0.4708196520805359
+Min Linf norm: 0.4719495177268982
+Test: 3584/10000 (35%)	Loss: 1.468797, Cross Entropy: 1.468797, Reg: 0.000000
+Elapsed time (s): 9.960920333862305
+Memory usage (GB): 0.5242233276367188
+Min Linf norm: 0.47392532229423523
+Min Linf norm: 0.47125712037086487
+Test: 3840/10000 (38%)	Loss: 1.476783, Cross Entropy: 1.476783, Reg: 0.000000
+Elapsed time (s): 10.073753595352173
+Memory usage (GB): 0.5242233276367188
+Min Linf norm: 0.4749999940395355
+Min Linf norm: 0.47443443536758423
+Test: 4096/10000 (41%)	Loss: 1.468986, Cross Entropy: 1.468986, Reg: 0.000000
+Elapsed time (s): 10.4110267162323
+Memory usage (GB): 0.5242233276367188
+Min Linf norm: 0.4749999940395355
+Min Linf norm: 0.4694036841392517
+Test: 4352/10000 (43%)	Loss: 1.483675, Cross Entropy: 1.483675, Reg: 0.000000
+Elapsed time (s): 12.047852754592896
+Memory usage (GB): 0.5242233276367188
+Min Linf norm: 0.47464463114738464
+Min Linf norm: 0.4746817648410797
+Test: 4608/10000 (46%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 12.10359501838684
+Memory usage (GB): 0.5242233276367188
+Min Linf norm: 0.4716205298900604
+Min Linf norm: 0.471102774143219
+Test: 4864/10000 (48%)	Loss: 1.466520, Cross Entropy: 1.466520, Reg: 0.000000
+Elapsed time (s): 10.543129444122314
+Memory usage (GB): 0.5242233276367188
+Min Linf norm: 0.4709601402282715
+Min Linf norm: 0.4742595851421356
+Test: 5120/10000 (51%)	Loss: 1.463296, Cross Entropy: 1.463296, Reg: 0.000000
+Elapsed time (s): 12.070582151412964
+Memory usage (GB): 0.5068893432617188
+Min Linf norm: 0.4722124934196472
+Min Linf norm: 0.47101935744285583
+Test: 5376/10000 (53%)	Loss: 1.462325, Cross Entropy: 1.462325, Reg: 0.000000
+Elapsed time (s): 14.246842622756958
+Memory usage (GB): 0.5066413879394531
+Min Linf norm: 0.4739663600921631
+Min Linf norm: 0.4734944701194763
+Test: 5632/10000 (56%)	Loss: 1.461169, Cross Entropy: 1.461169, Reg: 0.000000
+Elapsed time (s): 13.812578439712524
+Memory usage (GB): 0.5067062377929688
+Min Linf norm: 0.47252488136291504
+Min Linf norm: 0.4740500748157501
+Test: 5888/10000 (58%)	Loss: 1.480827, Cross Entropy: 1.480827, Reg: 0.000000
+Elapsed time (s): 11.275652170181274
+Memory usage (GB): 0.50653076171875
+Min Linf norm: 0.47318172454833984
+Min Linf norm: 0.46737760305404663
+Test: 6144/10000 (61%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 10.284290552139282
+Memory usage (GB): 0.5067634582519531
+Min Linf norm: 0.4729011654853821
+Min Linf norm: 0.47210410237312317
+Test: 6400/10000 (63%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 10.8694007396698
+Memory usage (GB): 0.5066490173339844
+Min Linf norm: 0.4749999940395355
+Min Linf norm: 0.47489675879478455
+Test: 6656/10000 (66%)	Loss: 1.469098, Cross Entropy: 1.469098, Reg: 0.000000
+Elapsed time (s): 12.114621877670288
+Memory usage (GB): 0.5240211486816406
+Min Linf norm: 0.4708268344402313
+Min Linf norm: 0.4722415804862976
+Test: 6912/10000 (68%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 12.057001829147339
+Memory usage (GB): 0.5064773559570312
+Min Linf norm: 0.4713621139526367
+Min Linf norm: 0.47468459606170654
+Test: 7168/10000 (71%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 10.88400149345398
+Memory usage (GB): 0.524078369140625
+Min Linf norm: 0.4725114107131958
+Min Linf norm: 0.4749999940395355
+Test: 7424/10000 (73%)	Loss: 1.461161, Cross Entropy: 1.461161, Reg: 0.000000
+Elapsed time (s): 10.37275218963623
+Memory usage (GB): 0.5064926147460938
+Min Linf norm: 0.4736884832382202
+Min Linf norm: 0.47158655524253845
+Test: 7680/10000 (76%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 10.163408994674683
+Memory usage (GB): 0.5066986083984375
+Min Linf norm: 0.47370922565460205
+Min Linf norm: 0.4733773171901703
+Test: 7936/10000 (78%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 9.99626636505127
+Memory usage (GB): 0.50665283203125
+Min Linf norm: 0.4720379114151001
+Min Linf norm: 0.4739363193511963
+Test: 8192/10000 (81%)	Loss: 1.461159, Cross Entropy: 1.461159, Reg: 0.000000
+Elapsed time (s): 10.426283359527588
+Memory usage (GB): 0.5067138671875
+Min Linf norm: 0.4739445447921753
+Min Linf norm: 0.47335177659988403
+Test: 8448/10000 (84%)	Loss: 1.468981, Cross Entropy: 1.468981, Reg: 0.000000
+Elapsed time (s): 10.319101333618164
+Memory usage (GB): 0.5240859985351562
+Min Linf norm: 0.4742589592933655
+Min Linf norm: 0.4728865921497345
+Test: 8704/10000 (86%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 10.415317296981812
+Memory usage (GB): 0.5069732666015625
+Min Linf norm: 0.4699556529521942
+Min Linf norm: 0.4700685143470764
+Test: 8960/10000 (89%)	Loss: 1.484604, Cross Entropy: 1.484604, Reg: 0.000000
+Elapsed time (s): 10.956564664840698
+Memory usage (GB): 0.5068130493164062
+Min Linf norm: 0.47150376439094543
+Min Linf norm: 0.47344350814819336
+Test: 9216/10000 (91%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 10.532596349716187
+Memory usage (GB): 0.506744384765625
+Min Linf norm: 0.4702748656272888
+Min Linf norm: 0.473949670791626
+Test: 9472/10000 (94%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 10.683481931686401
+Memory usage (GB): 0.506927490234375
+Min Linf norm: 0.4730004072189331
+Min Linf norm: 0.4723508358001709
+Test: 9728/10000 (96%)	Loss: 1.500129, Cross Entropy: 1.500129, Reg: 0.000000
+Elapsed time (s): 10.384938716888428
+Memory usage (GB): 0.506927490234375
+Min Linf norm: 0.4687981605529785
+Min Linf norm: 0.4749999940395355
+Test: 1248/10000 (99%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 6.0266125202178955
+Memory usage (GB): 0.5071525573730469
+Test set: Average loss: 1.4728, Average cross entropy: 1.4728, Average reg: 0.0000, Accuracy: 9883/10000 (99%), Robust accuracy: 419/9883 (4%)
+
+
+# budget : 0.5
+
+Using cpu
+Using testing batch size for test loader
+Using testing batch size for train loader
+Loading weights
+Initialization done
+Start testing
+Using test loader
+Min Linf norm: 0.49827468395233154
+Test: 0/10000 (0%)	Loss: 1.476760, Cross Entropy: 1.476760, Reg: 0.000000
+Elapsed time (s): 5.836315155029297
+Memory usage (GB): 0.4627113342285156
+Min Linf norm: 0.49844294786453247
+Min Linf norm: 0.49871712923049927
+Test: 256/10000 (3%)	Loss: 1.484563, Cross Entropy: 1.484563, Reg: 0.000000
+Elapsed time (s): 11.517640590667725
+Memory usage (GB): 0.5077705383300781
+Min Linf norm: 0.4953809976577759
+Min Linf norm: 0.4991435408592224
+Test: 512/10000 (5%)	Loss: 1.468970, Cross Entropy: 1.468970, Reg: 0.000000
+Elapsed time (s): 10.914748907089233
+Memory usage (GB): 0.5255813598632812
+Min Linf norm: 0.4999975562095642
+Min Linf norm: 0.4989468455314636
+Test: 768/10000 (8%)	Loss: 1.476781, Cross Entropy: 1.476781, Reg: 0.000000
+Elapsed time (s): 10.518870830535889
+Memory usage (GB): 0.5255813598632812
+Min Linf norm: 0.4985739588737488
+Min Linf norm: 0.5
+Test: 1024/10000 (10%)	Loss: 1.491720, Cross Entropy: 1.491720, Reg: 0.000000
+Elapsed time (s): 11.21592378616333
+Memory usage (GB): 0.5081672668457031
+Min Linf norm: 0.49900156259536743
+Min Linf norm: 0.498420774936676
+Test: 1280/10000 (13%)	Loss: 1.476040, Cross Entropy: 1.476040, Reg: 0.000000
+Elapsed time (s): 10.896118640899658
+Memory usage (GB): 0.5429840087890625
+Min Linf norm: 0.4998849034309387
+Min Linf norm: 0.4965199828147888
+Test: 1536/10000 (15%)	Loss: 1.469192, Cross Entropy: 1.469192, Reg: 0.000000
+Elapsed time (s): 12.19527268409729
+Memory usage (GB): 0.5429534912109375
+Min Linf norm: 0.4984578490257263
+Min Linf norm: 0.4959307909011841
+Test: 1792/10000 (18%)	Loss: 1.468975, Cross Entropy: 1.468975, Reg: 0.000000
+Elapsed time (s): 11.768401861190796
+Memory usage (GB): 0.5608787536621094
+Min Linf norm: 0.5
+Min Linf norm: 0.5
+Test: 2048/10000 (20%)	Loss: 1.515355, Cross Entropy: 1.515355, Reg: 0.000000
+Elapsed time (s): 10.683881759643555
+Memory usage (GB): 0.5084381103515625
+Min Linf norm: 0.4987570643424988
+Min Linf norm: 0.4985620677471161
+Test: 2304/10000 (23%)	Loss: 1.480077, Cross Entropy: 1.480077, Reg: 0.000000
+Elapsed time (s): 10.880335807800293
+Memory usage (GB): 0.5435600280761719
+Min Linf norm: 0.49823588132858276
+Min Linf norm: 0.4985612630844116
+Test: 2560/10000 (25%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 12.55568265914917
+Memory usage (GB): 0.5609283447265625
+Min Linf norm: 0.4987559914588928
+Min Linf norm: 0.4958606958389282
+Test: 2816/10000 (28%)	Loss: 1.492358, Cross Entropy: 1.492358, Reg: 0.000000
+Elapsed time (s): 11.73466181755066
+Memory usage (GB): 0.5261077880859375
+Min Linf norm: 0.5
+Min Linf norm: 0.4948006272315979
+Test: 3072/10000 (30%)	Loss: 1.468972, Cross Entropy: 1.468972, Reg: 0.000000
+Elapsed time (s): 10.92954969406128
+Memory usage (GB): 0.5429229736328125
+Min Linf norm: 0.49878108501434326
+Min Linf norm: 0.4998069405555725
+Test: 3328/10000 (33%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 11.701008081436157
+Memory usage (GB): 0.5430030822753906
+Min Linf norm: 0.4985933303833008
+Min Linf norm: 0.4993545413017273
+Test: 3584/10000 (35%)	Loss: 1.468797, Cross Entropy: 1.468797, Reg: 0.000000
+Elapsed time (s): 12.387406349182129
+Memory usage (GB): 0.5430030822753906
+Min Linf norm: 0.49886876344680786
+Min Linf norm: 0.4960601329803467
+Test: 3840/10000 (38%)	Loss: 1.476783, Cross Entropy: 1.476783, Reg: 0.000000
+Elapsed time (s): 10.74045181274414
+Memory usage (GB): 0.5250129699707031
+Min Linf norm: 0.5
+Min Linf norm: 0.4994046688079834
+Test: 4096/10000 (41%)	Loss: 1.468986, Cross Entropy: 1.468986, Reg: 0.000000
+Elapsed time (s): 11.01219892501831
+Memory usage (GB): 0.5431709289550781
+Min Linf norm: 0.5
+Min Linf norm: 0.49918705224990845
+Test: 4352/10000 (43%)	Loss: 1.483675, Cross Entropy: 1.483675, Reg: 0.000000
+Elapsed time (s): 10.978883504867554
+Memory usage (GB): 0.5255584716796875
+Min Linf norm: 0.49962592124938965
+Min Linf norm: 0.4996650218963623
+Test: 4608/10000 (46%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 13.882367372512817
+Memory usage (GB): 0.5433387756347656
+Min Linf norm: 0.5
+Min Linf norm: 0.49589765071868896
+Test: 4864/10000 (48%)	Loss: 1.466520, Cross Entropy: 1.466520, Reg: 0.000000
+Elapsed time (s): 10.959524631500244
+Memory usage (GB): 0.5431137084960938
+Min Linf norm: 0.49955862760543823
+Min Linf norm: 0.499220609664917
+Test: 5120/10000 (51%)	Loss: 1.463296, Cross Entropy: 1.463296, Reg: 0.000000
+Elapsed time (s): 11.812075853347778
+Memory usage (GB): 0.5261764526367188
+Min Linf norm: 0.49706578254699707
+Min Linf norm: 0.4958098530769348
+Test: 5376/10000 (53%)	Loss: 1.462325, Cross Entropy: 1.462325, Reg: 0.000000
+Elapsed time (s): 12.13229513168335
+Memory usage (GB): 0.543701171875
+Min Linf norm: 0.49891197681427
+Min Linf norm: 0.49895504117012024
+Test: 5632/10000 (56%)	Loss: 1.461169, Cross Entropy: 1.461169, Reg: 0.000000
+Elapsed time (s): 11.825154066085815
+Memory usage (GB): 0.5431709289550781
+Min Linf norm: 0.4973946213722229
+Min Linf norm: 0.49900007247924805
+Test: 5888/10000 (58%)	Loss: 1.480827, Cross Entropy: 1.480827, Reg: 0.000000
+Elapsed time (s): 11.89465045928955
+Memory usage (GB): 0.5253639221191406
+Min Linf norm: 0.49808603525161743
+Min Linf norm: 0.49664580821990967
+Test: 6144/10000 (61%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 12.777709245681763
+Memory usage (GB): 0.5434494018554688
+Min Linf norm: 0.49779069423675537
+Min Linf norm: 0.496951699256897
+Test: 6400/10000 (63%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 12.99142861366272
+Memory usage (GB): 0.5431747436523438
+Min Linf norm: 0.5
+Min Linf norm: 0.49989134073257446
+Test: 6656/10000 (66%)	Loss: 1.469098, Cross Entropy: 1.469098, Reg: 0.000000
+Elapsed time (s): 13.259646654129028
+Memory usage (GB): 0.5429763793945312
+Min Linf norm: 0.4987976551055908
+Min Linf norm: 0.4970964193344116
+Test: 6912/10000 (68%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 11.429449558258057
+Memory usage (GB): 0.5435943603515625
+Min Linf norm: 0.49617063999176025
+Min Linf norm: 0.4996680021286011
+Test: 7168/10000 (71%)	Loss: 1.468971, Cross Entropy: 1.468971, Reg: 0.000000
+Elapsed time (s): 12.30819320678711
+Memory usage (GB): 0.5783805847167969
+Min Linf norm: 0.49738043546676636
+Min Linf norm: 0.5
+Test: 7424/10000 (73%)	Loss: 1.461161, Cross Entropy: 1.461161, Reg: 0.000000
+Elapsed time (s): 11.779107570648193
+Memory usage (GB): 0.50848388671875
+Min Linf norm: 0.4986194968223572
+Min Linf norm: 0.49913686513900757
+Test: 7680/10000 (76%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 11.594674110412598
+Memory usage (GB): 0.5260391235351562
+Min Linf norm: 0.49864131212234497
+Min Linf norm: 0.49829190969467163
+Test: 7936/10000 (78%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 10.976893424987793
+Memory usage (GB): 0.5609169006347656
+Min Linf norm: 0.49688202142715454
+Min Linf norm: 0.4988803267478943
+Test: 8192/10000 (81%)	Loss: 1.461159, Cross Entropy: 1.461159, Reg: 0.000000
+Elapsed time (s): 11.07381534576416
+Memory usage (GB): 0.5261764526367188
+Min Linf norm: 0.5
+Min Linf norm: 0.49826502799987793
+Test: 8448/10000 (84%)	Loss: 1.468981, Cross Entropy: 1.468981, Reg: 0.000000
+Elapsed time (s): 11.181621789932251
+Memory usage (GB): 0.543548583984375
+Min Linf norm: 0.49921995401382446
+Min Linf norm: 0.49806731939315796
+Test: 8704/10000 (86%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 11.547415733337402
+Memory usage (GB): 0.525970458984375
+Min Linf norm: 0.4946901798248291
+Min Linf norm: 0.49611425399780273
+Test: 8960/10000 (89%)	Loss: 1.484604, Cross Entropy: 1.484604, Reg: 0.000000
+Elapsed time (s): 12.613628387451172
+Memory usage (GB): 0.5249824523925781
+Min Linf norm: 0.4987659454345703
+Min Linf norm: 0.49836158752441406
+Test: 9216/10000 (91%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 12.326811790466309
+Memory usage (GB): 0.50836181640625
+Min Linf norm: 0.49824780225753784
+Min Linf norm: 0.49977344274520874
+Test: 9472/10000 (94%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 11.441058874130249
+Memory usage (GB): 0.5431938171386719
+Min Linf norm: 0.49858951568603516
+Min Linf norm: 0.4977952837944031
+Test: 9728/10000 (96%)	Loss: 1.500129, Cross Entropy: 1.500129, Reg: 0.000000
+Elapsed time (s): 11.3707754611969
+Memory usage (GB): 0.541259765625
+Min Linf norm: 0.49347174167633057
+Min Linf norm: 0.5
+Test: 1248/10000 (99%)	Loss: 1.461158, Cross Entropy: 1.461158, Reg: 0.000000
+Elapsed time (s): 6.684093952178955
+Memory usage (GB): 0.4915809631347656
+Test set: Average loss: 1.4728, Average cross entropy: 1.4728, Average reg: 0.0000, Accuracy: 9883/10000 (99%), Robust accuracy: 279/9883 (3%)
+
+
+

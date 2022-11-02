@@ -11,6 +11,7 @@ from torchvision import datasets, transforms
 from mnist_model import Lenet, IsometryReg, JacobianReg
 from mnist_utils import load_yaml
 from attacks_utils import TorchAttackGaussianNoise, TorchAttackFGSM, TorchAttackPGD, TorchAttackPGDL2, TorchAttackDeepFool, TorchAttackCWL2
+from defense_utils import parseval_orthonormal_constraint
 from attacks_vis import plot_curves
 
 
@@ -99,6 +100,10 @@ def train(param, model, reg_model, teacher_model, device, train_loader, optimize
 
         # Update model parameters
         optimizer.step()
+
+        # Parseval Tight Constraint
+        if param['parseval_train']:
+            model = parseval_orthonormal_constraint(model)
 
         # Update running totals
         epoch_loss    += loss.item()*len(data)
