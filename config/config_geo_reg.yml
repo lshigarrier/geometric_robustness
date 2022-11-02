@@ -1,6 +1,6 @@
-name  : isometry/iso_8 # isometry/kyles_TEMP
+name  : jacobian/jac_3 # isometry/kyles_TEMP
 model : 00030.pt # baseline.pt # 00030.pt
-reg_type : isometry # isometry # jacobian
+reg_type : jacobian # isometry # jacobian
 gpu_number : None
 seed  : 1
 
@@ -27,8 +27,8 @@ num_classes : 10
 # training
 
 epochs          : 30
-batch_size      : 64
-test_batch_size : 64
+batch_size      : 128
+test_batch_size : 128
 learning_rate   : 0.001
 
 distill_temp : 20
@@ -41,7 +41,7 @@ eta_max   : 0.0001
 epoch_reg : 1
 
 verbose      : True
-log_interval : 100
+log_interval : 8
 save_step    : 1
 
 # testing
