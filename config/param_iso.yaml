@@ -2,6 +2,7 @@ name  : kyles_TEMP # iso_6 # vanilla | iso_1 | iso_2 | iso_3 | iso_4 | iso_5 | i
 model : isometry_defense.pt
 seed  : 1
 
+wandb_project_name : MNIST Attacks
 train           : False
 gpu_number      : "4"
 load            : True
