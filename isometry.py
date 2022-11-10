@@ -130,10 +130,10 @@ def train(param, model, device, train_loader, optimizer, epoch, lmbda, teacher_m
         # Compute loss
         if param['distill']:
             # Get soft-labels
-            soft_labels = F.softmax(teacher_model(data, perform_softmax = False) / param["distill_temp"], -1)
+            soft_labels = F.softmax(teacher_model(data, perform_softmax = False) / param["distill_temp"], 1)
 
             # Calculate loss with soft_labels
-            cross_entropy = torch.sum(-soft_labels * torch.log(output), -1).mean()
+            cross_entropy = torch.mean(-torch.sum(soft_labels * torch.log(output), -1))
 
             # Do not compute regularization
             reg =  torch.tensor(0)
