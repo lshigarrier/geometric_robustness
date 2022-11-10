@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 plt.style.use('seaborn-deep')
 from torchvision import datasets, transforms
 
-def parseval_orthonormal_constraint(model, beta = 0.0003, percent_of_rows = 0.3):
+def parseval_orthonormal_constraint(model, beta = 0.0003, percent_of_rows = 1):
     # From paper: https://arxiv.org/pdf/1704.08847.pdf
     with torch.no_grad():
         state_dict = model.state_dict()
@@ -19,8 +19,9 @@ def parseval_orthonormal_constraint(model, beta = 0.0003, percent_of_rows = 0.3)
             # Scaling factor for 2D convs in https://www.duo.uio.no/bitstream/handle/10852/69487/master_mathialo.pdf?sequence=1
             if isinstance(module, nn.Conv2d):
                 k = float(module.kernel_size[0])
+                rescale_factor = 1.0 # 2*k + 1
             else:
-                k = 1.0
+                rescale_factor = 1.0
 
             # Constraint
             if 'weight' in name:
@@ -31,7 +32,7 @@ def parseval_orthonormal_constraint(model, beta = 0.0003, percent_of_rows = 0.3)
                 S = torch.from_numpy(np.random.binomial(1, percent_of_rows, (w.size(0)))).bool()
 
                 # Update from orginal paper
-                w[S,:] = ((1 + beta) * w[S,:]) - ((beta / k) * torch.mm(w[S,:], torch.mm(w[S,:].T, w[S,:])))
+                w[S,:] = ((1 + beta) * w[S,:]) - ((beta / rescale_factor) * torch.mm(w[S,:], torch.mm(w[S,:].T, w[S,:])))
 
                 # Set parameters
                 state_dict[name] = w.view_as(param)
@@ -69,8 +70,6 @@ def check_parseval_tightness(model, save_path, comparison_model = None):
                 if comparison_model:
                     comparison_w = comparison_param.view(comparison_param.size(0), -1) if 'conv' in comparison_name else comparison_param
                     comparison_singular_values = torch.linalg.svdvals(comparison_w).cpu().numpy()
-
-                    print("Regular", len(singular_values), "Parseval", len(comparison_singular_values))
 
                     # Plot
                     bins = np.linspace(0, max(max(singular_values), max(comparison_singular_values)), 30)
