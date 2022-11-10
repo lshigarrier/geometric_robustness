@@ -73,7 +73,7 @@ class Lenet(nn.Module):
         logits = self.fc2(x)
 
         if perform_softmax:
-            softmax_output = F.log_softmax(logits, dim=1)
+            softmax_output = F.softmax(logits, dim=1)
             return softmax_output
 
         else:
