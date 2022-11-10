@@ -1,13 +1,13 @@
 name  : kyles_TEMP # iso_6 # vanilla | iso_1 | iso_2 | iso_3 | iso_4 | iso_5 | iso_6
-model : baseline.pt 
+model : isometry_defense.pt
 seed  : 1
 
-train           : True
-gpu_number      : "7"
-load            : False
+train           : False
+gpu_number      : "4"
+load            : True
 adv_train       : False
-adv_test        : False
-parseval_train  : True
+adv_test        : True
+parseval_train  : False
 
 distill         : False
 distill_temp    : 20
