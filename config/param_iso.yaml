@@ -1,5 +1,5 @@
 name  : kyles_TEMP # iso_6 # vanilla | iso_1 | iso_2 | iso_3 | iso_4 | iso_5 | iso_6
-model : parseval.pt # baseline.pt # adv_train.pt
+model : baseline.pt 
 seed  : 1
 
 train           : True
