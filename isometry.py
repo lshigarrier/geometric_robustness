@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 import time
 import psutil
 import os
+import wandb
 
 from torch.utils.data import DataLoader
 from torchvision import datasets, transforms
@@ -345,6 +346,17 @@ def test(param, model, device, test_loader, lmbda, attack=None):
                test_loss, test_entropy, test_reg,
                correct, len(test_loader.dataset), 100. * correct / len(test_loader.dataset),
                adv_correct, adv_total, 100. * adv_correct / adv_total))
+
+        wandb.log({ 'Test Loss'         : test_loss, 
+                    'Test Avg CE'       : test_entropy, 
+                    'Avg Reg'           : test_reg,
+                    'Correct'           : correct,
+                    'Total Tested'      : len(test_loader.dataset), 
+                    'Accuracy'          : 100. * correct / len(test_loader.dataset),
+                    'Adv Correct'       : adv_correct,
+                    'Adv Total Tested'  : adv_total, 
+                    'Adv Accuracy'      : 100. * adv_correct / adv_total})
+
     else:
         print('Test set: Average loss: {:.4f}, Average cross entropy: {:.4f}, Average reg: {:.4f}, Accuracy: {}/{} ({:.0f}%)\n'.format(
             test_loss, test_entropy, test_reg,
@@ -510,6 +522,11 @@ def main():
 
     # Set random seed
     torch.manual_seed(param['seed'])
+
+    # Initailize wandb
+    wandb.init( project = param["wandb_project_name"], 
+                entity  = "geometric_robustness",
+                config  = param)
 
     # Declare CPU/GPU useage
     if param['gpu_number'] is not None:
