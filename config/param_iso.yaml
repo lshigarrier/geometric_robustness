@@ -2,9 +2,12 @@ name  : kyles_TEMP # iso_6 # vanilla | iso_1 | iso_2 | iso_3 | iso_4 | iso_5 | i
 model : isometry_defense.pt
 seed  : 1
 
-wandb_project_name : MNIST Attacks
+# WandB Settings
+wandb_project_name  : MNIST Attacks
+run_sweep           : True
+
 train           : False
-gpu_number      : "4"
+gpu_number      : "3"
 load            : True
 adv_train       : False
 adv_test        : True
@@ -48,7 +51,7 @@ test_epoch          : 30
 loader              : test
 
 # attack
-attack_type       : fgsm # deep_fool # cw # 
+attack_type       : deep_fool # cw # 
 perturbation_type : linf # deep_fool only does L2
 budget            : 0.15
 alpha             : 0.01
