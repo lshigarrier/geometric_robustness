@@ -379,7 +379,6 @@ class TorchAttackPGD:
         labels = labels.detach()
         return self.attacker(original_images, labels)
 
-
 class TorchAttackDeepFool:
     """
     'DeepFool: A Simple and Accurate Method to Fool Deep Neural Networks'
@@ -400,7 +399,7 @@ class TorchAttackDeepFool:
 
     def __init__(self, 
                         model,                    
-                        max_iters   =   50,     
+                        max_iters   = 50,     
                         overshoot   = 0.02,     
                         return_type = 'float', 
                         ):
@@ -455,9 +454,9 @@ class TorchAttackCWL2:
     def __init__(self, 
                         # Model/Data args
                         model,         
-                        c           = 10, 
+                        c           = 1, 
                         kappa       = 0,
-                        max_iters    = 50,
+                        max_iters   = 50,
                         lr          = 0.01,
                         return_type = 'float'):
 
