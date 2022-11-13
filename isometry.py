@@ -119,8 +119,13 @@ def train(param, model, device, train_loader, optimizer, epoch, lmbda, teacher_m
         # Adversarial train
         if param['adv_train']:
             # Update attacker
+            original_perform_softmax_setting = model.perform_softmax 
+            model.perform_softmax = False
+
             attack.model = model
             attack.set_attacker()
+
+            model.perform_softmax = original_perform_softmax_setting
 
             # Generate attacks
             data = attack.perturb(data, target)  
@@ -131,7 +136,7 @@ def train(param, model, device, train_loader, optimizer, epoch, lmbda, teacher_m
         # Compute loss
         if param['distill']:
             # Get soft-labels
-            soft_labels = F.softmax(teacher_model(data, perform_softmax = False) / param["distill_temp"], 1)
+            soft_labels = F.softmax(teacher_model(data) / param["distill_temp"], 1)
 
             # Calculate loss with soft_labels
             cross_entropy = torch.mean(-torch.sum(soft_labels * torch.log(output), -1))
@@ -435,7 +440,7 @@ def initialize(param, device):
     # Load teacher model
     if param['distill']:
         # initalize network class
-        teacher_model = Lenet(param).to(device)
+        teacher_model = Lenet(param, perform_softmax = False).to(device)
 
         print(f'Loading weights onto teacher model')
         teacher_model.load_state_dict(torch.load(f'models/isometry/{param["name"]}/{param["model"]}', map_location='cpu'))
@@ -445,11 +450,41 @@ def initialize(param, device):
     else:
         teacher_model = None
 
+    # Load attacker
+    attack = None
+    if param['adv_test'] or param['adv_train']:
+        original_perform_softmax_setting = model.perform_softmax 
+        model.perform_softmax = False
+
+        if param["attack_type"] == "fgsm":
+            attack = TorchAttackFGSM(   model   = model,
+                                        eps     = param['budget'])
+
+        elif param['attack_type'] == "pgd":
+            attack = TorchAttackPGD(model   = model,
+                                    eps     = param['budget'],
+                                    alpha   = param['alpha'],
+                                    steps   = param['max_iter'],
+                                    )
+
+        elif param['attack_type'] == "deep_fool":
+            attack = TorchAttackDeepFool(model = model)
+
+        elif param['attack_type'] == "cw":
+            attack = TorchAttackCWL2( model = model)
+
+        else:
+            print("Invalid attack_type in config file, please use 'fgsm' or add a new class in attacks_utils....")
+            exit()
+
+        model.perform_softmax = original_perform_softmax_setting
+
+
     # Set optimizer
     optimizer = optim.SGD(model.parameters(), lr=param['learning_rate'])
 
     print('Initialization done')
-    return train_loader, light_train_loader, test_loader, model, optimizer, teacher_model
+    return train_loader, light_train_loader, test_loader, model, optimizer, teacher_model, attack
 
 
 def training(param, device, train_loader, test_loader, model, optimizer, teacher_model, attack=None):
@@ -515,18 +550,25 @@ def testing_loss(param, device, loader, model):
             if batch_idx == 0:
                 break
 
-
 def main():
     # Load configurations
     param = load_yaml('param_iso')
 
     # Set random seed
-    torch.manual_seed(param['seed'])
+    torch.manual_seed(param['seed']) 
 
     # Initailize wandb
-    wandb.init( project = param["wandb_project_name"], 
-                entity  = "geometric_robustness",
-                config  = param)
+    if param["run_sweep"]:
+        wandb.init()
+
+        # Convert WandB config to iso's
+        for key, value in dict(wandb.config).items():
+            param[key] = value
+
+    else:
+        wandb.init( project = param["wandb_project_name"], 
+                    entity  = "geometric_robustness",
+                    config  = param)
 
     # Declare CPU/GPU useage
     if param['gpu_number'] is not None:
@@ -537,32 +579,7 @@ def main():
     print(f'Using {device}')
 
     # Load data and model
-    train_loader, light_train_loader, test_loader, model, optimizer, teacher_model = initialize(param, device)
-
-    # Load attacker
-    attack = None
-    if param['adv_test'] or param['adv_train']:
-
-        if param["attack_type"] == "fgsm":
-            attack = TorchAttackFGSM(   model   = model,
-                                        eps     = param['budget'])
-
-        elif param['attack_type'] == "pgd":
-            attack = TorchAttackPGD(model   = model,
-                                    eps     = param['budget'],
-                                    alpha   = param['alpha'],
-                                    steps   = param['max_iter'],
-                                    )
-
-        elif param['attack_type'] == "deep_fool":
-            attack = TorchAttackDeepFool(model = model)
-
-        elif param['attack_type'] == "cw":
-            attack = TorchAttackCWL2( model = model)
-
-        else:
-            print("Invalid attack_type in config file, please use 'fgsm' or add a new class in attacks_utils....")
-            exit()
+    train_loader, light_train_loader, test_loader, model, optimizer, teacher_model, attack = initialize(param, device)
 
     # Train model
     if param['train']:
@@ -618,4 +635,22 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    # Load configurations
+    param = load_yaml('param_iso')
+
+    # Run WandB sweep
+    if param["run_sweep"]:
+        # Load sweep config
+        sweep_config = load_yaml('attack_sweep')
+
+        # Initialize sweep
+        sweep_id = wandb.sweep( sweep = sweep_config, 
+                                project = param["wandb_project_name"], 
+                                entity  = "geometric_robustness")
+
+        # Start sweep agent
+        wandb.agent(sweep_id, function = main)
+
+    # Run as normal
+    else:
+        main()
