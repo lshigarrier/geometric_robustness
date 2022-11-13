@@ -49,7 +49,7 @@ class SoftLeNet(nn.Module):
 
 class Lenet(nn.Module):
 
-    def __init__(self, param):
+    def __init__(self, param, perform_softmax = True):
         super(Lenet, self).__init__()
         self.conv1 = nn.Conv2d(1, param['channels1'], 3, 1)
         self.conv2 = nn.Conv2d(param['channels1'], param['channels2'], 3, 1)
@@ -58,7 +58,9 @@ class Lenet(nn.Module):
         self.fc1 = nn.Linear(9216, param['hidden'])
         self.fc2 = nn.Linear(param['hidden'], 10)
 
-    def forward(self, x, perform_softmax = True):
+        self.perform_softmax = perform_softmax
+
+    def forward(self, x):
         x = x.float()
         x = self.conv1(x)
         x = F.relu(x)
@@ -72,8 +74,8 @@ class Lenet(nn.Module):
         x = self.dropout2(x)
         logits = self.fc2(x)
 
-        if perform_softmax:
-            softmax_output = F.softmax(logits, dim=1)
+        if self.perform_softmax:
+            softmax_output = F.softmax(logits, dim = 1)
             return softmax_output
 
         else:
