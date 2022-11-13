@@ -81,7 +81,6 @@ def check_parseval_tightness(model, save_path, comparison_model = None):
 
                 fig.savefig(save_path + "_layer_" + name + ".png")
         
-
 if __name__ == '__main__':
 
     # Load configurations
