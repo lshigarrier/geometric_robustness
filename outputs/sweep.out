@@ -1406,3 +1406,65 @@ wandb:
 wandb: Synced lunar-sweep-26: https://wandb.ai/geometric_robustness/MNIST%20Attacks/runs/j6hlqu1z
 wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
 wandb: Find logs at: ./wandb/run-20221113_165211-j6hlqu1z/logs
+wandb: Agent Starting Run: 3e1re0k9 with config:
+wandb: 	alpha: 0.01
+wandb: 	attack_type: fgsm
+wandb: 	budget: 0.09
+wandb: 	max_iter: 40
+wandb: 	model: distilled_from_baseline.pt
+wandb: 	perturbation_type: linf
+wandb: 	save_an_image: True
+wandb: Tracking run with wandb version 0.13.5
+wandb: Run data is saved locally in /home/naddeok5/geometric_robustness/wandb/run-20221113_165222-3e1re0k9
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run deep-sweep-27
+wandb: ⭐️ View project at https://wandb.ai/geometric_robustness/MNIST%20Attacks
+wandb: 🧹 View sweep at https://wandb.ai/geometric_robustness/MNIST%20Attacks/sweeps/7l0devod
+wandb: 🚀 View run at https://wandb.ai/geometric_robustness/MNIST%20Attacks/runs/3e1re0k9
+Test: 0/10000 (0%)	Loss: 1.549108, Cross Entropy: 1.549108, Reg: 0.000000
+Elapsed time (s): 0.20983266830444336
+Memory usage (GB): 2.6899795532226562
+Test set: Average loss: 1.5528, Average cross entropy: 1.5528, Average reg: 0.0000, Accuracy: 9233/10000 (92%), Robust accuracy: 6530/9233 (71%)
+
+Using cuda
+Using testing batch size for test loader
+Using testing batch size for train loader
+Loading weights
+Initialization done
+Start testing
+Using test loader
+wandb: Waiting for W&B process to finish... (success).
+wandb: - 0.008 MB of 0.011 MB uploaded (0.000 MB deduped)wandb: \ 0.008 MB of 0.011 MB uploaded (0.000 MB deduped)wandb: 
+wandb: Run history:
+wandb:         Accuracy ▁
+wandb:     Adv Accuracy ▁
+wandb:      Adv Correct ▁
+wandb: Adv Total Tested ▁
+wandb:          Avg Reg ▁
+wandb:          Correct ▁
+wandb:      Test Avg CE ▁
+wandb:        Test Loss ▁
+wandb:     Total Tested ▁
+wandb: 
+wandb: Run summary:
+wandb:         Accuracy 89.96
+wandb:     Adv Accuracy 81.01378
+wandb:      Adv Correct 7288
+wandb: Adv Total Tested 8996
+wandb:          Avg Reg 0.0
+wandb:          Correct 8996
+wandb:      Test Avg CE 2.20353
+wandb:        Test Loss 2.20353
+wandb:     Total Tested 10000
+wandb: 
+wandb: Synced deep-sweep-27: https://wandb.ai/geometric_robustness/MNIST%20Attacks/runs/3e1re0k9
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20221113_165222-3e1re0k9/logs
+wandb: Agent Starting Run: wj5x3p3f with config:
+wandb: 	alpha: 0.01
+wandb: 	attack_type: fgsm
+wandb: 	budget: 0.09
+wandb: 	max_iter: 40
+wandb: 	model: adv_train_fgsm.pt
+wandb: 	perturbation_type: linf
+wandb: 	save_an_image: True
