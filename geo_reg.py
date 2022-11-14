@@ -8,11 +8,11 @@ import os
 
 from torch.utils.data import DataLoader
 from torchvision import datasets, transforms
-from mnist_model import Lenet, IsometryReg, JacobianReg
+from mnist_model import Lenet, IsometryReg, JacobianReg, compute_jacobian, get_jacobian_bound
 from mnist_utils import load_yaml
 from attacks_utils import TorchAttackGaussianNoise, TorchAttackFGSM, TorchAttackPGD, TorchAttackPGDL2, TorchAttackDeepFool, TorchAttackCWL2
 from defense_utils import parseval_orthonormal_constraint
-from attacks_vis import plot_curves
+from attacks_vis import plot_curves, plot_hist
 
 
 # -------------------------------------------- Training & Testing ------------------------------------------------------
@@ -143,6 +143,15 @@ def test(param, model, reg_model, device, test_loader, eta, attack=None):
     test_reg     = 0
     correct      = 0
     adv_correct  = 0
+    test_bound           = []
+    test_bound_robust    = []
+    test_bound_nonrobust = []
+    # data_robust_list        = []
+    # data_nonrobust_list     = []
+    # adv_data_robust_list    = []
+    # adv_data_nonrobust_list = []
+    # data_robust_flag     = False
+    # data_nonrobust_flag  = False
     tic          = time.time()
 
     ## Cycle through data
@@ -203,14 +212,33 @@ def test(param, model, reg_model, device, test_loader, eta, attack=None):
 
             # Test adversary
             if param['adv_test'] and correct_mask.any():
+                # Compute the max singular value and the bound
+                if param['test_bound']:
+                    new_data = data[correct_mask].clone()
+                    with torch.enable_grad():
+                        # Ensure grad is on
+                        new_data.requires_grad = True
+
+                        # Forward pass
+                        new_output = model(new_data)
+
+                        # Compute jacobian and bound
+                        jac = compute_jacobian(new_data, new_output, device)
+                        bound = get_jacobian_bound(new_output, param['epsilon'])
+                        sv_max = torch.max(torch.linalg.svdvals(jac), dim=1)[0]
+
+                        # Compute mask for points respecting the bound
+                        diff = (bound - sv_max).squeeze()
+                        test_bound.append(diff)
+                        # bound_mask = diff.gt(0.575).view(-1)
+
                 # Generate attacks
                 adv_data = attack.perturb(data[correct_mask], target[correct_mask])
                 ## For testing purposes
                 # assert not torch.isnan(adv_data).any()
                 diff_tensor = adv_data.contiguous().view(adv_data.shape[0], -1) - data[correct_mask].contiguous().view(adv_data.shape[0], -1)
-                # print(f'Mean linf norm: {torch.max(torch.abs(diff_tensor), dim=1)[0].mean()}')
                 min_norm = torch.max(torch.abs(diff_tensor), dim=1)[0].min()
-                print(f'Min Linf norm: {min_norm}')
+                # print(f'Min Linf norm: {min_norm}')
                 if min_norm < 0.9*param['budget']:
                     print('PERTURBATION IS TOO SMALL!!!')
 
@@ -221,7 +249,30 @@ def test(param, model, reg_model, device, test_loader, eta, attack=None):
                 adv_pred = adv_output.argmax(dim=1, keepdim=True)
 
                 # Collect statistics
-                adv_correct += adv_pred.eq(target[correct_mask].view_as(adv_pred)).sum().item()
+                adv_correct_mask = adv_pred.eq(target[correct_mask].view_as(adv_pred)).view(-1)
+                adv_correct += adv_correct_mask.sum().item()
+                if param['test_bound']:
+                    '''
+                    data_robust_mask    = bound_mask.logical_and(adv_correct_mask)
+                    data_nonrobust_mask = bound_mask.logical_and(torch.logical_not(adv_correct_mask))
+                    data_robust         = new_data[data_robust_mask]
+                    data_nonrobust      = new_data[data_nonrobust_mask]
+                    if data_robust.numel() > 0:
+                        # data_robust_flag = True
+                        adv_data_robust  = adv_data[data_robust_mask]
+                        data_robust_list.append(data_robust)
+                        adv_data_robust_list.append(adv_data_robust)
+                    if data_nonrobust.numel() > 0:
+                        # data_nonrobust_flag = True
+                        adv_data_nonrobust  = adv_data[data_nonrobust_mask]
+                        data_nonrobust_list.append(data_nonrobust)
+                        adv_data_nonrobust_list.append(adv_data_nonrobust)
+                    '''
+                    test_bound_robust.append(diff[adv_correct_mask])
+                    test_bound_nonrobust.append(diff[torch.logical_not(adv_correct_mask)])
+
+                    # if data_robust_flag and data_nonrobust_flag:
+                    #    break
 
             ## Display results
             # ---------------------------------------------------------------- #
@@ -248,6 +299,21 @@ def test(param, model, reg_model, device, test_loader, eta, attack=None):
         print('Test set: Average loss: {:.4f}, Average cross entropy: {:.4f}, Average reg: {:.4f}, Accuracy: {}/{} ({:.0f}%)\n'.format(
             test_loss, test_entropy, test_reg,
             correct, len(test_loader.dataset), 100. * correct / len(test_loader.dataset)))
+    if param['test_bound']:
+        '''
+        data_robust_list = torch.cat(data_robust_list, dim=0)
+        data_nonrobust_list = torch.cat(data_nonrobust_list, dim=0)
+        adv_data_robust_list = torch.cat(adv_data_robust_list, dim=0)
+        adv_data_nonrobust_list = torch.cat(adv_data_nonrobust_list, dim=0)
+        torch.save(data_robust_list, 'data/img/jac_3_test_robust_image.pt')
+        torch.save(adv_data_robust_list, 'data/img/jac_3_test_adv_robust_image.pt')
+        torch.save(data_nonrobust_list, 'data/img/jac_3_test_nonrobust_image.pt')
+        torch.save(adv_data_nonrobust_list, 'data/img/jac_3_test_adv_nonrobust_image.pt')
+        '''
+        test_bound = torch.cat(test_bound, dim=0).flatten().tolist()
+        test_bound_robust = torch.cat(test_bound_robust, dim=0).flatten().tolist()
+        test_bound_nonrobust = torch.cat(test_bound_nonrobust, dim=0).flatten().tolist()
+        return test_bound, test_bound_robust, test_bound_nonrobust
     return test_loss, test_entropy, test_reg
 
 
@@ -321,7 +387,7 @@ def initialize(param, device):
     ## Initialize regularization class
     # -------------------------------------------------------------- #
     if param['reg_type'] == 'jacobian':
-        reg_model = JacobianReg(param['epsilon'])
+        reg_model = JacobianReg(param['epsilon'], barrier=param['barrier'])
     elif param['reg_type'] == 'isometry':
         reg_model = IsometryReg(param['epsilon'])
     else:
@@ -477,7 +543,13 @@ def one_train_or_test(param):
         # eta = param['eta_min'] * (param['eta_max'] / param['eta_min']) ** ((param['test_epoch'] - 1) / (param['epochs'] - 1))
 
         # Launch testing
-        test(param, model, reg_model, device, loader, eta, attack)
+        if param['test_bound']:
+            test_bound, test_bound_robust, test_bound_nonrobust = test(param, model, reg_model, device, loader, eta, attack)
+            _ = plot_hist(test_bound, "All points", "Bound minus max singular value", "Number")
+            _ = plot_hist(test_bound_robust, "Robust points", "Bound minus max singular value", "Number")
+            _ = plot_hist(test_bound_nonrobust, "Non-robust points", "Bound minus max singular value", "Number")
+        else:
+            test(param, model, reg_model, device, loader, eta, attack)
 
     if param['plot']:
         plt.show()

@@ -1,0 +1,29 @@
+dim        : 784
+seed       : 1
+gpu_number : None
+verbose    : True
+
+# Model
+
+name      : jacobian/jac_3 # jacobian/baseline
+model     : 00030.pt
+channels1 : 32
+channels2 : 64
+hidden    : 128
+
+# Files
+
+data_robust_file        : data/img/jac_3_train_robust_image.pt
+adv_data_robust_file    : data/img/jac_3_train_adv_robust_image.pt
+data_nonrobust_file     : data/img/jac_3_train_nonrobust_image.pt
+adv_data_nonrobust_file : data/img/jac_3_train_adv_nonrobust_image.pt
+
+# Plot
+
+use_robust : True
+random_dir : False
+data_index : 1
+nb_points  : 71   # number of points per row, must be odd
+epsilon    : 4.2  # radius of the l2 ball
+scale      : 10   # the plot will span from -scale*epsilon to scale*epsilon
+

@@ -3,6 +3,34 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 
+def compute_jacobian(data, output, device, num_stab=1e-6):
+    c = output.shape[1]
+    m = c - 1
+
+    output = output * (1 - c * num_stab) + num_stab
+
+    new_output = torch.sqrt(output)
+    new_output = 2 * new_output[:, :m] / (1 - new_output[:, m].unsqueeze(1).repeat(1, m))
+
+    jac = torch.zeros(m, *data.shape).to(device)
+    grad_output = torch.zeros(*new_output.shape).to(device)
+    for i in range(m):
+        grad_output.zero_()
+        grad_output[:, i] = 1
+        jac[i] = torch.autograd.grad(new_output, data, grad_outputs=grad_output, retain_graph=True)[0]
+    jac = torch.transpose(jac, dim0=0, dim1=1)
+    return jac.contiguous().view(jac.shape[0], m, -1)
+
+
+def get_jacobian_bound(output, epsilon):
+    c = output.shape[1]
+    m = c - 1
+    delta = torch.sqrt(output / c).sum(dim=1)
+    delta = 2 * torch.acos(delta)
+    rho = (2 * (1 - torch.sqrt(output[:, m])) - output[:, :m].sum(dim=1)) / (1 - torch.sqrt(output[:, m]))
+    return delta / (rho * epsilon)
+
+
 class IsometryReg(nn.Module):
 
     def __init__(self, epsilon, num_stab=1e-6):
@@ -11,8 +39,8 @@ class IsometryReg(nn.Module):
         self.num_stab = num_stab
 
     def forward(self, data, output, device):
-        # Squared input dimension
-        n2 = data.shape[2]*data.shape[3]
+        # Input dimension
+        n = data.shape[2]*data.shape[3]
         # Number of classes
         c = output.shape[1]
         m = c - 1
@@ -51,7 +79,7 @@ class IsometryReg(nn.Module):
         change = change / self.epsilon ** 2
 
         # Compute regularization term (alpha in docs)
-        reg = self.epsilon**2/n2*torch.linalg.norm((jac - change).contiguous().view(len(data), -1), dim=1)
+        reg = self.epsilon**2/n*torch.linalg.norm((jac - change).contiguous().view(len(data), -1), dim=1)
 
         # Return
         return reg.mean()
@@ -59,14 +87,23 @@ class IsometryReg(nn.Module):
 
 class JacobianReg(nn.Module):
 
-    def __init__(self, epsilon, num_stab=1e-6):
+    def __init__(self, epsilon, barrier='relu', num_stab=1e-6):
         super(JacobianReg, self).__init__()
         self.epsilon = epsilon
         self.num_stab = num_stab
+        # Barrier function
+        if barrier == 'relu':
+            self.barrier = F.relu
+        elif barrier == 'elu':
+            self.barrier = F.elu
+        elif barrier == 'exp':
+            self.barrier = torch.exp
+        else:
+            raise NotImplementedError
 
     def forward(self, data, output, device):
-        # Squared input dimension
-        # n2 = data.shape[2]*data.shape[3]
+        # Input dimension
+        n = data.shape[2]*data.shape[3]
         # Number of classes
         c = output.shape[1]
         m = c - 1
@@ -86,15 +123,25 @@ class JacobianReg(nn.Module):
             grad_output[:, i] = 1
             jac[i] = torch.autograd.grad(new_output, data, grad_outputs=grad_output, retain_graph=True)[0]
         jac = torch.transpose(jac, dim0=0, dim1=1)
-        jac = jac.contiguous().view(jac.shape[0], -1)
+        jac = jac.contiguous().view(jac.shape[0], m, -1)
 
         # Compute delta and rho
         delta = torch.sqrt(output/c).sum(dim=1)
         delta = 2*torch.acos(delta)
         rho = (2*(1-torch.sqrt(output[:, m])) - output[:, :m].sum(dim=1))/(1-torch.sqrt(output[:, m]))
 
+        # Frobenius norm
+        # jac = jac.contiguous().view(jac.shape[0], -1)
+        # jac_norm = torch.square(jac).sum(dim=1)
+
+        # Holder inequality
+        abs_jac = torch.abs(jac)
+        norm_1 = torch.max(abs_jac.sum(dim=1, keepdim=True), dim=2)[0]
+        norm_inf = torch.max(abs_jac.sum(dim=2, keepdim=True), dim=1)[0]
+        jac_norm = norm_1 * norm_inf
+
         # Compute regularization
-        reg = F.elu(torch.sqrt(torch.square(jac).sum(dim=1)) - delta/(rho*self.epsilon))
+        reg = self.barrier(jac_norm - (delta/(rho*self.epsilon))**2)/n
         return reg.mean()
 
 
