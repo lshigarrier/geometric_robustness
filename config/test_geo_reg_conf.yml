@@ -5,15 +5,9 @@ barrier    : relu
 gpu_number : None
 seed       : 1
 
-train          : False
-load           : True
-adv_train      : False
 adv_test       : True
-parseval_train : False
-distill        : False
 reg            : False
-loop           : False
-plot           : False
+plot           : True
 test_bound     : False
 
 # WandB settings
@@ -32,14 +26,11 @@ hidden    : 128
 input_shape : (1, 28, 28)
 num_classes : 10
 
-# training
+# testing
 
-epochs          : 30
-batch_size      : 128
-test_batch_size : 128
-learning_rate   : 0.001
-
-distill_temp : 20
+testing_batch_size : 128
+test_epoch         : 30
+loader             : train
 
 # eps_inf = 0.3 => eps_l2 = sqrt(784)*eps_inf = 28*0.3 = 8.4
 # eps_inf = 0.2 => eps_l2 = 5.6
@@ -51,13 +42,6 @@ epoch_reg : 1
 
 verbose      : True
 log_interval : 4
-save_step    : 1
-
-# testing
-
-testing_batch_size : 128
-test_epoch         : 30
-loader             : train
 
 # attack
 
