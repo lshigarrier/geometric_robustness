@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import time
 import psutil
 import os
+import wandb
 
 from torch.utils.data import DataLoader
 from torchvision import datasets, transforms
@@ -12,7 +13,7 @@ from mnist_model import Lenet, IsometryReg, JacobianReg
 from mnist_utils import load_yaml
 from attacks_utils import TorchAttackGaussianNoise, TorchAttackFGSM, TorchAttackPGD, TorchAttackPGDL2, TorchAttackDeepFool, TorchAttackCWL2
 from defense_utils import parseval_orthonormal_constraint
-from attacks_vis import plot_curves
+from attacks_vis import plot_curves, plot_side_by_side
 
 
 # -------------------------------------------- Training & Testing ------------------------------------------------------
@@ -64,7 +65,7 @@ def train(param, model, reg_model, teacher_model, device, train_loader, optimize
             # print("One Hot", label_onehot[0])
             # print(torch.sum(-label_onehot * F.log_softmax(outputs, -1), -1).mean())
 
-            soft_labels = F.softmax(teacher_model(data, perform_softmax=False) / param["distill_temp"], -1)
+            soft_labels = F.softmax(teacher_model(data) / param["distill_temp"], -1)
             # torch.log(output) or F.log_softmax(output, -1) ?
             entropy = torch.sum(-soft_labels * torch.log(output), -1).mean()
 
@@ -205,6 +206,7 @@ def test(param, model, reg_model, device, test_loader, eta, attack=None):
             if param['adv_test'] and correct_mask.any():
                 # Generate attacks
                 adv_data = attack.perturb(data[correct_mask], target[correct_mask])
+
                 ## For testing purposes
                 # assert not torch.isnan(adv_data).any()
                 diff_tensor = adv_data.contiguous().view(adv_data.shape[0], -1) - data[correct_mask].contiguous().view(adv_data.shape[0], -1)
@@ -222,6 +224,22 @@ def test(param, model, reg_model, device, test_loader, eta, attack=None):
 
                 # Collect statistics
                 adv_correct += adv_pred.eq(target[correct_mask].view_as(adv_pred)).sum().item()
+
+                fooled_mask = adv_pred.ne(target[correct_mask].view_as(adv_pred)).view(-1)
+                if fooled_mask.sum().item() != 0:
+
+                    # Save a single attack
+                    if param['save_an_image']:
+                        param['save_an_image'] = False
+                        # Random sample
+                        idx = torch.randint(fooled_mask.sum(), (1,)).item()
+
+                        plot_side_by_side(img       = data[correct_mask][fooled_mask][idx],
+                                          adv_img   = adv_data[fooled_mask][idx],
+                                          pred      = pred[correct_mask][fooled_mask][idx],
+                                          adv_pred  = adv_pred[fooled_mask][idx],
+                                          title     = param['perturbation_type'].upper() + ": " + str(param['budget']) + " " + param['attack_type'].upper(),
+                                          save_path = "img/attacks/" + param['attack_type'] + "_" + param['perturbation_type'] + "_" + str(param['budget']) + ".png")
 
             ## Display results
             # ---------------------------------------------------------------- #
@@ -244,6 +262,17 @@ def test(param, model, reg_model, device, test_loader, eta, attack=None):
                test_loss, test_entropy, test_reg,
                correct, len(test_loader.dataset), 100. * correct / len(test_loader.dataset),
                adv_correct, correct, 100. * adv_correct / correct))
+
+        wandb.log({ 'Test Loss'         : test_loss,
+                    'Test Avg CE'       : test_entropy,
+                    'Avg Reg'           : test_reg,
+                    'Correct'           : correct,
+                    'Total Tested'      : len(test_loader.dataset),
+                    'Accuracy'          : 100. * correct / len(test_loader.dataset),
+                    'Adv Correct'       : adv_correct,
+                    'Adv Total Tested'  : correct,
+                    'Adv Accuracy'      : 100. * adv_correct / correct})
+
     else:
         print('Test set: Average loss: {:.4f}, Average cross entropy: {:.4f}, Average reg: {:.4f}, Accuracy: {}/{} ({:.0f}%)\n'.format(
             test_loss, test_entropy, test_reg,
@@ -398,9 +427,25 @@ def training(param, device, train_loader, test_loader, model, reg_model, teacher
 # ---------------------------------------------------- Main ------------------------------------------------------------
 
 
-def one_train_or_test(param):
+def one_run():
+    # Load configurations
+    param = load_yaml('config_geo_reg')
+
     # Set random seed
     torch.manual_seed(param['seed'])
+
+    # Initialize wandb
+    if param["run_sweep"]:
+        wandb.init()
+
+        # Convert WandB config
+        for key, value in dict(wandb.config).items():
+            param[key] = value
+
+    else:
+        wandb.init( project = param["wandb_project_name"],
+                    entity  = "geometric_robustness",
+                    config  = param)
 
     # Declare CPU/GPU usage
     if param['gpu_number'] is not None:
@@ -490,22 +535,22 @@ def main():
     # Load configurations
     param = load_yaml('config_geo_reg')
 
-    if param['loop']:
-        # Create config lists
-        eta_list = []
-        # eta_list = [1e-4, 3e-4, 5e-4, 7e-4, 9e-4, 1e-3, 3e-3, 5e-3, 7e-3, 9e-3, 1e-2]
-        # model_list = ['iso-4_1', 'iso-4_3', 'iso-4_5', 'iso-4_7', 'iso-4_9',
-        #              'iso-3_1', 'iso-3_3', 'iso-3_5', 'iso-3_7', 'iso-3_9', 'iso-2_1']
+    # Run WandB sweep
+    if param["run_sweep"]:
+        # Load sweep config
+        sweep_config = load_yaml('attack_sweep')
 
-        # Loop over configurations
-        for i in range(len(eta_list)):
-            # param['name'] = 'isometry/' + model_list[i]
-            # param['eta_max'] = eta_list[i]
-            # print(param['name'])
-            one_train_or_test(param)
+        # Initialize sweep
+        sweep_id = wandb.sweep(sweep  =sweep_config,
+                               project=param["wandb_project_name"],
+                               entity ="geometric_robustness")
 
+        # Start sweep agent
+        wandb.agent(sweep_id, function=one_run)
+
+    # Run as normal
     else:
-        one_train_or_test(param)
+        one_run()
 
 
 if __name__ == '__main__':
