@@ -1,5 +1,5 @@
-name       : jacobian/jac_3 # isometry/kyles_TEMP
-model      : 00030.pt # baseline.pt # 00030.pt
+name       : jacobian/jac_3
+model      : 00013.pt
 reg_type   : jacobian # isometry # jacobian
 barrier    : relu
 gpu_number : None
@@ -13,8 +13,8 @@ parseval_train : False
 distill        : False
 reg            : False
 loop           : False
-plot           : True
-test_bound     : True
+plot           : False
+test_bound     : False
 
 # model
 
@@ -45,14 +45,14 @@ eta_max   : 0.1
 epoch_reg : 1
 
 verbose      : True
-log_interval : 8
+log_interval : 4
 save_step    : 1
 
 # testing
 
 testing_batch_size : 128
 test_epoch         : 30
-loader             : test
+loader             : train
 
 # attack
 

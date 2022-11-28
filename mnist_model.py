@@ -46,7 +46,7 @@ class IsometryReg(nn.Module):
         m = c - 1
 
         # Numerical stability
-        output = output*(1 - c*self.num_stab) + self.num_stab
+        output = F.softmax(output)*(1 - c*self.num_stab) + self.num_stab
 
         # Coordinate change
         new_output = torch.sqrt(output)
@@ -109,7 +109,7 @@ class JacobianReg(nn.Module):
         m = c - 1
 
         # Numerical stability
-        output = output*(1 - c*self.num_stab) + self.num_stab
+        output = F.softmax(output)*(1 - c*self.num_stab) + self.num_stab
 
         # Coordinate change
         new_output = torch.sqrt(output)
@@ -156,7 +156,7 @@ class Lenet(nn.Module):
         self.fc1 = nn.Linear(9216, param['hidden'])
         self.fc2 = nn.Linear(param['hidden'], 10)
 
-    def forward(self, x, perform_softmax=True):
+    def forward(self, x):
         x = x.float()
         x = self.conv1(x)
         x = F.relu(x)
@@ -169,10 +169,4 @@ class Lenet(nn.Module):
         x = F.relu(x)
         # x = self.dropout2(x)
         logits = self.fc2(x)
-
-        if perform_softmax:
-            softmax_output = F.softmax(logits, dim=1)
-            return softmax_output
-
-        else:
-            return logits
+        return logits

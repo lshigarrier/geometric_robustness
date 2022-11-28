@@ -482,6 +482,7 @@ def one_train_or_test(param):
     # Load attacker
     attack = None
     if param['adv_test'] or param['adv_train']:
+
         if param["attack_type"] == "fgsm":
             attack = TorchAttackFGSM(model = model,
                                      eps   = param['budget'])
