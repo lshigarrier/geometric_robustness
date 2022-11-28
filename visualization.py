@@ -4,7 +4,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 
-from geo_reg import initialize
 from mnist_utils import load_yaml
 from mnist_model import Lenet, compute_jacobian, get_jacobian_bound
 

@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import torch
 
+
 def plot_side_by_side(img, adv_img, pred, adv_pred, title, save_path):
     
     petrubation = adv_img - img
@@ -14,7 +15,7 @@ def plot_side_by_side(img, adv_img, pred, adv_pred, title, save_path):
         ax.set_yticks([])
     
     ax1.imshow(img.permute(1, 2, 0).cpu().detach(), cmap="gray")
-    ax1.set_title("Orginal")
+    ax1.set_title("Original")
     ax1.set_xlabel("Prediction: " + str(pred.item()))
 
 
@@ -31,6 +32,7 @@ def plot_side_by_side(img, adv_img, pred, adv_pred, title, save_path):
     ax3.set_xlabel("Linf: " + str(linf) + "  L2: " + str(l2))
 
     fig.savefig(save_path)
+
 
 def plot_accuracy(epsilons, accuracies):
     fig, ax = plt.subplots()

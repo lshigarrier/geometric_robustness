@@ -5,9 +5,10 @@ import torch.nn as nn
 import numpy as np
 from mnist_model import Lenet
 import matplotlib.pyplot as plt
+plt.style.use('seaborn-deep')
 
 
-def parseval_orthonormal_constraint(model, beta = 0.0003):
+def parseval_orthonormal_constraint(model, beta = 0.0003, percent_of_rows = 1):
     # From paper: https://arxiv.org/pdf/1704.08847.pdf
     with torch.no_grad():
         state_dict = model.state_dict()
@@ -16,20 +17,21 @@ def parseval_orthonormal_constraint(model, beta = 0.0003):
 
             # Scaling factor for 2D convs in https://www.duo.uio.no/bitstream/handle/10852/69487/master_mathialo.pdf?sequence=1
             if isinstance(module, nn.Conv2d):
-                k = float(module.kernel_size[0])
+                # k = float(module.kernel_size[0])
+                rescale_factor = 1.0 # 2*k + 1
             else:
-                k = 1.0
+                rescale_factor = 1.0
 
             # Constraint
             if 'weight' in name:
                 # Flatten
-                w = param.view(-1,1)
+                w = param.view(param.size(0), -1) if 'conv' in name else param
 
                 # Sample 30% of Rows
-                S = torch.from_numpy(np.random.binomial(1, 0.3, (w.size(0)))).bool()
+                S = torch.from_numpy(np.random.binomial(1, percent_of_rows, (w.size(0)))).bool()
 
                 # Update from orginal paper
-                w[S] = ((1 - beta) * w[S]) - ((beta / k) * torch.mm(w[S], torch.mm(w[S].T, w[S])))
+                w[S,:] = ((1 + beta) * w[S,:]) - ((beta / rescale_factor) * torch.mm(w[S,:], torch.mm(w[S,:].T, w[S,:])))
 
                 # Set parameters
                 state_dict[name] = w.view_as(param)
@@ -39,47 +41,48 @@ def parseval_orthonormal_constraint(model, beta = 0.0003):
     return model
 
 
-def check_parseval_tightness(model, save_path):
+def check_parseval_tightness(model, save_path, comparison_model = None):
     # From paper: https://arxiv.org/pdf/1704.08847.pdf
 
-    fig = plt.figure()
-    count = 0
-    max_singular_value = []
+    num_layers = len(list(model.named_parameters()))
+    named_parameters = iter(model.named_parameters())
+
+    if comparison_model:
+        assert num_layers == len(list(comparison_model.named_parameters())), "Comparison model must have same number of parameters..."
+        comparison_named_parameters = iter(comparison_model.named_parameters())
+
     with torch.no_grad():
-        state_dict = model.state_dict()
-        for name, param in model.named_parameters():
-            # Constraint
+        for i in range(num_layers):
+            
+            name, param = next(named_parameters)
+
+            if comparison_model:
+                comparison_name, comparison_param = next(comparison_named_parameters)
+
             if 'weight' in name:
                 # Flatten
-                w = param.view(-1,1)
+                w = param.view(param.size(0), -1) if 'conv' in name else param
+                singular_values = torch.linalg.svdvals(w).cpu().numpy()
 
-                # Sample 30% of Rows
-                p = min(800 / w.size(0), 1)
-                S = torch.from_numpy(np.random.binomial(1, p, (w.size(0)))).bool()
+                fig = plt.figure()
+                
+                if comparison_model:
+                    comparison_w = comparison_param.view(comparison_param.size(0), -1) if 'conv' in comparison_name else comparison_param
+                    comparison_singular_values = torch.linalg.svdvals(comparison_w).cpu().numpy()
 
-                # Update from orginal paper
-                wTw_eigvalues, _ = torch.linalg.eig(torch.mm(w[S], w[S].T))
+                    # Plot
+                    bins = np.linspace(0, max(max(singular_values), max(comparison_singular_values)), 30)
+                    plt.hist([singular_values, comparison_singular_values], bins=bins, range = (0, max(max(singular_values), max(comparison_singular_values))), alpha=0.6, label=["Regular", "Parseval"])
+                    plt.legend(loc='upper right')
+                else:
+                    bins = np.linspace(0, max(singular_values), 30)
+                    plt.hist(singular_values, bins=bins, range = (0, max(singular_values)), alpha=0.6, label=name, color='blue')
 
-                a = wTw_eigvalues.real.cpu().tolist()
-                max_singular_value.append(max(a))
-
-                # if count == 0:
-                    
-                #     # print(, min(a), np.mean(a), np.std(a))
-                #     # print(torch.min(wTw_eigvalues.real), torch.max(wTw_eigvalues.real), wTw_eigvalues.size(), wTw_eigvalues.real.mean().item(), wTw_eigvalues.real.std().item())
-                #     # exit()
-                #     plt.hist(max(a), bins=1, range = (0,max(a)), alpha=0.6, label=name)
-                #     fig.savefig(save_path)
-                #     break
-
-                count += 1
-        # plt.legend(loc='upper right')
-        plt.hist(max_singular_value, bins=40, range = (0,max(max_singular_value) + 2), alpha=0.6, label=name)
-        fig.savefig(save_path)
-        print(max_singular_value)
+                fig.savefig(save_path + "_layer_" + name + ".png")
 
 
 def main():
+
     # Load configurations
     param = load_yaml('param_iso')
 
@@ -97,16 +100,17 @@ def main():
     model.load_state_dict(torch.load(f'models/{param["name"]}/{"baseline.pt"}', map_location='cpu'))
     model.eval()
 
-    parseval_model.load_state_dict(torch.load(f'models/{param["name"]}/{"parseval.pt"}', map_location='cpu'))
+    parseval_model.load_state_dict(torch.load(f'models/isometry/{param["name"]}/{"00010.pt"}', map_location='cpu'))
     parseval_model.eval()
 
-    print("Regular")
-    check_parseval_tightness(model, "img/parseval_tightness/baseline.png")
-
-    print("Parseval")
-    check_parseval_tightness(parseval_model, "img/parseval_tightness/parseval.png")
+    # Check tightness
+    check_parseval_tightness(model = model,
+                             comparison_model = parseval_model,
+                             save_path = "img/parseval_tightness/comparison")
 
 
 if __name__ == '__main__':
     main()
+
+
     

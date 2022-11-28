@@ -150,7 +150,7 @@ class TorchAttackGaussianNoise:
     def set_attacker(self):
         self.attacker = GN(
                             model = self.model,
-                            std = self.std
+                            std   = self.std
         )
         self.attacker.set_return_type(type=self.return_type)  # float returns [0-1], int returns [0-255]
 
@@ -322,7 +322,6 @@ class TorchAttackPGDL2:
             adv_images = self.attacker(original_images, labels)
         return adv_images
 
-
 class TorchAttackDeepFool:
     """
     'DeepFool: A Simple and Accurate Method to Fool Deep Neural Networks'
@@ -341,7 +340,7 @@ class TorchAttackDeepFool:
 
     def __init__(self, 
                         model,                    
-                        max_iters   =   50,     
+                        max_iters   = 50,     
                         overshoot   = 0.02,     
                         return_type = 'float', 
                         ):
@@ -400,9 +399,9 @@ class TorchAttackCWL2:
     def __init__(self, 
                         # Model/Data args
                         model,         
-                        c           = 10, 
+                        c           = 1, 
                         kappa       = 0,
-                        max_iters    = 50,
+                        max_iters   = 50,
                         lr          = 0.01,
                         return_type = 'float'):
 

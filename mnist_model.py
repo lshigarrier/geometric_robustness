@@ -147,7 +147,7 @@ class JacobianReg(nn.Module):
 
 class Lenet(nn.Module):
 
-    def __init__(self, param):
+    def __init__(self, param, perform_softmax=False):
         super(Lenet, self).__init__()
         self.conv1 = nn.Conv2d(1, param['channels1'], 3, 1)
         self.conv2 = nn.Conv2d(param['channels1'], param['channels2'], 3, 1)
@@ -155,9 +155,9 @@ class Lenet(nn.Module):
         # self.dropout2 = nn.Dropout(0.5)
         self.fc1 = nn.Linear(9216, param['hidden'])
         self.fc2 = nn.Linear(param['hidden'], 10)
+        self.perform_softmax = perform_softmax
 
     def forward(self, x):
-        x = x.float()
         x = self.conv1(x)
         x = F.relu(x)
         x = self.conv2(x)
@@ -169,4 +169,8 @@ class Lenet(nn.Module):
         x = F.relu(x)
         # x = self.dropout2(x)
         logits = self.fc2(x)
-        return logits
+        if self.perform_softmax:
+            softmax_output = F.softmax(logits, dim=1)
+            return softmax_output
+        else:
+            return logits

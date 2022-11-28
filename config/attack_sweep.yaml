@@ -1,0 +1,20 @@
+name       : attack_sweep
+method     : grid
+metric :
+  name     : val_acc
+  goal     : maximize
+parameters :
+  attack_type :
+    values : ['fgsm', 'pgd', 'cw', 'deepfool']
+  model:
+    values : ["baseline.pt", "parseval.pt", "distilled_from_baseline.pt", "adv_train_fgsm.pt"]
+  perturbation_type : 
+    value  : linf
+  budget        : 
+    values : [0., 0.015, 0.03, 0.045, 0.06, 0.075, 0.09, 0.105, 0.12, 0.135, 0.15]
+  alpha         :  
+    value  : 0.01
+  max_iter      :  
+    value  : 40
+  save_an_image :  
+    value  : True
