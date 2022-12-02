@@ -1,5 +1,5 @@
-name       : jacobian/jac_6 # isometry/kyles_TEMP
-model      : 00030.pt       # baseline.pt # 00030.pt # isometry_defense.pt
+name       : jacobian/jac_8 # isometry/kyles_TEMP
+model      : 00001.pt       # baseline.pt # 00030.pt # isometry_defense.pt
 reg_type   : jacobian       # isometry # jacobian
 barrier    : relu
 gpu_number : None
@@ -29,16 +29,13 @@ num_classes : 10
 # testing
 
 testing_batch_size : 128
-test_epoch         : 30
 loader             : train
 
 # eps_inf = 0.3 => eps_l2 = sqrt(784)*eps_inf = 28*0.3 = 8.4
 # eps_inf = 0.2 => eps_l2 = 5.6
 # eps_inf = 0.15 => eps_l2 = 4.2
 epsilon   : 4.2
-eta_min   : None
-eta_max   : 0.1
-epoch_reg : 1
+eta   : 0.04
 
 verbose      : True
 log_interval : 4

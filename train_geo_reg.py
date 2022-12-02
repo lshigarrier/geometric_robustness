@@ -1,11 +1,12 @@
 import torch
 import torch.nn.functional as F
 import matplotlib.pyplot as plt
+import numpy as np
 import time
 import psutil
 import os
 
-from mnist_utils import load_yaml, initialize
+from mnist_utils import load_yaml, initialize, moving_average
 from test_geo_reg import test
 from attacks_utils import TorchAttackGaussianNoise, TorchAttackFGSM, TorchAttackPGD, TorchAttackPGDL2, TorchAttackDeepFool, TorchAttackCWL2
 from defense_utils import parseval_orthonormal_constraint
@@ -14,16 +15,16 @@ from attacks_vis import plot_curves
 
 def train(param, model, reg_model, teacher_model, device, train_loader, optimizer, epoch, eta, attack=None):
     # Initialize variables
-    epoch_loss    = 0
-    epoch_entropy = 0
-    epoch_reg     = 0
+    epoch_loss    = []
+    epoch_entropy = []
+    epoch_reg     = []
+    epoch_norm    = []
+    epoch_hold    = []
+    epoch_frob    = []
+    epoch_bound   = []
 
     # Make model stochastic and compute gradient graph
     model.train()
-
-    # Display lambda value
-    if param['reg']:
-        print(f'Eta:{eta}')
 
     # Cycle through data
     tic = time.time()
@@ -46,7 +47,15 @@ def train(param, model, reg_model, teacher_model, device, train_loader, optimize
         # Forward pass
         output = model(data)
 
-        # Calculate soft-labels
+        # Compute regularization and norms
+        if param['compute_reg']:
+            reg, norm, norm_hold, norm_frob, bound = reg_model(data, output, device)
+        else:
+            reg       = torch.tensor(0)
+            norm      = torch.tensor(0)
+            norm_hold = torch.tensor(0)
+            norm_frob = torch.tensor(0)
+            bound     = torch.tensor(0)
 
         # Compute loss
         if param['distill']:
@@ -62,15 +71,21 @@ def train(param, model, reg_model, teacher_model, device, train_loader, optimize
             # torch.log(output) or F.log_softmax(output, -1) ?
             entropy = torch.sum(-soft_labels * torch.log(output), -1).mean()
 
-            # Do not compute regularization
-            reg = torch.tensor(0)
-
             # Loss is only cross entropy
             loss = entropy
 
-        elif param['reg']:
+        elif param['max_eig']:
             # Compute regularization term and cross entropy loss
-            reg     = reg_model(data, output, device)
+            c           = output.shape[1]
+            new_output  = F.softmax(output, dim=1) * (1 - c * 1e-6) + 1e-6  # for numerical stability
+            max_eig_reg = torch.sum(1/new_output, dim=1).mean()
+            entropy     = F.cross_entropy(output, target)
+
+            # Loss is only cross entropy
+            loss = entropy + eta * max_eig_reg
+
+        elif param['reg']:
+            # Compute cross entropy loss
             entropy = F.cross_entropy(output, target)
 
             # Loss with regularization
@@ -79,9 +94,6 @@ def train(param, model, reg_model, teacher_model, device, train_loader, optimize
         else:
             # Compute cross entropy loss
             entropy = F.cross_entropy(output, target)
-
-            # Do not compute regularization
-            reg = torch.tensor(0)
 
             # Loss is only cross entropy
             loss = entropy
@@ -100,9 +112,17 @@ def train(param, model, reg_model, teacher_model, device, train_loader, optimize
             model = parseval_orthonormal_constraint(model)
 
         # Update running totals
-        epoch_loss    += loss.item()*len(data)
-        epoch_entropy += entropy.item()*len(data)
-        epoch_reg     += reg.item()*len(data)
+        # epoch_loss    += loss.item()*len(data)
+        # epoch_entropy += entropy.item()*len(data)
+        # epoch_reg     += reg.item()*len(data)
+        epoch_loss.append(loss.item())
+        epoch_entropy.append(entropy.item())
+        epoch_reg.append(reg.item())
+        epoch_norm.append(norm.item())
+        epoch_hold.append(norm_hold.item())
+        epoch_frob.append(norm_frob.item())
+        epoch_bound.append(bound.item())
+
 
         # Display
         if param['verbose'] and (batch_idx % param['log_interval'] == 0):
@@ -114,17 +134,17 @@ def train(param, model, reg_model, teacher_model, device, train_loader, optimize
             tic = time.time()
 
     # Calculate results
-    epoch_loss    /= len(train_loader.dataset)
-    epoch_entropy /= len(train_loader.dataset)
-    epoch_reg     /= len(train_loader.dataset)
+    # epoch_loss    /= len(train_loader.dataset)
+    # epoch_entropy /= len(train_loader.dataset)
+    # epoch_reg     /= len(train_loader.dataset)
 
     # Display
     if param['verbose']:
         print('Train set: Average loss: {:.4f}, Average cross entropy: {:.4f}, Average reg: {:.4f}'.format(
-            epoch_loss, epoch_entropy, epoch_reg))
+            np.mean(epoch_loss), np.mean(epoch_entropy), np.mean(epoch_reg)))
 
     # Return results
-    return epoch_loss, epoch_entropy, epoch_reg
+    return epoch_loss, epoch_entropy, epoch_reg, epoch_norm, epoch_hold, epoch_frob, epoch_bound
 
 
 def training(param, device, train_loader, test_loader, model, reg_model, teacher_model, optimizer, attack=None):
@@ -132,55 +152,67 @@ def training(param, device, train_loader, test_loader, model, reg_model, teacher
     # ---------------------------------------------------------------------- #
     # Initiate variables
     loss_list, entropy_list, reg_list = [], [], []
+    norm_list, hold_list, frob_list, bound_list = [], [], [], []
     test_loss_list, test_entropy_list, test_reg_list = [], [], []
     # ---------------------------------------------------------------------- #
 
     ## Cycle through epochs
     # ---------------------------------------------------------------------- #
     for epoch in range(1, param['epochs'] + 1):
-        # Set eta term
-        # eta = param['eta_min'] * (param['eta_max']/param['eta_min'])**((epoch - 1)/(param['epochs'] - 1))
-        if epoch < param['epoch_reg']:
-            eta = param['eta_min']
-        else:
-            eta = param['eta_max']
 
         # Train
-        epoch_loss, epoch_entropy, epoch_reg = train(param, model, reg_model, teacher_model, device, train_loader, optimizer, epoch, eta, attack)
+        epoch_loss, epoch_entropy, epoch_reg, epoch_norm, epoch_hold, epoch_frob, epoch_bound = train(param, model, reg_model, teacher_model, device, train_loader, optimizer, epoch, param['eta'], attack)
 
         # Validate
-        test_loss, test_entropy, test_reg = test(param, model, reg_model, device, test_loader, eta, attack=attack, train=True)
+        test_loss, test_entropy, test_reg = test(param, model, reg_model, device, test_loader, param['eta'], attack=attack, train=True)
 
         # Checkpoint model weights
         if epoch % param['save_step'] == 0:
             torch.save(model.state_dict(), f'models/{param["name"]}/{epoch:05d}.pt')
 
         # Collect statistics
-        loss_list.append(epoch_loss)
-        entropy_list.append(epoch_entropy)
-        reg_list.append(epoch_reg)
+        loss_list    = [*loss_list, *epoch_loss]
+        entropy_list = [*entropy_list, *epoch_entropy]
+        reg_list     = [*reg_list, *epoch_reg]
+        norm_list    = [*norm_list, *epoch_norm]
+        hold_list    = [*hold_list, *epoch_hold]
+        frob_list    = [*frob_list, *epoch_frob]
+        bound_list   = [*bound_list, *epoch_bound]
+
         test_loss_list.append(test_loss)
         test_entropy_list.append(test_entropy)
         test_reg_list.append(test_reg)
 
+    # Moving average
+    loss_list    = moving_average(loss_list, 50)
+    entropy_list = moving_average(entropy_list, 50)
+    reg_list     = moving_average(reg_list, 50)
+    norm_list_avg    = moving_average(norm_list, 50)
+    hold_list    = moving_average(hold_list, 50)
+    frob_list    = moving_average(frob_list, 50)
+    bound_list_avg   = moving_average(bound_list, 50)
     if param['plot']:
         # Display plot
-        fig1 = plot_curves(loss_list, test_loss_list, "Loss function", "Epoch", "Loss")
-        fig2 = plot_curves(entropy_list, test_entropy_list, "Cross Entropy", "Epoch", "Cross entropy")
-        fig3 = plot_curves(reg_list, test_reg_list, "Regularization", "Epoch", "Regularization")
+        figs = [
+            plot_curves([loss_list], [None], "Training Loss", "Batch", "Loss"),
+            plot_curves([entropy_list], [None], "Training Cross Entropy", "Batch", "Cross entropy"),
+            plot_curves([reg_list], [None], "Training Regularization", "Batch", "Regularization"),
+            plot_curves([norm_list_avg, hold_list],
+                        ["Spectral", "Holder"],
+                        "Jacobian matrix norms", "Batch", "Norm"),
+            plot_curves([frob_list], [None], "Frobenius Norm", "Batch", "Norm"),
+            plot_curves([bound_list_avg], [None], "Bound", "Batch", "Norm"),
+            plot_curves([[bound_list[i] - norm_list[i] for i in range(len(bound_list))]], [None], "Bound minus True Norm", "Batch", "bound - norm"),
+            plot_curves([test_loss_list], [None], "Test Loss", "Epoch", "Loss"),
+            plot_curves([test_entropy_list], [None], "Test Cross Entropy", "Epoch", "Cross Entropy"),
+            plot_curves([test_reg_list], [None], "Test Regularization", "Epoch", "Regularization")
+        ]
 
-        # Return
-        return fig1, fig2, fig3
+        return figs
     return None
 
 
-def main():
-    # Detect anomaly in autograd
-    torch.autograd.set_detect_anomaly(True)
-
-    # Load configurations
-    param = load_yaml('train_geo_reg_conf')
-
+def one_run(param):
     # Set random seed
     torch.manual_seed(param['seed'])
 
@@ -238,10 +270,91 @@ def main():
 
     # Train model
     print(f'Start training')
-    _ = training(param, device, train_loader, test_loader, model, reg_model, teacher_model, optimizer, attack=attack)
+    figs = training(param, device, train_loader, test_loader, model, reg_model, teacher_model, optimizer, attack=attack)
 
     if param['plot']:
-        plt.show()
+        prefix = './outputs/'
+        name = param['name'].split('/')[1]
+        paths = ["_train_loss.png",
+                 "_train_entropy.png",
+                 "_train_reg.png",
+                 "_norms.png",
+                 "_frob_norm.png",
+                 "_bound.png",
+                 "_bound-norm.png",
+                 "_test_loss.png",
+                 "_test_entropy.png",
+                 "_test_reg.png"
+                 ]
+        for i in range(len(figs)):
+            figs[i].savefig(prefix+name+paths[i])
+    #    plt.show()
+
+
+def main():
+    # Detect anomaly in autograd
+    torch.autograd.set_detect_anomaly(True)
+
+    # Load configurations
+    param = load_yaml('train_geo_reg_conf')
+
+    # Loop
+    if param['loop']:
+        prefix = 'jacobian/'
+        # NO ADVERSARIAL TRAINING WHILE I CAN'T INSTALL TORCHATTACKS ON DORMAMMU
+        for i in range(8):
+            print('-' * 61)
+            if i == 0:
+                print('baseline_4')
+            if i == 1:
+                # baseline with another seed
+                print('baseline_5')
+                param['name'] = prefix + 'baseline_5'
+                param['seed'] = 42
+            elif i == 2:
+                # jacobian reg with medium eps
+                print('jac_10')
+                param['name'] = prefix + 'jac_10'
+                param['reg'] = True
+            elif i == 3:
+                # jacobian reg with small eps
+                print('jac_9')
+                param['name'] = prefix + 'jac_9'
+                param['epsilon'] = 0.1
+            elif i == 4:
+                # jacobian reg with large eps
+                print('jac_11')
+                param['name'] = prefix + 'jac_11'
+                param['epsilon'] = 8.4
+            elif i == 5:
+                # suppress max eigenvalue
+                print('max_eig')
+                param['name'] = prefix + 'max_eig'
+                param['max_eig'] = True
+                param['reg'] = False
+            elif i == 6:
+                # distillation
+                print('distillation')
+                os.system('cp ./models/jacobian/baseline_4/00010.pt ./models/jacobian/distill/teacher.pt')
+                param['name'] = prefix + 'distill_baseline_4'
+                param['distill'] = True
+                param['max_eig'] = False
+            elif i == 7:
+                # Parseval network
+                print('parseval')
+                param['name'] = prefix + 'parseval'
+                param['parseval_train'] = True
+                param['distill'] = False
+            elif i == 8:
+                # adversarial training
+                print('adversarial training')
+                param['name'] = prefix + 'adv_train'
+                param['adv_train'] = True
+                param['reg'] = False
+            one_run(param)
+
+    else:
+        one_run(param)
 
 
 if __name__ == '__main__':

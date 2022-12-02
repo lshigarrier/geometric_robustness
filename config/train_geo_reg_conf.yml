@@ -1,15 +1,18 @@
-name       : jacobian/jac_6 # isometry/kyles_TEMP
-model      : 00030.pt       # weights of teacher model
-reg_type   : jacobian       # isometry # jacobian
+name       : jacobian/baseline_4 # isometry/kyles_TEMP
+model      : teacher.pt          # weights of teacher model
+reg_type   : jacobian            # isometry # jacobian
 barrier    : relu
-gpu_number : "0"
+gpu_number : "7"
 seed       : 1
 
 adv_train      : False
-parseval_train : False
 distill        : False
-reg            : True
-plot           : False
+parseval_train : False
+max_eig        : False
+reg            : False
+compute_reg    : True
+plot           : True
+loop           : True
 
 # model
 
@@ -24,7 +27,7 @@ num_classes : 10
 
 # training
 
-epochs          : 30
+epochs          : 10
 batch_size      : 128
 test_batch_size : 128
 learning_rate   : 0.001
@@ -34,9 +37,7 @@ distill_temp    : 20
 # eps_inf = 0.2 => eps_l2 = 5.6
 # eps_inf = 0.15 => eps_l2 = 4.2
 epsilon   : 4.2
-eta_min   : None
-eta_max   : 0.1
-epoch_reg : 1
+eta       : 0.05
 
 verbose      : True
 log_interval : 200

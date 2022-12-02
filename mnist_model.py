@@ -104,7 +104,7 @@ class JacobianReg(nn.Module):
 
     def forward(self, data, output, device):
         # Input dimension
-        n = data.shape[2]*data.shape[3]
+        # n = data.shape[2]*data.shape[3]
         # Number of classes
         c = output.shape[1]
         m = c - 1
@@ -132,24 +132,25 @@ class JacobianReg(nn.Module):
         delta = 2*torch.acos(delta)
         # rho = (2*(1-torch.sqrt(output[:, m])) - output[:, :m].sum(dim=1))/(1-torch.sqrt(output[:, m]))
         rho = 1 - torch.sqrt(output[:, m])
+        bound = delta/(rho*self.epsilon)
 
         # Frobenius norm
-        # jac = jac.contiguous().view(jac.shape[0], -1)
-        # jac_norm = torch.square(jac).sum(dim=1)
+        jac_flat = jac.contiguous().view(jac.shape[0], -1)
+        jac_norm_frob = torch.square(jac_flat).sum(dim=1)
 
         # Holder inequality
         abs_jac = torch.abs(jac)
         norm_1 = torch.max(abs_jac.sum(dim=1, keepdim=True), dim=2)[0]
         norm_inf = torch.max(abs_jac.sum(dim=2, keepdim=True), dim=1)[0]
-        jac_norm = torch.sqrt(norm_1 * norm_inf)
+        jac_norm_holder = torch.sqrt(norm_1 * norm_inf)
 
         # Exact computation
-        # max_eig_val = torch.lobpcg(torch.bmm(jac, jac.transpose(1,2)), k=1, largest=True)[0]
-        # jac_norm = torch.sqrt(max_eig_val.squeeze())
+        max_eig_val = torch.lobpcg(torch.bmm(jac, jac.transpose(1,2)), k=1, largest=True)[0]
+        jac_norm = torch.sqrt(max_eig_val.squeeze())
 
         # Compute regularization
-        reg = self.barrier(jac_norm - delta/(rho*self.epsilon))/n
-        return reg.mean()
+        reg = self.barrier(jac_norm - bound)
+        return reg.mean(), jac_norm.mean(), jac_norm_holder.mean(), jac_norm_frob.mean(), bound.mean()
 
 
 class Lenet(nn.Module):

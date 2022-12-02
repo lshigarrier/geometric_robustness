@@ -51,7 +51,7 @@ def test(param, model, reg_model, device, test_loader, eta, attack=None, train=F
                     output = model(data)
 
                     # Compute regularization term and
-                    reg = reg_model(data, output, device)
+                    reg, _, _, _, _ = reg_model(data, output, device)
 
                     # Compute cross entropy
                     entropy = F.cross_entropy(output, target)
@@ -306,21 +306,14 @@ def one_run():
         loader = light_train_loader
         print('Using light train loader')
 
-    # Compute eta value
-    if param['test_epoch'] < param['epoch_reg']:
-        eta = param['eta_min']
-    else:
-        eta = param['eta_max']
-    # eta = param['eta_min'] * (param['eta_max'] / param['eta_min']) ** ((param['test_epoch'] - 1) / (param['epochs'] - 1))
-
     # Launch testing
     if param['test_bound']:
-        test_bound, test_bound_robust, test_bound_nonrobust = test(param, model, reg_model, device, loader, eta, attack)
+        test_bound, test_bound_robust, test_bound_nonrobust = test(param, model, reg_model, device, loader, param['eta'], attack)
         _ = plot_hist(test_bound, "All points", "Bound minus max singular value", "Number")
         _ = plot_hist(test_bound_robust, "Robust points", "Bound minus max singular value", "Number")
         _ = plot_hist(test_bound_nonrobust, "Non-robust points", "Bound minus max singular value", "Number")
     else:
-        test(param, model, reg_model, device, loader, eta, attack)
+        test(param, model, reg_model, device, loader, param['eta'], attack)
 
     if param['plot']:
         plt.show()

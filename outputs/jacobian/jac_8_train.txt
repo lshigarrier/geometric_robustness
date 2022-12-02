@@ -1,0 +1,201 @@
+name       : jacobian/jac_8 # isometry/kyles_TEMP
+model      : 00010.pt       # weights of teacher model
+reg_type   : jacobian       # isometry # jacobian
+barrier    : relu
+gpu_number : "0"
+seed       : 1
+
+adv_train      : False
+parseval_train : False
+distill        : False
+reg            : True
+plot           : True
+
+# model
+
+channels1 : 32
+channels2 : 64
+hidden    : 128
+
+# data
+
+input_shape : (1, 28, 28)
+num_classes : 10
+
+# training
+
+epochs          : 10
+batch_size      : 128
+test_batch_size : 128
+learning_rate   : 0.001
+distill_temp    : 20
+
+# eps_inf = 0.3 => eps_l2 = sqrt(784)*eps_inf = 28*0.3 = 8.4
+# eps_inf = 0.2 => eps_l2 = 5.6
+# eps_inf = 0.15 => eps_l2 = 4.2
+epsilon   : 4.2
+eta_min   : None
+eta_max   : 0.04
+epoch_reg : 1
+
+verbose      : True
+log_interval : 200
+save_step    : 1
+
+# attack
+
+attack_type       : pgd  # gn # fgsm # pgd # deep_fool # cw
+perturbation_type : linf # only for pgd
+budget            : 0.15 # for gn, fgsm, pgd
+alpha             : 0.01 # only for pgd
+max_iter          : 40   # for pgd, deep_fool, cw
+random_start      : True # only for pgd
+
+-----------------------------------------------------------------------------------------------------
+
+Using cuda
+Using training batch size for test loader
+Using training batch size for train loader
+Randomly initialized weights
+Initialization done
+Start training
+Eta:0.04
+Train Epoch: 1 [0/60000 (0%)]	Loss: 2.210486, Cross Entropy: 2.302316, Reg: 0.006566
+Elapsed time (s): 14.904037952423096
+Memory usage (GB): 3.1449661254882812
+Train Epoch: 1 [25600/60000 (43%)]	Loss: 0.105895, Cross Entropy: 0.091324, Reg: 0.455590
+Elapsed time (s): 570.8934481143951
+Memory usage (GB): 3.155731201171875
+Train Epoch: 1 [51200/60000 (85%)]	Loss: 0.066481, Cross Entropy: 0.054355, Reg: 0.357516
+Elapsed time (s): 539.3676607608795
+Memory usage (GB): 3.155780792236328
+Train set: Average loss: 0.2689, Average cross entropy: 0.2531, Average reg: 0.6467
+Test set: Average loss: 0.1964, Average cross entropy: 0.1704, Average reg: 0.8226, Accuracy: 9587/10000 (96%)
+
+Eta:0.04
+Train Epoch: 2 [0/60000 (0%)]	Loss: 0.200776, Cross Entropy: 0.183807, Reg: 0.608032
+Elapsed time (s): 2.368495464324951
+Memory usage (GB): 3.15655517578125
+Train Epoch: 2 [25600/60000 (43%)]	Loss: 0.150719, Cross Entropy: 0.094605, Reg: 1.497454
+Elapsed time (s): 520.8601756095886
+Memory usage (GB): 3.1566543579101562
+Train Epoch: 2 [51200/60000 (85%)]	Loss: 0.067193, Cross Entropy: 0.052891, Reg: 0.410442
+Elapsed time (s): 492.7974944114685
+Memory usage (GB): 3.1567535400390625
+Train set: Average loss: 0.4172, Average cross entropy: 0.3787, Average reg: 1.3391
+Test set: Average loss: 0.8247, Average cross entropy: 0.7746, Average reg: 2.0269, Accuracy: 8221/10000 (82%)
+
+Eta:0.04
+Train Epoch: 3 [0/60000 (0%)]	Loss: 0.717909, Cross Entropy: 0.698456, Reg: 1.184778
+Elapsed time (s): 1.044607162475586
+Memory usage (GB): 3.1600875854492188
+Train Epoch: 3 [25600/60000 (43%)]	Loss: 0.075165, Cross Entropy: 0.066319, Reg: 0.287476
+Elapsed time (s): 532.6098120212555
+Memory usage (GB): 3.1601905822753906
+Train Epoch: 3 [51200/60000 (85%)]	Loss: 0.135665, Cross Entropy: 0.092725, Reg: 1.166232
+Elapsed time (s): 504.7519588470459
+Memory usage (GB): 3.160236358642578
+Train set: Average loss: 0.2193, Average cross entropy: 0.1908, Average reg: 0.9039
+Test set: Average loss: 0.1120, Average cross entropy: 0.0854, Average reg: 0.7508, Accuracy: 9735/10000 (97%)
+
+Eta:0.04
+Train Epoch: 4 [0/60000 (0%)]	Loss: 0.192761, Cross Entropy: 0.171460, Reg: 0.703992
+Elapsed time (s): 2.362675666809082
+Memory usage (GB): 3.1601905822753906
+Train Epoch: 4 [25600/60000 (43%)]	Loss: 0.152495, Cross Entropy: 0.088119, Reg: 1.697526
+Elapsed time (s): 522.9355094432831
+Memory usage (GB): 3.1602935791015625
+Train Epoch: 4 [51200/60000 (85%)]	Loss: 2.335419, Cross Entropy: 2.171320, Reg: 6.273777
+Elapsed time (s): 455.8941044807434
+Memory usage (GB): 3.1603355407714844
+Train set: Average loss: 0.3837, Average cross entropy: 0.3332, Average reg: 1.5953
+Test set: Average loss: 0.0792, Average cross entropy: 0.0651, Average reg: 0.4164, Accuracy: 9781/10000 (98%)
+
+Eta:0.04
+Train Epoch: 5 [0/60000 (0%)]	Loss: 0.098893, Cross Entropy: 0.083568, Reg: 0.466692
+Elapsed time (s): 3.1723737716674805
+Memory usage (GB): 3.1636581420898438
+Train Epoch: 5 [25600/60000 (43%)]	Loss: 0.036670, Cross Entropy: 0.013440, Reg: 0.594191
+Elapsed time (s): 491.2723717689514
+Memory usage (GB): 3.16375732421875
+Train Epoch: 5 [51200/60000 (85%)]	Loss: 0.036001, Cross Entropy: 0.016914, Reg: 0.494081
+Elapsed time (s): 488.99576711654663
+Memory usage (GB): 3.163799285888672
+Train set: Average loss: 0.1960, Average cross entropy: 0.1688, Average reg: 0.8501
+Test set: Average loss: 0.1239, Average cross entropy: 0.0939, Average reg: 0.8419, Accuracy: 9728/10000 (97%)
+
+Eta:0.04
+Train Epoch: 6 [0/60000 (0%)]	Loss: 0.171989, Cross Entropy: 0.136517, Reg: 1.023324
+Elapsed time (s): 0.9007024765014648
+Memory usage (GB): 3.1639671325683594
+Train Epoch: 6 [25600/60000 (43%)]	Loss: 0.049230, Cross Entropy: 0.039713, Reg: 0.277648
+Elapsed time (s): 505.63988280296326
+Memory usage (GB): 3.163970947265625
+Train Epoch: 6 [51200/60000 (85%)]	Loss: 0.051964, Cross Entropy: 0.042608, Reg: 0.276508
+Elapsed time (s): 481.65414357185364
+Memory usage (GB): 3.163970947265625
+Train set: Average loss: 0.3959, Average cross entropy: 0.3489, Average reg: 1.5236
+Test set: Average loss: 0.8016, Average cross entropy: 0.6857, Average reg: 3.5842, Accuracy: 8793/10000 (88%)
+
+Eta:0.04
+Train Epoch: 7 [0/60000 (0%)]	Loss: 0.470669, Cross Entropy: 0.376777, Reg: 2.724063
+Elapsed time (s): 2.663125991821289
+Memory usage (GB): 3.1639671325683594
+Train Epoch: 7 [25600/60000 (43%)]	Loss: 0.076752, Cross Entropy: 0.073820, Reg: 0.147130
+Elapsed time (s): 479.70572805404663
+Memory usage (GB): 3.163970947265625
+Train Epoch: 7 [51200/60000 (85%)]	Loss: 1.145728, Cross Entropy: 0.895712, Reg: 7.146126
+Elapsed time (s): 480.3785026073456
+Memory usage (GB): 3.1639938354492188
+Train set: Average loss: 0.5650, Average cross entropy: 0.4983, Average reg: 2.1661
+Test set: Average loss: 0.1037, Average cross entropy: 0.0819, Average reg: 0.6273, Accuracy: 9721/10000 (97%)
+
+Eta:0.04
+Train Epoch: 8 [0/60000 (0%)]	Loss: 0.122921, Cross Entropy: 0.088978, Reg: 0.937538
+Elapsed time (s): 3.1669869422912598
+Memory usage (GB): 3.1642112731933594
+Train Epoch: 8 [25600/60000 (43%)]	Loss: 7.991642, Cross Entropy: 7.857463, Reg: 11.211957
+Elapsed time (s): 455.10690808296204
+Memory usage (GB): 3.1642189025878906
+Train Epoch: 8 [51200/60000 (85%)]	Loss: 0.054104, Cross Entropy: 0.044967, Reg: 0.273400
+Elapsed time (s): 542.1105806827545
+Memory usage (GB): 3.1642189025878906
+Train set: Average loss: 0.3550, Average cross entropy: 0.3181, Average reg: 1.2416
+Test set: Average loss: 0.1114, Average cross entropy: 0.0878, Average reg: 0.6766, Accuracy: 9742/10000 (97%)
+
+Eta:0.04
+Train Epoch: 9 [0/60000 (0%)]	Loss: 0.096587, Cross Entropy: 0.079068, Reg: 0.517023
+Elapsed time (s): 3.1169745922088623
+Memory usage (GB): 3.164215087890625
+Train Epoch: 9 [25600/60000 (43%)]	Loss: 0.130605, Cross Entropy: 0.090587, Reg: 1.091023
+Elapsed time (s): 433.47950172424316
+Memory usage (GB): 3.1642189025878906
+Train Epoch: 9 [51200/60000 (85%)]	Loss: 0.094313, Cross Entropy: 0.066320, Reg: 0.766153
+Elapsed time (s): 462.2016427516937
+Memory usage (GB): 3.1642189025878906
+Train set: Average loss: 0.3970, Average cross entropy: 0.3508, Average reg: 1.5050
+Test set: Average loss: 0.0953, Average cross entropy: 0.0724, Average reg: 0.6440, Accuracy: 9773/10000 (98%)
+
+Eta:0.04
+Train Epoch: 10 [0/60000 (0%)]	Loss: 0.110286, Cross Entropy: 0.097627, Reg: 0.414080
+Elapsed time (s): 0.9680290222167969
+Memory usage (GB): 3.164215087890625
+Train Epoch: 10 [25600/60000 (43%)]	Loss: 0.281108, Cross Entropy: 0.254018, Reg: 0.931285
+Elapsed time (s): 406.39568972587585
+Memory usage (GB): 3.1642532348632812
+Train Epoch: 10 [51200/60000 (85%)]	Loss: 14.290195, Cross Entropy: 14.357408, Reg: 12.677131
+Elapsed time (s): 510.7118763923645
+Memory usage (GB): 3.164295196533203
+Train set: Average loss: 0.9032, Average cross entropy: 0.8168, Average reg: 2.9762
+Test set: Average loss: 0.1477, Average cross entropy: 0.1116, Average reg: 1.0147, Accuracy: 9631/10000 (96%)
+
+Traceback (most recent call last):
+  File "/home/loic/geometric_robustness/train_geo_reg.py", line 307, in <module>
+    main()
+  File "/home/loic/geometric_robustness/train_geo_reg.py", line 286, in main
+    figs = training(param, device, train_loader, test_loader, model, reg_model, teacher_model, optimizer, attack=attack)
+  File "/home/loic/geometric_robustness/train_geo_reg.py", line 212, in training
+    plot_curves([bound_list[i] - norm_list[i] for i in range(len(bound_list))], [None], "Bound minus True Norm", "Batch", "bound - norm"),
+  File "/home/loic/geometric_robustness/attacks_vis.py", line 191, in plot_curves
+    ax.plot(range(1, len(data[i])+1), data[i])
+TypeError: object of type 'float' has no len()

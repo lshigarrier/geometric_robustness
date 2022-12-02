@@ -183,7 +183,24 @@ def plot_hist(data, title, xlabel, ylabel, bins=None, xmax=None, xline=None):
     return fig
 
 
-def plot_curves(list1, list2, title, xlabel, ylabel):
+def plot_curves(data, legend, title, xlabel, ylabel):
+    fig, ax = plt.subplots(figsize=(24, 18))
+    add_legend = False
+    for i in range(len(data)):
+        if legend[i] is None:
+            ax.plot(range(1, len(data[i])+1), data[i])
+        else:
+            add_legend = True
+            ax.plot(range(1, len(data[i])+1), data[i], label=legend[i])
+    ax.set_title(title)
+    ax.set_xlabel(xlabel)
+    ax.set_ylabel(ylabel)
+    if add_legend:
+        ax.legend()
+    return fig
+
+
+def plot_train_test_curves(list1, list2, title, xlabel, ylabel):
     fig, ax = plt.subplots()
     ax.plot(list1, label='Training')
     ax.plot(list2, label='Testing')
