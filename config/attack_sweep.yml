@@ -1,0 +1,11 @@
+name       : attack_sweep
+method     : grid
+metric :
+  name     : val_acc
+  goal     : maximize
+parameters :
+  model:
+    values : ["jac_12_2.pt", "jac_13_7.pt", "jac_14_4.pt", "max_eig_2_8.pt", "only_reg_1_7.pt"]
+    # ["baseline_4_5.pt", "baseline_5_3.pt", "jac_9_4.pt", "jac_10_8.pt", "jac_11_3.pt", "max_eig_1_10.pt"]
+  budget        : 
+    values : [0., 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4]

@@ -1,4 +1,4 @@
-name       : jacobian/jac_8 # isometry/kyles_TEMP
+name       : jacobian/test  # isometry/kyles_TEMP
 model      : 00001.pt       # baseline.pt # 00030.pt # isometry_defense.pt
 reg_type   : jacobian       # isometry # jacobian
 barrier    : relu
@@ -7,13 +7,14 @@ seed       : 1
 
 adv_test       : True
 reg            : False
+compute_reg    : False
 plot           : False
 test_bound     : False
 
 # WandB settings
 
 wandb_project_name  : MNIST Attacks
-run_sweep           : False
+run_sweep           : True
 
 # model
 
@@ -29,13 +30,13 @@ num_classes : 10
 # testing
 
 testing_batch_size : 128
-loader             : train
+loader             : test
 
 # eps_inf = 0.3 => eps_l2 = sqrt(784)*eps_inf = 28*0.3 = 8.4
 # eps_inf = 0.2 => eps_l2 = 5.6
 # eps_inf = 0.15 => eps_l2 = 4.2
-epsilon   : 4.2
-eta   : 0.04
+epsilon : 4.2
+eta     : 0.05
 
 verbose      : True
 log_interval : 4

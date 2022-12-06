@@ -57,7 +57,8 @@ def train(param, model, reg_model, teacher_model, device, train_loader, optimize
             norm_frob = torch.tensor(0)
             bound     = torch.tensor(0)
 
-        # Compute loss
+        ## Compute loss
+        # Distillation
         if param['distill']:
             ## Sanity check that this method is equivalent to original criterion
             # batch_size = labels.size(0)
@@ -68,12 +69,16 @@ def train(param, model, reg_model, teacher_model, device, train_loader, optimize
             # print(torch.sum(-label_onehot * F.log_softmax(outputs, -1), -1).mean())
 
             soft_labels = F.softmax(teacher_model(data) / param["distill_temp"], -1)
+            # numerical stability
+            c = soft_labels.shape[1]
+            soft_labels = soft_labels * (1 - c * 1e-6) + 1e-6
             # torch.log(output) or F.log_softmax(output, -1) ?
-            entropy = torch.sum(-soft_labels * torch.log(output), -1).mean()
+            entropy = torch.sum(-soft_labels * torch.log_softmax(output, -1), -1).mean()
 
             # Loss is only cross entropy
             loss = entropy
 
+        # Suppress maximum eigenvalue
         elif param['max_eig']:
             # Compute regularization term and cross entropy loss
             c           = output.shape[1]
@@ -84,6 +89,15 @@ def train(param, model, reg_model, teacher_model, device, train_loader, optimize
             # Loss is only cross entropy
             loss = entropy + eta * max_eig_reg
 
+        # Jacobian regularization only
+        elif param['only_reg']:
+            # Compute cross entropy loss
+            entropy = F.cross_entropy(output, target)
+
+            # Loss with regularization
+            loss = (1 - eta) * entropy + eta * norm
+
+        # Geometric regularization
         elif param['reg']:
             # Compute cross entropy loss
             entropy = F.cross_entropy(output, target)
@@ -91,6 +105,7 @@ def train(param, model, reg_model, teacher_model, device, train_loader, optimize
             # Loss with regularization
             loss = (1 - eta) * entropy + eta * reg
 
+        # Baseline
         else:
             # Compute cross entropy loss
             entropy = F.cross_entropy(output, target)
@@ -184,13 +199,13 @@ def training(param, device, train_loader, test_loader, model, reg_model, teacher
         test_reg_list.append(test_reg)
 
     # Moving average
-    loss_list    = moving_average(loss_list, 50)
-    entropy_list = moving_average(entropy_list, 50)
-    reg_list     = moving_average(reg_list, 50)
-    norm_list_avg    = moving_average(norm_list, 50)
-    hold_list    = moving_average(hold_list, 50)
-    frob_list    = moving_average(frob_list, 50)
-    bound_list_avg   = moving_average(bound_list, 50)
+    loss_list      = moving_average(loss_list, 50)
+    entropy_list   = moving_average(entropy_list, 50)
+    reg_list       = moving_average(reg_list, 50)
+    norm_list_avg  = moving_average(norm_list, 50)
+    hold_list      = moving_average(hold_list, 50)
+    frob_list      = moving_average(frob_list, 50)
+    bound_list_avg = moving_average(bound_list, 50)
     if param['plot']:
         # Display plot
         figs = [
@@ -302,8 +317,8 @@ def main():
     if param['loop']:
         prefix = 'jacobian/'
         # NO ADVERSARIAL TRAINING WHILE I CAN'T INSTALL TORCHATTACKS ON DORMAMMU
-        for i in range(8):
-            print('-' * 61)
+        for i in range(2,7):
+            print('-' * 102)
             if i == 0:
                 print('baseline_4')
             if i == 1:
@@ -313,42 +328,50 @@ def main():
                 param['seed'] = 42
             elif i == 2:
                 # jacobian reg with medium eps
-                print('jac_10')
-                param['name'] = prefix + 'jac_10'
+                print('jac_13')
+                param['name'] = prefix + 'jac_13'
                 param['reg'] = True
             elif i == 3:
                 # jacobian reg with small eps
-                print('jac_9')
-                param['name'] = prefix + 'jac_9'
+                print('jac_12')
+                param['name'] = prefix + 'jac_12'
                 param['epsilon'] = 0.1
             elif i == 4:
                 # jacobian reg with large eps
-                print('jac_11')
-                param['name'] = prefix + 'jac_11'
+                print('jac_14')
+                param['name'] = prefix + 'jac_14'
                 param['epsilon'] = 8.4
             elif i == 5:
                 # suppress max eigenvalue
-                print('max_eig')
-                param['name'] = prefix + 'max_eig'
+                print('max_eig_2')
+                param['name'] = prefix + 'max_eig_2'
                 param['max_eig'] = True
                 param['reg'] = False
+                param['eta'] = 0.1
             elif i == 6:
+                # regularization only
+                print('only_reg_1')
+                param['name'] = prefix + 'only_reg_1'
+                param['only_reg'] = True
+                param['max_eig'] = False
+                param['eta'] = 0.03
+            elif i == 7:
                 # distillation
-                print('distillation')
-                os.system('cp ./models/jacobian/baseline_4/00010.pt ./models/jacobian/distill/teacher.pt')
-                param['name'] = prefix + 'distill_baseline_4'
+                print('distill_2_baseline_4')
+                os.system('cp ./models/jacobian/baseline_4/00010.pt ./models/jacobian/distill_baseline_4/teacher.pt')
+                param['name'] = prefix + 'distill_2_baseline_4'
                 param['distill'] = True
                 param['max_eig'] = False
-            elif i == 7:
+            elif i == 8:
                 # Parseval network
-                print('parseval')
-                param['name'] = prefix + 'parseval'
+                print('parseval_2')
+                param['name'] = prefix + 'parseval_2'
                 param['parseval_train'] = True
                 param['distill'] = False
             elif i == 8:
                 # adversarial training
-                print('adversarial training')
-                param['name'] = prefix + 'adv_train'
+                print('adv_train_1')
+                param['name'] = prefix + 'adv_train_1'
                 param['adv_train'] = True
                 param['reg'] = False
             one_run(param)

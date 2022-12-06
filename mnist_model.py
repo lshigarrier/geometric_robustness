@@ -83,7 +83,7 @@ class IsometryReg(nn.Module):
         reg = self.epsilon**2/n*torch.linalg.norm((jac - change).contiguous().view(len(data), -1), dim=1)
 
         # Return
-        return reg.mean()
+        return reg.mean(), 0, 0, 0, 0
 
 
 class JacobianReg(nn.Module):

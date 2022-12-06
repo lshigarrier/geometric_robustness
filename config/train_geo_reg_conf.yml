@@ -1,6 +1,6 @@
-name       : jacobian/baseline_4 # isometry/kyles_TEMP
-model      : teacher.pt          # weights of teacher model
-reg_type   : jacobian            # isometry # jacobian
+name       : jacobian/jac_13
+model      : teacher.pt
+reg_type   : jacobian
 barrier    : relu
 gpu_number : "7"
 seed       : 1
@@ -9,7 +9,8 @@ adv_train      : False
 distill        : False
 parseval_train : False
 max_eig        : False
-reg            : False
+only_reg       : False
+reg            : True
 compute_reg    : True
 plot           : True
 loop           : True
@@ -37,7 +38,7 @@ distill_temp    : 20
 # eps_inf = 0.2 => eps_l2 = 5.6
 # eps_inf = 0.15 => eps_l2 = 4.2
 epsilon   : 4.2
-eta       : 0.05
+eta       : 0.03
 
 verbose      : True
 log_interval : 200

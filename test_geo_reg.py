@@ -42,7 +42,7 @@ def test(param, model, reg_model, device, test_loader, eta, attack=None, train=F
 
             # Compute loss
 
-            if param['reg']:
+            if param['compute_reg']:
                 with torch.enable_grad():
                     # Ensure grad is on
                     data.requires_grad = True
@@ -50,25 +50,24 @@ def test(param, model, reg_model, device, test_loader, eta, attack=None, train=F
                     # Forward pass
                     output = model(data)
 
-                    # Compute regularization term and
+                    # Compute regularization term
                     reg, _, _, _, _ = reg_model(data, output, device)
-
-                    # Compute cross entropy
-                    entropy = F.cross_entropy(output, target)
-
-                    # Loss with regularization
-                    loss = (1 - eta) * entropy + eta * reg
 
             else:
                 # Forward pass
                 output = model(data)
 
-                # Compute cross entropy loss
-                entropy = F.cross_entropy(output, target)
-
                 # Do not compute regularization
                 reg = torch.tensor(0)
 
+            # Compute cross entropy
+            entropy = F.cross_entropy(output, target)
+
+            if param['reg']:
+                # Loss with regularization
+                loss = (1 - eta) * entropy + eta * reg
+
+            else:
                 # Loss is only cross entropy
                 loss = entropy
 

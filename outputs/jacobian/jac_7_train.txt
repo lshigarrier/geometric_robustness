@@ -51,7 +51,7 @@ alpha             : 0.01 # only for pgd
 max_iter          : 40   # for pgd, deep_fool, cw
 random_start      : True # only for pgd
 
-------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------
 
 Using cuda
 Using training batch size for test loader

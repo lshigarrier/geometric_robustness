@@ -211,11 +211,13 @@ def plot_train_test_curves(list1, list2, title, xlabel, ylabel):
     return fig
 
 
-def plot_robust_curves(budgets, base_data, robust_data, adv_data, xlabel, ylabel):
+def plot_robust_curves(budgets, data, labels, xlabel, ylabel):
     fig, ax = plt.subplots()
-    ax.plot(budgets, base_data, label='Baseline', marker='.', color='blue', linewidth=4, markersize=12, linestyle='dashed')
-    ax.plot(budgets, robust_data, label='Regularized', marker='.', color='green', linewidth=4, markersize=12, linestyle='solid')
-    ax.plot(budgets, adv_data, label='Adversarial training', marker='.', color='red', linewidth=4, markersize=12, linestyle='dotted')
+    for i in range(len(data)):
+        ax.plot(budgets, data[i], label=labels[i], marker='.', linewidth=1, markersize=8)
+    # ax.plot(budgets, base_data, label='Baseline', marker='.', color='blue', linewidth=4, markersize=12, linestyle='dashed')
+    # ax.plot(budgets, robust_data, label='Regularized', marker='.', color='green', linewidth=4, markersize=12, linestyle='solid')
+    # ax.plot(budgets, adv_data, label='Adversarial training', marker='.', color='red', linewidth=4, markersize=12, linestyle='dotted')
     ax.set_xlabel(xlabel)
     ax.set_ylabel(ylabel)
     ax.legend()
@@ -225,25 +227,37 @@ def plot_robust_curves(budgets, base_data, robust_data, adv_data, xlabel, ylabel
 def main():
     plt.rcParams.update({'font.size': 16})
 
-    file0 = 'outputs/icassp/budgets.txt'
-    file1 = 'outputs/icassp/vanilla_2_robust_acc.txt'
-    file2 = 'outputs/icassp/iso_8_robust_acc.txt'
-    file3 = 'outputs/icassp/adv_train_robust_acc.txt'
+    prefix = 'outputs/jacobian/robust_acc/'
+    files = ['budgets.txt',
+             'baseline_4_5.txt',
+             'baseline_5_3.txt',
+             'distill_1_baseline_4_8.txt',
+             'jac_12_2.txt',
+             'jac_13_7.txt',
+             'jac_14_4.txt',
+             'max_eig_2_8.txt',
+             'only_reg_1_7.txt',
+             'parseval_1_8.txt']
+    labels = ['baseline - ep 5',
+              'baseline bis - ep 3',
+              'distillation from baseline ep 10 - ep 8',
+              'jacobian eps=0.1 - ep 2',
+              'jacobian eps=4.2 - ep 7',
+              'jacobian eps=8.4 - ep 4',
+              'max eig - ep 8',
+              'reg only - ep 7',
+              'parseval - ep 8']
+    data = []
 
-    budgets = np.loadtxt(file0)
-    base_data = np.loadtxt(file1)
-    base_data /= 100
-    # base_data = base_data/base_data[0]*10000
+    for i in range(len(files)):
+        files[i] = prefix + files[i]
 
-    robust_data = np.loadtxt(file2)
-    robust_data /= 100
-    # robust_data = robust_data/robust_data[0]*10000
+    budgets = np.loadtxt(files[0])
+    for i in range(1, len(files)):
+        data.append(np.loadtxt(files[i]))
+        data[-1] /= 100
 
-    adv_data = np.loadtxt(file3)
-    adv_data /= 100
-    # robust_data = robust_data/robust_data[0]*10000
-
-    _ = plot_robust_curves(budgets, base_data, robust_data, adv_data, 'Attack perturbation', 'Accuracy (%)')
+    _ = plot_robust_curves(budgets, data, labels, 'Attack perturbation', 'Accuracy (%)')
     plt.show()
 
 

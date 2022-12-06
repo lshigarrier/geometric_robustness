@@ -1,0 +1,1925 @@
+Create sweep with ID: k8pg3xeo
+Sweep URL: https://wandb.ai/geometric_robustness/MNIST%20Attacks/sweeps/k8pg3xeo
+wandb: Agent Starting Run: ne6ikxdb with config:
+wandb: 	budget: 0
+wandb: 	model: distill_1_baseline_4_8.pt
+wandb: Currently logged in as: lshigarrier (geometric_robustness). Use `wandb login --relogin` to force relogin
+wandb: Tracking run with wandb version 0.13.5
+wandb: Run data is saved locally in /home/loic/lsg/code/geometric_robustness/wandb/run-20221204_175232-ne6ikxdb
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run eternal-sweep-1
+wandb: ⭐️ View project at https://wandb.ai/geometric_robustness/MNIST%20Attacks
+wandb: 🧹 View sweep at https://wandb.ai/geometric_robustness/MNIST%20Attacks/sweeps/k8pg3xeo
+wandb: 🚀 View run at https://wandb.ai/geometric_robustness/MNIST%20Attacks/runs/ne6ikxdb
+Using cpu
+Using testing batch size for test loader
+Using testing batch size for train loader
+Loading weights
+Initialization done
+Start testing
+Using test loader
+Test: 0/10000 (0%)	Loss: 1.276220, Cross Entropy: 1.276220, Reg: 0.000000
+Elapsed time (s): 4.470423460006714
+Memory usage (GB): 0.4996833801269531
+Test: 512/10000 (5%)	Loss: 1.247200, Cross Entropy: 1.247200, Reg: 0.000000
+Elapsed time (s): 18.227169036865234
+Memory usage (GB): 0.5348396301269531
+Test: 1024/10000 (10%)	Loss: 1.263720, Cross Entropy: 1.263720, Reg: 0.000000
+Elapsed time (s): 21.73382568359375
+Memory usage (GB): 0.5512428283691406
+Test: 1536/10000 (15%)	Loss: 1.282346, Cross Entropy: 1.282346, Reg: 0.000000
+Elapsed time (s): 19.012946367263794
+Memory usage (GB): 0.5520439147949219
+Test: 2048/10000 (20%)	Loss: 1.261909, Cross Entropy: 1.261909, Reg: 0.000000
+Elapsed time (s): 17.780836582183838
+Memory usage (GB): 0.5861091613769531
+Test: 2560/10000 (25%)	Loss: 1.248531, Cross Entropy: 1.248531, Reg: 0.000000
+Elapsed time (s): 18.37984347343445
+Memory usage (GB): 0.5520591735839844
+Test: 3072/10000 (30%)	Loss: 1.247328, Cross Entropy: 1.247328, Reg: 0.000000
+Elapsed time (s): 19.755778074264526
+Memory usage (GB): 0.551971435546875
+Test: 3584/10000 (35%)	Loss: 1.240305, Cross Entropy: 1.240305, Reg: 0.000000
+Elapsed time (s): 18.936943769454956
+Memory usage (GB): 0.5518722534179688
+Test: 4096/10000 (41%)	Loss: 1.291468, Cross Entropy: 1.291468, Reg: 0.000000
+Elapsed time (s): 17.933614492416382
+Memory usage (GB): 0.5522422790527344
+Test: 4608/10000 (46%)	Loss: 1.259709, Cross Entropy: 1.259709, Reg: 0.000000
+Elapsed time (s): 18.42768883705139
+Memory usage (GB): 0.6212730407714844
+Test: 5120/10000 (51%)	Loss: 1.193809, Cross Entropy: 1.193809, Reg: 0.000000
+Elapsed time (s): 19.92708420753479
+Memory usage (GB): 0.5691719055175781
+Test: 5632/10000 (56%)	Loss: 1.252828, Cross Entropy: 1.252828, Reg: 0.000000
+Elapsed time (s): 20.503576040267944
+Memory usage (GB): 0.569244384765625
+Test: 6144/10000 (61%)	Loss: 1.181832, Cross Entropy: 1.181832, Reg: 0.000000
+Elapsed time (s): 19.666332483291626
+Memory usage (GB): 0.5692481994628906
+Test: 6656/10000 (66%)	Loss: 1.284874, Cross Entropy: 1.284874, Reg: 0.000000
+Elapsed time (s): 18.614824771881104
+Memory usage (GB): 0.5693702697753906
+Test: 7168/10000 (71%)	Loss: 1.221809, Cross Entropy: 1.221809, Reg: 0.000000
+Elapsed time (s): 19.771936416625977
+Memory usage (GB): 0.5692672729492188
+Test: 7680/10000 (76%)	Loss: 1.201614, Cross Entropy: 1.201614, Reg: 0.000000
+Elapsed time (s): 19.589329719543457
+Memory usage (GB): 0.5689888000488281
+Test: 8192/10000 (81%)	Loss: 1.252728, Cross Entropy: 1.252728, Reg: 0.000000
+Elapsed time (s): 21.723429918289185
+Memory usage (GB): 0.6219406127929688
+Test: 8704/10000 (86%)	Loss: 1.171270, Cross Entropy: 1.171270, Reg: 0.000000
+Elapsed time (s): 18.018242359161377
+Memory usage (GB): 0.6221199035644531
+wandb: Network error (ConnectionError), entering retry loop.
+Test: 9216/10000 (91%)	Loss: 1.148282, Cross Entropy: 1.148282, Reg: 0.000000
+Elapsed time (s): 19.075133085250854
+Memory usage (GB): 0.6227035522460938
+wandb: Network error (ConnectionError), entering retry loop.
+Test: 9728/10000 (96%)	Loss: 1.324861, Cross Entropy: 1.324861, Reg: 0.000000
+Elapsed time (s): 17.727566719055176
+Memory usage (GB): 0.6228904724121094
+Test set: Average loss: 1.2499, Average cross entropy: 1.2499, Average reg: 0.0000, Accuracy: 9869/10000 (99%), Robust accuracy: 9869/9869 (100%)
+
+wandb: Waiting for W&B process to finish... (success).
+wandb: 
+wandb: Run history:
+wandb:         Accuracy ▁
+wandb:     Adv Accuracy ▁
+wandb:      Adv Correct ▁
+wandb: Adv Total Tested ▁
+wandb:          Avg Reg ▁
+wandb:          Correct ▁
+wandb:      Test Avg CE ▁
+wandb:        Test Loss ▁
+wandb:     Total Tested ▁
+wandb: 
+wandb: Run summary:
+wandb:         Accuracy 98.69
+wandb:     Adv Accuracy 100.0
+wandb:      Adv Correct 9869
+wandb: Adv Total Tested 9869
+wandb:          Avg Reg 0.0
+wandb:          Correct 9869
+wandb:      Test Avg CE 1.24992
+wandb:        Test Loss 1.24992
+wandb:     Total Tested 10000
+wandb: 
+wandb: Synced eternal-sweep-1: https://wandb.ai/geometric_robustness/MNIST%20Attacks/runs/ne6ikxdb
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20221204_175232-ne6ikxdb/logs
+wandb: Sweep Agent: Waiting for job.
+wandb: Job received.
+wandb: Agent Starting Run: bqh4q5x6 with config:
+wandb: 	budget: 0
+wandb: 	model: parseval_1_8.pt
+wandb: Tracking run with wandb version 0.13.5
+wandb: Run data is saved locally in /home/loic/lsg/code/geometric_robustness/wandb/run-20221204_180306-bqh4q5x6
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run giddy-sweep-2
+wandb: ⭐️ View project at https://wandb.ai/geometric_robustness/MNIST%20Attacks
+wandb: 🧹 View sweep at https://wandb.ai/geometric_robustness/MNIST%20Attacks/sweeps/k8pg3xeo
+wandb: 🚀 View run at https://wandb.ai/geometric_robustness/MNIST%20Attacks/runs/bqh4q5x6
+Using cpu
+Using testing batch size for test loader
+Using testing batch size for train loader
+Loading weights
+Initialization done
+Start testing
+Using test loader
+Test: 0/10000 (0%)	Loss: 0.011365, Cross Entropy: 0.011365, Reg: 0.000000
+Elapsed time (s): 4.5188376903533936
+Memory usage (GB): 0.6219596862792969
+Test: 512/10000 (5%)	Loss: 0.033166, Cross Entropy: 0.033166, Reg: 0.000000
+Elapsed time (s): 17.948339462280273
+Memory usage (GB): 0.5691986083984375
+Test: 1024/10000 (10%)	Loss: 0.042649, Cross Entropy: 0.042649, Reg: 0.000000
+Elapsed time (s): 17.780794382095337
+Memory usage (GB): 0.5690994262695312
+Test: 1536/10000 (15%)	Loss: 0.052090, Cross Entropy: 0.052090, Reg: 0.000000
+Elapsed time (s): 17.46520233154297
+Memory usage (GB): 0.5700607299804688
+Test: 2048/10000 (20%)	Loss: 0.097962, Cross Entropy: 0.097962, Reg: 0.000000
+Elapsed time (s): 17.39931035041809
+Memory usage (GB): 0.5701789855957031
+Test: 2560/10000 (25%)	Loss: 0.057931, Cross Entropy: 0.057931, Reg: 0.000000
+Elapsed time (s): 17.98672842979431
+Memory usage (GB): 0.5704574584960938
+Test: 3072/10000 (30%)	Loss: 0.012199, Cross Entropy: 0.012199, Reg: 0.000000
+Elapsed time (s): 17.865299224853516
+Memory usage (GB): 0.5704154968261719
+Test: 3584/10000 (35%)	Loss: 0.025393, Cross Entropy: 0.025393, Reg: 0.000000
+Elapsed time (s): 17.72147536277771
+Memory usage (GB): 0.5703163146972656
+Test: 4096/10000 (41%)	Loss: 0.116414, Cross Entropy: 0.116414, Reg: 0.000000
+Elapsed time (s): 17.49137783050537
+Memory usage (GB): 0.6040382385253906
+Test: 4608/10000 (46%)	Loss: 0.054063, Cross Entropy: 0.054063, Reg: 0.000000
+Elapsed time (s): 17.59152388572693
+Memory usage (GB): 0.570159912109375
+Test: 5120/10000 (51%)	Loss: 0.011147, Cross Entropy: 0.011147, Reg: 0.000000
+Elapsed time (s): 17.80100917816162
+Memory usage (GB): 0.5702629089355469
+Test: 5632/10000 (56%)	Loss: 0.033194, Cross Entropy: 0.033194, Reg: 0.000000
+Elapsed time (s): 17.993956089019775
+Memory usage (GB): 0.5702133178710938
+Test: 6144/10000 (61%)	Loss: 0.052013, Cross Entropy: 0.052013, Reg: 0.000000
+Elapsed time (s): 17.72198247909546
+Memory usage (GB): 0.5703010559082031
+Test: 6656/10000 (66%)	Loss: 0.024911, Cross Entropy: 0.024911, Reg: 0.000000
+Elapsed time (s): 17.93000054359436
+Memory usage (GB): 0.5702362060546875
+Test: 7168/10000 (71%)	Loss: 0.015503, Cross Entropy: 0.015503, Reg: 0.000000
+Elapsed time (s): 18.095473051071167
+Memory usage (GB): 0.5703697204589844
+Test: 7680/10000 (76%)	Loss: 0.001607, Cross Entropy: 0.001607, Reg: 0.000000
+Elapsed time (s): 18.16041922569275
+Memory usage (GB): 0.5703315734863281
+Test: 8192/10000 (81%)	Loss: 0.022443, Cross Entropy: 0.022443, Reg: 0.000000
+Elapsed time (s): 18.111430883407593
+Memory usage (GB): 0.5703201293945312
+Test: 8704/10000 (86%)	Loss: 0.001106, Cross Entropy: 0.001106, Reg: 0.000000
+Elapsed time (s): 18.19722843170166
+Memory usage (GB): 0.6228675842285156
+Test: 9216/10000 (91%)	Loss: 0.001630, Cross Entropy: 0.001630, Reg: 0.000000
+Elapsed time (s): 18.121327877044678
+Memory usage (GB): 0.6229362487792969
+Test: 9728/10000 (96%)	Loss: 0.050331, Cross Entropy: 0.050331, Reg: 0.000000
+Elapsed time (s): 17.94305729866028
+Memory usage (GB): 0.6218490600585938
+Test set: Average loss: 0.0401, Average cross entropy: 0.0401, Average reg: 0.0000, Accuracy: 9873/10000 (99%), Robust accuracy: 9873/9873 (100%)
+
+wandb: Waiting for W&B process to finish... (success).
+wandb: - 0.002 MB of 0.002 MB uploaded (0.000 MB deduped)wandb: \ 0.002 MB of 0.006 MB uploaded (0.000 MB deduped)wandb: | 0.021 MB of 0.021 MB uploaded (0.000 MB deduped)wandb: / 0.021 MB of 0.021 MB uploaded (0.000 MB deduped)wandb: 
+wandb: Run history:
+wandb:         Accuracy ▁
+wandb:     Adv Accuracy ▁
+wandb:      Adv Correct ▁
+wandb: Adv Total Tested ▁
+wandb:          Avg Reg ▁
+wandb:          Correct ▁
+wandb:      Test Avg CE ▁
+wandb:        Test Loss ▁
+wandb:     Total Tested ▁
+wandb: 
+wandb: Run summary:
+wandb:         Accuracy 98.73
+wandb:     Adv Accuracy 100.0
+wandb:      Adv Correct 9873
+wandb: Adv Total Tested 9873
+wandb:          Avg Reg 0.0
+wandb:          Correct 9873
+wandb:      Test Avg CE 0.04011
+wandb:        Test Loss 0.04011
+wandb:     Total Tested 10000
+wandb: 
+wandb: Synced giddy-sweep-2: https://wandb.ai/geometric_robustness/MNIST%20Attacks/runs/bqh4q5x6
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20221204_180306-bqh4q5x6/logs
+wandb: Sweep Agent: Waiting for job.
+wandb: Job received.
+wandb: Agent Starting Run: z4j11bug with config:
+wandb: 	budget: 0.05
+wandb: 	model: distill_1_baseline_4_8.pt
+wandb: Tracking run with wandb version 0.13.5
+wandb: Run data is saved locally in /home/loic/lsg/code/geometric_robustness/wandb/run-20221204_180917-z4j11bug
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run fluent-sweep-3
+wandb: ⭐️ View project at https://wandb.ai/geometric_robustness/MNIST%20Attacks
+wandb: 🧹 View sweep at https://wandb.ai/geometric_robustness/MNIST%20Attacks/sweeps/k8pg3xeo
+wandb: 🚀 View run at https://wandb.ai/geometric_robustness/MNIST%20Attacks/runs/z4j11bug
+Using cpu
+Using testing batch size for test loader
+Using testing batch size for train loader
+Loading weights
+Initialization done
+Start testing
+Using test loader
+Test: 0/10000 (0%)	Loss: 1.276220, Cross Entropy: 1.276220, Reg: 0.000000
+Elapsed time (s): 4.346278429031372
+Memory usage (GB): 0.6950149536132812
+Test: 512/10000 (5%)	Loss: 1.247200, Cross Entropy: 1.247200, Reg: 0.000000
+Elapsed time (s): 17.49944496154785
+Memory usage (GB): 0.6949005126953125
+Test: 1024/10000 (10%)	Loss: 1.263720, Cross Entropy: 1.263720, Reg: 0.000000
+Elapsed time (s): 17.335729837417603
+Memory usage (GB): 0.6948890686035156
+Test: 1536/10000 (15%)	Loss: 1.282346, Cross Entropy: 1.282346, Reg: 0.000000
+Elapsed time (s): 17.322624921798706
+Memory usage (GB): 0.6950912475585938
+Test: 2048/10000 (20%)	Loss: 1.261909, Cross Entropy: 1.261909, Reg: 0.000000
+Elapsed time (s): 17.4097638130188
+Memory usage (GB): 0.6949195861816406
+Test: 2560/10000 (25%)	Loss: 1.248531, Cross Entropy: 1.248531, Reg: 0.000000
+Elapsed time (s): 17.446354150772095
+Memory usage (GB): 0.6950607299804688
+Test: 3072/10000 (30%)	Loss: 1.247328, Cross Entropy: 1.247328, Reg: 0.000000
+Elapsed time (s): 17.33081078529358
+Memory usage (GB): 0.6949996948242188
+Test: 3584/10000 (35%)	Loss: 1.240305, Cross Entropy: 1.240305, Reg: 0.000000
+Elapsed time (s): 17.53621530532837
+Memory usage (GB): 0.7121124267578125
+Test: 4096/10000 (41%)	Loss: 1.291468, Cross Entropy: 1.291468, Reg: 0.000000
+Elapsed time (s): 17.356202840805054
+Memory usage (GB): 0.694854736328125
+Test: 4608/10000 (46%)	Loss: 1.259709, Cross Entropy: 1.259709, Reg: 0.000000
+Elapsed time (s): 17.41183876991272
+Memory usage (GB): 0.6949653625488281
+Test: 5120/10000 (51%)	Loss: 1.193809, Cross Entropy: 1.193809, Reg: 0.000000
+Elapsed time (s): 17.41206693649292
+Memory usage (GB): 0.6950416564941406
+Test: 5632/10000 (56%)	Loss: 1.252828, Cross Entropy: 1.252828, Reg: 0.000000
+Elapsed time (s): 17.7851243019104
+Memory usage (GB): 0.7124557495117188
+Test: 6144/10000 (61%)	Loss: 1.181832, Cross Entropy: 1.181832, Reg: 0.000000
+Elapsed time (s): 17.4688503742218
+Memory usage (GB): 0.6951370239257812
+Test: 6656/10000 (66%)	Loss: 1.284874, Cross Entropy: 1.284874, Reg: 0.000000
+Elapsed time (s): 17.619980335235596
+Memory usage (GB): 0.7121543884277344
+Test: 7168/10000 (71%)	Loss: 1.221809, Cross Entropy: 1.221809, Reg: 0.000000
+Elapsed time (s): 17.690523386001587
+Memory usage (GB): 0.6948814392089844
+Test: 7680/10000 (76%)	Loss: 1.201614, Cross Entropy: 1.201614, Reg: 0.000000
+Elapsed time (s): 17.75344753265381
+Memory usage (GB): 0.6948699951171875
+Test: 8192/10000 (81%)	Loss: 1.252728, Cross Entropy: 1.252728, Reg: 0.000000
+Elapsed time (s): 17.734739542007446
+Memory usage (GB): 0.6950302124023438
+Test: 8704/10000 (86%)	Loss: 1.171270, Cross Entropy: 1.171270, Reg: 0.000000
+Elapsed time (s): 17.619874954223633
+Memory usage (GB): 0.6949996948242188
+Test: 9216/10000 (91%)	Loss: 1.148282, Cross Entropy: 1.148282, Reg: 0.000000
+Elapsed time (s): 17.665788173675537
+Memory usage (GB): 0.6948509216308594
+Test: 9728/10000 (96%)	Loss: 1.324861, Cross Entropy: 1.324861, Reg: 0.000000
+Elapsed time (s): 17.47194242477417
+Memory usage (GB): 0.6948280334472656
+Test set: Average loss: 1.2499, Average cross entropy: 1.2499, Average reg: 0.0000, Accuracy: 9869/10000 (99%), Robust accuracy: 9565/9869 (97%)
+
+wandb: Waiting for W&B process to finish... (success).
+wandb: 
+wandb: Run history:
+wandb:         Accuracy ▁
+wandb:     Adv Accuracy ▁
+wandb:      Adv Correct ▁
+wandb: Adv Total Tested ▁
+wandb:          Avg Reg ▁
+wandb:          Correct ▁
+wandb:      Test Avg CE ▁
+wandb:        Test Loss ▁
+wandb:     Total Tested ▁
+wandb: 
+wandb: Run summary:
+wandb:         Accuracy 98.69
+wandb:     Adv Accuracy 96.91965
+wandb:      Adv Correct 9565
+wandb: Adv Total Tested 9869
+wandb:          Avg Reg 0.0
+wandb:          Correct 9869
+wandb:      Test Avg CE 1.24992
+wandb:        Test Loss 1.24992
+wandb:     Total Tested 10000
+wandb: 
+wandb: Synced fluent-sweep-3: https://wandb.ai/geometric_robustness/MNIST%20Attacks/runs/z4j11bug
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20221204_180917-z4j11bug/logs
+wandb: Agent Starting Run: 2oo41ejg with config:
+wandb: 	budget: 0.05
+wandb: 	model: parseval_1_8.pt
+wandb: Tracking run with wandb version 0.13.5
+wandb: Run data is saved locally in /home/loic/lsg/code/geometric_robustness/wandb/run-20221204_181513-2oo41ejg
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run zesty-sweep-4
+wandb: ⭐️ View project at https://wandb.ai/geometric_robustness/MNIST%20Attacks
+wandb: 🧹 View sweep at https://wandb.ai/geometric_robustness/MNIST%20Attacks/sweeps/k8pg3xeo
+wandb: 🚀 View run at https://wandb.ai/geometric_robustness/MNIST%20Attacks/runs/2oo41ejg
+Using cpu
+Using testing batch size for test loader
+Using testing batch size for train loader
+Loading weights
+Initialization done
+Start testing
+Using test loader
+Test: 0/10000 (0%)	Loss: 0.011365, Cross Entropy: 0.011365, Reg: 0.000000
+Elapsed time (s): 4.429194927215576
+Memory usage (GB): 0.690765380859375
+Test: 512/10000 (5%)	Loss: 0.033166, Cross Entropy: 0.033166, Reg: 0.000000
+Elapsed time (s): 17.492939233779907
+Memory usage (GB): 0.6906890869140625
+Test: 1024/10000 (10%)	Loss: 0.042649, Cross Entropy: 0.042649, Reg: 0.000000
+Elapsed time (s): 17.3176531791687
+Memory usage (GB): 0.6908416748046875
+Test: 1536/10000 (15%)	Loss: 0.052090, Cross Entropy: 0.052090, Reg: 0.000000
+Elapsed time (s): 17.228071928024292
+Memory usage (GB): 0.690704345703125
+Test: 2048/10000 (20%)	Loss: 0.097962, Cross Entropy: 0.097962, Reg: 0.000000
+Elapsed time (s): 17.32966923713684
+Memory usage (GB): 0.6907501220703125
+Test: 2560/10000 (25%)	Loss: 0.057931, Cross Entropy: 0.057931, Reg: 0.000000
+Elapsed time (s): 17.414952993392944
+Memory usage (GB): 0.6907386779785156
+Test: 3072/10000 (30%)	Loss: 0.012199, Cross Entropy: 0.012199, Reg: 0.000000
+Elapsed time (s): 17.367732763290405
+Memory usage (GB): 0.6909065246582031
+Test: 3584/10000 (35%)	Loss: 0.025393, Cross Entropy: 0.025393, Reg: 0.000000
+Elapsed time (s): 17.40795087814331
+Memory usage (GB): 0.6907081604003906
+Test: 4096/10000 (41%)	Loss: 0.116414, Cross Entropy: 0.116414, Reg: 0.000000
+Elapsed time (s): 17.182631969451904
+Memory usage (GB): 0.6905097961425781
+Test: 4608/10000 (46%)	Loss: 0.054063, Cross Entropy: 0.054063, Reg: 0.000000
+Elapsed time (s): 17.350727081298828
+Memory usage (GB): 0.708099365234375
+Test: 5120/10000 (51%)	Loss: 0.011147, Cross Entropy: 0.011147, Reg: 0.000000
+Elapsed time (s): 17.457340717315674
+Memory usage (GB): 0.6905708312988281
+Test: 5632/10000 (56%)	Loss: 0.033194, Cross Entropy: 0.033194, Reg: 0.000000
+Elapsed time (s): 17.583705186843872
+Memory usage (GB): 0.6908149719238281
+Test: 6144/10000 (61%)	Loss: 0.052013, Cross Entropy: 0.052013, Reg: 0.000000
+Elapsed time (s): 17.450812339782715
+Memory usage (GB): 0.6905860900878906
+Test: 6656/10000 (66%)	Loss: 0.024911, Cross Entropy: 0.024911, Reg: 0.000000
+Elapsed time (s): 17.50472402572632
+Memory usage (GB): 0.6905708312988281
+Test: 7168/10000 (71%)	Loss: 0.015503, Cross Entropy: 0.015503, Reg: 0.000000
+Elapsed time (s): 17.63056254386902
+Memory usage (GB): 0.69091796875
+Test: 7680/10000 (76%)	Loss: 0.001607, Cross Entropy: 0.001607, Reg: 0.000000
+Elapsed time (s): 17.65423059463501
+Memory usage (GB): 0.6905403137207031
+Test: 8192/10000 (81%)	Loss: 0.022443, Cross Entropy: 0.022443, Reg: 0.000000
+Elapsed time (s): 17.570379495620728
+Memory usage (GB): 0.6906623840332031
+Test: 8704/10000 (86%)	Loss: 0.001106, Cross Entropy: 0.001106, Reg: 0.000000
+Elapsed time (s): 17.643444776535034
+Memory usage (GB): 0.6907501220703125
+Test: 9216/10000 (91%)	Loss: 0.001630, Cross Entropy: 0.001630, Reg: 0.000000
+Elapsed time (s): 17.633416652679443
+Memory usage (GB): 0.6907196044921875
+Test: 9728/10000 (96%)	Loss: 0.050331, Cross Entropy: 0.050331, Reg: 0.000000
+Elapsed time (s): 17.446833848953247
+Memory usage (GB): 0.6904869079589844
+Test set: Average loss: 0.0401, Average cross entropy: 0.0401, Average reg: 0.0000, Accuracy: 9873/10000 (99%), Robust accuracy: 9531/9873 (97%)
+
+wandb: Waiting for W&B process to finish... (success).
+wandb: - 0.002 MB of 0.002 MB uploaded (0.000 MB deduped)wandb: \ 0.002 MB of 0.018 MB uploaded (0.000 MB deduped)wandb: | 0.002 MB of 0.018 MB uploaded (0.000 MB deduped)wandb: 
+wandb: Run history:
+wandb:         Accuracy ▁
+wandb:     Adv Accuracy ▁
+wandb:      Adv Correct ▁
+wandb: Adv Total Tested ▁
+wandb:          Avg Reg ▁
+wandb:          Correct ▁
+wandb:      Test Avg CE ▁
+wandb:        Test Loss ▁
+wandb:     Total Tested ▁
+wandb: 
+wandb: Run summary:
+wandb:         Accuracy 98.73
+wandb:     Adv Accuracy 96.53601
+wandb:      Adv Correct 9531
+wandb: Adv Total Tested 9873
+wandb:          Avg Reg 0.0
+wandb:          Correct 9873
+wandb:      Test Avg CE 0.04011
+wandb:        Test Loss 0.04011
+wandb:     Total Tested 10000
+wandb: 
+wandb: Synced zesty-sweep-4: https://wandb.ai/geometric_robustness/MNIST%20Attacks/runs/2oo41ejg
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20221204_181513-2oo41ejg/logs
+wandb: Agent Starting Run: g22pr911 with config:
+wandb: 	budget: 0.1
+wandb: 	model: distill_1_baseline_4_8.pt
+wandb: Tracking run with wandb version 0.13.5
+wandb: Run data is saved locally in /home/loic/lsg/code/geometric_robustness/wandb/run-20221204_182109-g22pr911
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run distinctive-sweep-5
+wandb: ⭐️ View project at https://wandb.ai/geometric_robustness/MNIST%20Attacks
+wandb: 🧹 View sweep at https://wandb.ai/geometric_robustness/MNIST%20Attacks/sweeps/k8pg3xeo
+wandb: 🚀 View run at https://wandb.ai/geometric_robustness/MNIST%20Attacks/runs/g22pr911
+Using cpu
+Using testing batch size for test loader
+Using testing batch size for train loader
+Loading weights
+Initialization done
+Start testing
+Using test loader
+Test: 0/10000 (0%)	Loss: 1.276220, Cross Entropy: 1.276220, Reg: 0.000000
+Elapsed time (s): 4.370720863342285
+Memory usage (GB): 0.6947135925292969
+Test: 512/10000 (5%)	Loss: 1.247200, Cross Entropy: 1.247200, Reg: 0.000000
+Elapsed time (s): 17.391396284103394
+Memory usage (GB): 0.6944503784179688
+Test: 1024/10000 (10%)	Loss: 1.263720, Cross Entropy: 1.263720, Reg: 0.000000
+Elapsed time (s): 17.276780366897583
+Memory usage (GB): 0.6945762634277344
+Test: 1536/10000 (15%)	Loss: 1.282346, Cross Entropy: 1.282346, Reg: 0.000000
+Elapsed time (s): 17.319667100906372
+Memory usage (GB): 0.6945915222167969
+Test: 2048/10000 (20%)	Loss: 1.261909, Cross Entropy: 1.261909, Reg: 0.000000
+Elapsed time (s): 17.3258376121521
+Memory usage (GB): 0.6947021484375
+Test: 2560/10000 (25%)	Loss: 1.248531, Cross Entropy: 1.248531, Reg: 0.000000
+Elapsed time (s): 17.471542358398438
+Memory usage (GB): 0.6947364807128906
+Test: 3072/10000 (30%)	Loss: 1.247328, Cross Entropy: 1.247328, Reg: 0.000000
+Elapsed time (s): 17.30445647239685
+Memory usage (GB): 0.6949615478515625
+Test: 3584/10000 (35%)	Loss: 1.240305, Cross Entropy: 1.240305, Reg: 0.000000
+Elapsed time (s): 17.91394567489624
+Memory usage (GB): 0.6946182250976562
+Test: 4096/10000 (41%)	Loss: 1.291468, Cross Entropy: 1.291468, Reg: 0.000000
+Elapsed time (s): 17.27311635017395
+Memory usage (GB): 0.6943473815917969
+Test: 4608/10000 (46%)	Loss: 1.259709, Cross Entropy: 1.259709, Reg: 0.000000
+Elapsed time (s): 17.307732105255127
+Memory usage (GB): 0.6944465637207031
+Test: 5120/10000 (51%)	Loss: 1.193809, Cross Entropy: 1.193809, Reg: 0.000000
+Elapsed time (s): 17.381720304489136
+Memory usage (GB): 0.6943321228027344
+Test: 5632/10000 (56%)	Loss: 1.252828, Cross Entropy: 1.252828, Reg: 0.000000
+Elapsed time (s): 17.44183349609375
+Memory usage (GB): 0.6943435668945312
+Test: 6144/10000 (61%)	Loss: 1.181832, Cross Entropy: 1.181832, Reg: 0.000000
+Elapsed time (s): 17.400308847427368
+Memory usage (GB): 0.6943092346191406
+Test: 6656/10000 (66%)	Loss: 1.284874, Cross Entropy: 1.284874, Reg: 0.000000
+Elapsed time (s): 17.482207536697388
+Memory usage (GB): 0.6944465637207031
+Test: 7168/10000 (71%)	Loss: 1.221809, Cross Entropy: 1.221809, Reg: 0.000000
+Elapsed time (s): 17.57656478881836
+Memory usage (GB): 0.74713134765625
+Test: 7680/10000 (76%)	Loss: 1.201614, Cross Entropy: 1.201614, Reg: 0.000000
+Elapsed time (s): 17.48269772529602
+Memory usage (GB): 0.6944351196289062
+Test: 8192/10000 (81%)	Loss: 1.252728, Cross Entropy: 1.252728, Reg: 0.000000
+Elapsed time (s): 17.559541940689087
+Memory usage (GB): 0.6944351196289062
+Test: 8704/10000 (86%)	Loss: 1.171270, Cross Entropy: 1.171270, Reg: 0.000000
+Elapsed time (s): 17.642680168151855
+Memory usage (GB): 0.6943893432617188
+Test: 9216/10000 (91%)	Loss: 1.148282, Cross Entropy: 1.148282, Reg: 0.000000
+Elapsed time (s): 17.602102518081665
+Memory usage (GB): 0.6943893432617188
+Test: 9728/10000 (96%)	Loss: 1.324861, Cross Entropy: 1.324861, Reg: 0.000000
+Elapsed time (s): 17.488117456436157
+Memory usage (GB): 0.6943855285644531
+Test set: Average loss: 1.2499, Average cross entropy: 1.2499, Average reg: 0.0000, Accuracy: 9869/10000 (99%), Robust accuracy: 8217/9869 (83%)
+
+wandb: Waiting for W&B process to finish... (success).
+wandb: - 0.002 MB of 0.002 MB uploaded (0.000 MB deduped)wandb: \ 0.002 MB of 0.018 MB uploaded (0.000 MB deduped)wandb: | 0.002 MB of 0.018 MB uploaded (0.000 MB deduped)wandb: 
+wandb: Run history:
+wandb:         Accuracy ▁
+wandb:     Adv Accuracy ▁
+wandb:      Adv Correct ▁
+wandb: Adv Total Tested ▁
+wandb:          Avg Reg ▁
+wandb:          Correct ▁
+wandb:      Test Avg CE ▁
+wandb:        Test Loss ▁
+wandb:     Total Tested ▁
+wandb: 
+wandb: Run summary:
+wandb:         Accuracy 98.69
+wandb:     Adv Accuracy 83.26072
+wandb:      Adv Correct 8217
+wandb: Adv Total Tested 9869
+wandb:          Avg Reg 0.0
+wandb:          Correct 9869
+wandb:      Test Avg CE 1.24992
+wandb:        Test Loss 1.24992
+wandb:     Total Tested 10000
+wandb: 
+wandb: Synced distinctive-sweep-5: https://wandb.ai/geometric_robustness/MNIST%20Attacks/runs/g22pr911
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20221204_182109-g22pr911/logs
+wandb: Agent Starting Run: x7puaunf with config:
+wandb: 	budget: 0.1
+wandb: 	model: parseval_1_8.pt
+wandb: Tracking run with wandb version 0.13.5
+wandb: Run data is saved locally in /home/loic/lsg/code/geometric_robustness/wandb/run-20221204_182706-x7puaunf
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run denim-sweep-6
+wandb: ⭐️ View project at https://wandb.ai/geometric_robustness/MNIST%20Attacks
+wandb: 🧹 View sweep at https://wandb.ai/geometric_robustness/MNIST%20Attacks/sweeps/k8pg3xeo
+wandb: 🚀 View run at https://wandb.ai/geometric_robustness/MNIST%20Attacks/runs/x7puaunf
+Using cpu
+Using testing batch size for test loader
+Using testing batch size for train loader
+Loading weights
+Initialization done
+Start testing
+Using test loader
+Test: 0/10000 (0%)	Loss: 0.011365, Cross Entropy: 0.011365, Reg: 0.000000
+Elapsed time (s): 4.434376955032349
+Memory usage (GB): 0.6875953674316406
+Test: 512/10000 (5%)	Loss: 0.033166, Cross Entropy: 0.033166, Reg: 0.000000
+Elapsed time (s): 17.627187490463257
+Memory usage (GB): 0.6875991821289062
+Test: 1024/10000 (10%)	Loss: 0.042649, Cross Entropy: 0.042649, Reg: 0.000000
+Elapsed time (s): 17.478699922561646
+Memory usage (GB): 0.6877365112304688
+Test: 1536/10000 (15%)	Loss: 0.052090, Cross Entropy: 0.052090, Reg: 0.000000
+Elapsed time (s): 17.4308180809021
+Memory usage (GB): 0.6879043579101562
+Test: 2048/10000 (20%)	Loss: 0.097962, Cross Entropy: 0.097962, Reg: 0.000000
+Elapsed time (s): 17.37062120437622
+Memory usage (GB): 0.6875343322753906
+Test: 2560/10000 (25%)	Loss: 0.057931, Cross Entropy: 0.057931, Reg: 0.000000
+Elapsed time (s): 17.659321069717407
+Memory usage (GB): 0.6877098083496094
+Test: 3072/10000 (30%)	Loss: 0.012199, Cross Entropy: 0.012199, Reg: 0.000000
+Elapsed time (s): 17.61867642402649
+Memory usage (GB): 0.6878242492675781
+Test: 3584/10000 (35%)	Loss: 0.025393, Cross Entropy: 0.025393, Reg: 0.000000
+Elapsed time (s): 17.482953786849976
+Memory usage (GB): 0.7049064636230469
+Test: 4096/10000 (41%)	Loss: 0.116414, Cross Entropy: 0.116414, Reg: 0.000000
+Elapsed time (s): 17.351612329483032
+Memory usage (GB): 0.7049064636230469
+Test: 4608/10000 (46%)	Loss: 0.054063, Cross Entropy: 0.054063, Reg: 0.000000
+Elapsed time (s): 17.528791427612305
+Memory usage (GB): 0.6979217529296875
+Test: 5120/10000 (51%)	Loss: 0.011147, Cross Entropy: 0.011147, Reg: 0.000000
+Elapsed time (s): 17.707862854003906
+Memory usage (GB): 0.6874771118164062
+Test: 5632/10000 (56%)	Loss: 0.033194, Cross Entropy: 0.033194, Reg: 0.000000
+Elapsed time (s): 17.67338490486145
+Memory usage (GB): 0.6873779296875
+Test: 6144/10000 (61%)	Loss: 0.052013, Cross Entropy: 0.052013, Reg: 0.000000
+Elapsed time (s): 17.55500626564026
+Memory usage (GB): 0.6874275207519531
+Test: 6656/10000 (66%)	Loss: 0.024911, Cross Entropy: 0.024911, Reg: 0.000000
+Elapsed time (s): 17.66746163368225
+Memory usage (GB): 0.7050247192382812
+Test: 7168/10000 (71%)	Loss: 0.015503, Cross Entropy: 0.015503, Reg: 0.000000
+Elapsed time (s): 17.73032259941101
+Memory usage (GB): 0.7047576904296875
+Test: 7680/10000 (76%)	Loss: 0.001607, Cross Entropy: 0.001607, Reg: 0.000000
+Elapsed time (s): 17.690308332443237
+Memory usage (GB): 0.6979942321777344
+Test: 8192/10000 (81%)	Loss: 0.022443, Cross Entropy: 0.022443, Reg: 0.000000
+Elapsed time (s): 17.655603647232056
+Memory usage (GB): 0.7047576904296875
+Test: 8704/10000 (86%)	Loss: 0.001106, Cross Entropy: 0.001106, Reg: 0.000000
+Elapsed time (s): 17.787362575531006
+Memory usage (GB): 0.6877288818359375
+Test: 9216/10000 (91%)	Loss: 0.001630, Cross Entropy: 0.001630, Reg: 0.000000
+Elapsed time (s): 17.667876720428467
+Memory usage (GB): 0.6981658935546875
+Test: 9728/10000 (96%)	Loss: 0.050331, Cross Entropy: 0.050331, Reg: 0.000000
+Elapsed time (s): 17.649982213974
+Memory usage (GB): 0.6874198913574219
+Test set: Average loss: 0.0401, Average cross entropy: 0.0401, Average reg: 0.0000, Accuracy: 9873/10000 (99%), Robust accuracy: 8124/9873 (82%)
+
+wandb: Waiting for W&B process to finish... (success).
+wandb: - 0.002 MB of 0.006 MB uploaded (0.000 MB deduped)wandb: \ 0.021 MB of 0.021 MB uploaded (0.000 MB deduped)wandb: | 0.021 MB of 0.021 MB uploaded (0.000 MB deduped)wandb: 
+wandb: Run history:
+wandb:         Accuracy ▁
+wandb:     Adv Accuracy ▁
+wandb:      Adv Correct ▁
+wandb: Adv Total Tested ▁
+wandb:          Avg Reg ▁
+wandb:          Correct ▁
+wandb:      Test Avg CE ▁
+wandb:        Test Loss ▁
+wandb:     Total Tested ▁
+wandb: 
+wandb: Run summary:
+wandb:         Accuracy 98.73
+wandb:     Adv Accuracy 82.28502
+wandb:      Adv Correct 8124
+wandb: Adv Total Tested 9873
+wandb:          Avg Reg 0.0
+wandb:          Correct 9873
+wandb:      Test Avg CE 0.04011
+wandb:        Test Loss 0.04011
+wandb:     Total Tested 10000
+wandb: 
+wandb: Synced denim-sweep-6: https://wandb.ai/geometric_robustness/MNIST%20Attacks/runs/x7puaunf
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20221204_182706-x7puaunf/logs
+wandb: Agent Starting Run: wkioru5s with config:
+wandb: 	budget: 0.15
+wandb: 	model: distill_1_baseline_4_8.pt
+wandb: Tracking run with wandb version 0.13.5
+wandb: Run data is saved locally in /home/loic/lsg/code/geometric_robustness/wandb/run-20221204_183302-wkioru5s
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run earnest-sweep-7
+wandb: ⭐️ View project at https://wandb.ai/geometric_robustness/MNIST%20Attacks
+wandb: 🧹 View sweep at https://wandb.ai/geometric_robustness/MNIST%20Attacks/sweeps/k8pg3xeo
+wandb: 🚀 View run at https://wandb.ai/geometric_robustness/MNIST%20Attacks/runs/wkioru5s
+Using cpu
+Using testing batch size for test loader
+Using testing batch size for train loader
+Loading weights
+Initialization done
+Start testing
+Using test loader
+Test: 0/10000 (0%)	Loss: 1.276220, Cross Entropy: 1.276220, Reg: 0.000000
+Elapsed time (s): 4.430086612701416
+Memory usage (GB): 0.6994438171386719
+Test: 512/10000 (5%)	Loss: 1.247200, Cross Entropy: 1.247200, Reg: 0.000000
+Elapsed time (s): 17.64529800415039
+Memory usage (GB): 0.6994438171386719
+Test: 1024/10000 (10%)	Loss: 1.263720, Cross Entropy: 1.263720, Reg: 0.000000
+Elapsed time (s): 17.49711847305298
+Memory usage (GB): 0.6994476318359375
+Test: 1536/10000 (15%)	Loss: 1.282346, Cross Entropy: 1.282346, Reg: 0.000000
+Elapsed time (s): 17.517964363098145
+Memory usage (GB): 0.7062225341796875
+Test: 2048/10000 (20%)	Loss: 1.261909, Cross Entropy: 1.261909, Reg: 0.000000
+Elapsed time (s): 17.479695320129395
+Memory usage (GB): 0.7062225341796875
+Test: 2560/10000 (25%)	Loss: 1.248531, Cross Entropy: 1.248531, Reg: 0.000000
+Elapsed time (s): 17.6076078414917
+Memory usage (GB): 0.7062225341796875
+Test: 3072/10000 (30%)	Loss: 1.247328, Cross Entropy: 1.247328, Reg: 0.000000
+Elapsed time (s): 17.471542596817017
+Memory usage (GB): 0.7062225341796875
+Test: 3584/10000 (35%)	Loss: 1.240305, Cross Entropy: 1.240305, Reg: 0.000000
+Elapsed time (s): 17.71173620223999
+Memory usage (GB): 0.7062225341796875
+Test: 4096/10000 (41%)	Loss: 1.291468, Cross Entropy: 1.291468, Reg: 0.000000
+Elapsed time (s): 17.511749982833862
+Memory usage (GB): 0.7063217163085938
+Test: 4608/10000 (46%)	Loss: 1.259709, Cross Entropy: 1.259709, Reg: 0.000000
+Elapsed time (s): 17.485312938690186
+Memory usage (GB): 0.7063217163085938
+Test: 5120/10000 (51%)	Loss: 1.193809, Cross Entropy: 1.193809, Reg: 0.000000
+Elapsed time (s): 17.58717179298401
+Memory usage (GB): 0.7063217163085938
+Test: 5632/10000 (56%)	Loss: 1.252828, Cross Entropy: 1.252828, Reg: 0.000000
+Elapsed time (s): 17.76523756980896
+Memory usage (GB): 0.7063217163085938
+Test: 6144/10000 (61%)	Loss: 1.181832, Cross Entropy: 1.181832, Reg: 0.000000
+Elapsed time (s): 18.5279643535614
+Memory usage (GB): 0.7063217163085938
+Test: 6656/10000 (66%)	Loss: 1.284874, Cross Entropy: 1.284874, Reg: 0.000000
+Elapsed time (s): 17.632860898971558
+Memory usage (GB): 0.7063217163085938
+Test: 7168/10000 (71%)	Loss: 1.221809, Cross Entropy: 1.221809, Reg: 0.000000
+Elapsed time (s): 17.862810611724854
+Memory usage (GB): 0.7063217163085938
+Test: 7680/10000 (76%)	Loss: 1.201614, Cross Entropy: 1.201614, Reg: 0.000000
+Elapsed time (s): 17.826767921447754
+Memory usage (GB): 0.7063217163085938
+Test: 8192/10000 (81%)	Loss: 1.252728, Cross Entropy: 1.252728, Reg: 0.000000
+Elapsed time (s): 17.828688383102417
+Memory usage (GB): 0.7063217163085938
+Test: 8704/10000 (86%)	Loss: 1.171270, Cross Entropy: 1.171270, Reg: 0.000000
+Elapsed time (s): 17.814924716949463
+Memory usage (GB): 0.7063217163085938
+Test: 9216/10000 (91%)	Loss: 1.148282, Cross Entropy: 1.148282, Reg: 0.000000
+Elapsed time (s): 17.83489179611206
+Memory usage (GB): 0.7063217163085938
+Test: 9728/10000 (96%)	Loss: 1.324861, Cross Entropy: 1.324861, Reg: 0.000000
+Elapsed time (s): 17.63861894607544
+Memory usage (GB): 0.7063217163085938
+Test set: Average loss: 1.2499, Average cross entropy: 1.2499, Average reg: 0.0000, Accuracy: 9869/10000 (99%), Robust accuracy: 3860/9869 (39%)
+
+wandb: Waiting for W&B process to finish... (success).
+wandb: - 0.002 MB of 0.002 MB uploaded (0.000 MB deduped)wandb: \ 0.002 MB of 0.006 MB uploaded (0.000 MB deduped)wandb: | 0.021 MB of 0.021 MB uploaded (0.000 MB deduped)wandb: / 0.021 MB of 0.021 MB uploaded (0.000 MB deduped)wandb: 
+wandb: Run history:
+wandb:         Accuracy ▁
+wandb:     Adv Accuracy ▁
+wandb:      Adv Correct ▁
+wandb: Adv Total Tested ▁
+wandb:          Avg Reg ▁
+wandb:          Correct ▁
+wandb:      Test Avg CE ▁
+wandb:        Test Loss ▁
+wandb:     Total Tested ▁
+wandb: 
+wandb: Run summary:
+wandb:         Accuracy 98.69
+wandb:     Adv Accuracy 39.11237
+wandb:      Adv Correct 3860
+wandb: Adv Total Tested 9869
+wandb:          Avg Reg 0.0
+wandb:          Correct 9869
+wandb:      Test Avg CE 1.24992
+wandb:        Test Loss 1.24992
+wandb:     Total Tested 10000
+wandb: 
+wandb: Synced earnest-sweep-7: https://wandb.ai/geometric_robustness/MNIST%20Attacks/runs/wkioru5s
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20221204_183302-wkioru5s/logs
+wandb: Agent Starting Run: x21vo3p8 with config:
+wandb: 	budget: 0.15
+wandb: 	model: parseval_1_8.pt
+wandb: Tracking run with wandb version 0.13.5
+wandb: Run data is saved locally in /home/loic/lsg/code/geometric_robustness/wandb/run-20221204_183904-x21vo3p8
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run giddy-sweep-8
+wandb: ⭐️ View project at https://wandb.ai/geometric_robustness/MNIST%20Attacks
+wandb: 🧹 View sweep at https://wandb.ai/geometric_robustness/MNIST%20Attacks/sweeps/k8pg3xeo
+wandb: 🚀 View run at https://wandb.ai/geometric_robustness/MNIST%20Attacks/runs/x21vo3p8
+Using cpu
+Using testing batch size for test loader
+Using testing batch size for train loader
+Loading weights
+Initialization done
+Start testing
+Using test loader
+Test: 0/10000 (0%)	Loss: 0.011365, Cross Entropy: 0.011365, Reg: 0.000000
+Elapsed time (s): 4.410402774810791
+Memory usage (GB): 0.68548583984375
+Test: 512/10000 (5%)	Loss: 0.033166, Cross Entropy: 0.033166, Reg: 0.000000
+Elapsed time (s): 17.517271041870117
+Memory usage (GB): 0.7032051086425781
+Test: 1024/10000 (10%)	Loss: 0.042649, Cross Entropy: 0.042649, Reg: 0.000000
+Elapsed time (s): 17.468773126602173
+Memory usage (GB): 0.6851615905761719
+Test: 1536/10000 (15%)	Loss: 0.052090, Cross Entropy: 0.052090, Reg: 0.000000
+Elapsed time (s): 17.367905378341675
+Memory usage (GB): 0.7030906677246094
+Test: 2048/10000 (20%)	Loss: 0.097962, Cross Entropy: 0.097962, Reg: 0.000000
+Elapsed time (s): 17.259352445602417
+Memory usage (GB): 0.6957054138183594
+Test: 2560/10000 (25%)	Loss: 0.057931, Cross Entropy: 0.057931, Reg: 0.000000
+Elapsed time (s): 17.36891484260559
+Memory usage (GB): 0.6956024169921875
+Test: 3072/10000 (30%)	Loss: 0.012199, Cross Entropy: 0.012199, Reg: 0.000000
+Elapsed time (s): 17.512598752975464
+Memory usage (GB): 0.7028770446777344
+Test: 3584/10000 (35%)	Loss: 0.025393, Cross Entropy: 0.025393, Reg: 0.000000
+Elapsed time (s): 17.49463152885437
+Memory usage (GB): 0.7028999328613281
+Test: 4096/10000 (41%)	Loss: 0.116414, Cross Entropy: 0.116414, Reg: 0.000000
+Elapsed time (s): 17.329556703567505
+Memory usage (GB): 0.7032814025878906
+Test: 4608/10000 (46%)	Loss: 0.054063, Cross Entropy: 0.054063, Reg: 0.000000
+Elapsed time (s): 17.607383012771606
+Memory usage (GB): 0.7024383544921875
+Test: 5120/10000 (51%)	Loss: 0.011147, Cross Entropy: 0.011147, Reg: 0.000000
+Elapsed time (s): 17.535146713256836
+Memory usage (GB): 0.7029075622558594
+Test: 5632/10000 (56%)	Loss: 0.033194, Cross Entropy: 0.033194, Reg: 0.000000
+Elapsed time (s): 17.72241187095642
+Memory usage (GB): 0.6858863830566406
+Test: 6144/10000 (61%)	Loss: 0.052013, Cross Entropy: 0.052013, Reg: 0.000000
+Elapsed time (s): 17.535103797912598
+Memory usage (GB): 0.6858024597167969
+Test: 6656/10000 (66%)	Loss: 0.024911, Cross Entropy: 0.024911, Reg: 0.000000
+Elapsed time (s): 17.6348934173584
+Memory usage (GB): 0.6784439086914062
+Test: 7168/10000 (71%)	Loss: 0.015503, Cross Entropy: 0.015503, Reg: 0.000000
+Elapsed time (s): 17.458401203155518
+Memory usage (GB): 0.6786537170410156
+Test: 7680/10000 (76%)	Loss: 0.001607, Cross Entropy: 0.001607, Reg: 0.000000
+Elapsed time (s): 17.526913166046143
+Memory usage (GB): 0.6860771179199219
+Test: 8192/10000 (81%)	Loss: 0.022443, Cross Entropy: 0.022443, Reg: 0.000000
+Elapsed time (s): 17.640438556671143
+Memory usage (GB): 0.6857643127441406
+Test: 8704/10000 (86%)	Loss: 0.001106, Cross Entropy: 0.001106, Reg: 0.000000
+Elapsed time (s): 17.664032697677612
+Memory usage (GB): 0.6786117553710938
+Test: 9216/10000 (91%)	Loss: 0.001630, Cross Entropy: 0.001630, Reg: 0.000000
+Elapsed time (s): 17.566072463989258
+Memory usage (GB): 0.6859092712402344
+Test: 9728/10000 (96%)	Loss: 0.050331, Cross Entropy: 0.050331, Reg: 0.000000
+Elapsed time (s): 17.566951274871826
+Memory usage (GB): 0.6853561401367188
+Test set: Average loss: 0.0401, Average cross entropy: 0.0401, Average reg: 0.0000, Accuracy: 9873/10000 (99%), Robust accuracy: 4495/9873 (46%)
+
+wandb: Waiting for W&B process to finish... (success).
+wandb: - 0.002 MB of 0.018 MB uploaded (0.000 MB deduped)wandb: \ 0.002 MB of 0.018 MB uploaded (0.000 MB deduped)wandb: 
+wandb: Run history:
+wandb:         Accuracy ▁
+wandb:     Adv Accuracy ▁
+wandb:      Adv Correct ▁
+wandb: Adv Total Tested ▁
+wandb:          Avg Reg ▁
+wandb:          Correct ▁
+wandb:      Test Avg CE ▁
+wandb:        Test Loss ▁
+wandb:     Total Tested ▁
+wandb: 
+wandb: Run summary:
+wandb:         Accuracy 98.73
+wandb:     Adv Accuracy 45.52821
+wandb:      Adv Correct 4495
+wandb: Adv Total Tested 9873
+wandb:          Avg Reg 0.0
+wandb:          Correct 9873
+wandb:      Test Avg CE 0.04011
+wandb:        Test Loss 0.04011
+wandb:     Total Tested 10000
+wandb: 
+wandb: Synced giddy-sweep-8: https://wandb.ai/geometric_robustness/MNIST%20Attacks/runs/x21vo3p8
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20221204_183904-x21vo3p8/logs
+wandb: Agent Starting Run: 0lk680xx with config:
+wandb: 	budget: 0.2
+wandb: 	model: distill_1_baseline_4_8.pt
+wandb: Tracking run with wandb version 0.13.5
+wandb: Run data is saved locally in /home/loic/lsg/code/geometric_robustness/wandb/run-20221204_184501-0lk680xx
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run vocal-sweep-9
+wandb: ⭐️ View project at https://wandb.ai/geometric_robustness/MNIST%20Attacks
+wandb: 🧹 View sweep at https://wandb.ai/geometric_robustness/MNIST%20Attacks/sweeps/k8pg3xeo
+wandb: 🚀 View run at https://wandb.ai/geometric_robustness/MNIST%20Attacks/runs/0lk680xx
+Using cpu
+Using testing batch size for test loader
+Using testing batch size for train loader
+Loading weights
+Initialization done
+Start testing
+Using test loader
+Test: 0/10000 (0%)	Loss: 1.276220, Cross Entropy: 1.276220, Reg: 0.000000
+Elapsed time (s): 4.433396339416504
+Memory usage (GB): 0.6808815002441406
+Test: 512/10000 (5%)	Loss: 1.247200, Cross Entropy: 1.247200, Reg: 0.000000
+Elapsed time (s): 17.671739101409912
+Memory usage (GB): 0.6905517578125
+Test: 1024/10000 (10%)	Loss: 1.263720, Cross Entropy: 1.263720, Reg: 0.000000
+Elapsed time (s): 17.495896100997925
+Memory usage (GB): 0.7073326110839844
+Test: 1536/10000 (15%)	Loss: 1.282346, Cross Entropy: 1.282346, Reg: 0.000000
+Elapsed time (s): 17.526885747909546
+Memory usage (GB): 0.7080230712890625
+Test: 2048/10000 (20%)	Loss: 1.261909, Cross Entropy: 1.261909, Reg: 0.000000
+Elapsed time (s): 17.5241436958313
+Memory usage (GB): 0.7080230712890625
+Test: 2560/10000 (25%)	Loss: 1.248531, Cross Entropy: 1.248531, Reg: 0.000000
+Elapsed time (s): 17.603713750839233
+Memory usage (GB): 0.6902008056640625
+Test: 3072/10000 (30%)	Loss: 1.247328, Cross Entropy: 1.247328, Reg: 0.000000
+Elapsed time (s): 17.453559160232544
+Memory usage (GB): 0.7007942199707031
+Test: 3584/10000 (35%)	Loss: 1.240305, Cross Entropy: 1.240305, Reg: 0.000000
+Elapsed time (s): 17.745759963989258
+Memory usage (GB): 0.7081413269042969
+Test: 4096/10000 (41%)	Loss: 1.291468, Cross Entropy: 1.291468, Reg: 0.000000
+Elapsed time (s): 17.570063591003418
+Memory usage (GB): 0.6902809143066406
+Test: 4608/10000 (46%)	Loss: 1.259709, Cross Entropy: 1.259709, Reg: 0.000000
+Elapsed time (s): 17.529976844787598
+Memory usage (GB): 0.6903343200683594
+Test: 5120/10000 (51%)	Loss: 1.193809, Cross Entropy: 1.193809, Reg: 0.000000
+Elapsed time (s): 17.551286458969116
+Memory usage (GB): 0.690704345703125
+Test: 5632/10000 (56%)	Loss: 1.252828, Cross Entropy: 1.252828, Reg: 0.000000
+Elapsed time (s): 17.85742497444153
+Memory usage (GB): 0.6904678344726562
+Test: 6144/10000 (61%)	Loss: 1.181832, Cross Entropy: 1.181832, Reg: 0.000000
+Elapsed time (s): 17.608019590377808
+Memory usage (GB): 0.707550048828125
+Test: 6656/10000 (66%)	Loss: 1.284874, Cross Entropy: 1.284874, Reg: 0.000000
+Elapsed time (s): 17.73085641860962
+Memory usage (GB): 0.7006072998046875
+Test: 7168/10000 (71%)	Loss: 1.221809, Cross Entropy: 1.221809, Reg: 0.000000
+Elapsed time (s): 17.89286494255066
+Memory usage (GB): 0.6908111572265625
+Test: 7680/10000 (76%)	Loss: 1.201614, Cross Entropy: 1.201614, Reg: 0.000000
+Elapsed time (s): 17.826913595199585
+Memory usage (GB): 0.6905517578125
+Test: 8192/10000 (81%)	Loss: 1.252728, Cross Entropy: 1.252728, Reg: 0.000000
+Elapsed time (s): 17.885756731033325
+Memory usage (GB): 0.7011642456054688
+Test: 8704/10000 (86%)	Loss: 1.171270, Cross Entropy: 1.171270, Reg: 0.000000
+Elapsed time (s): 17.849421977996826
+Memory usage (GB): 0.7010688781738281
+Test: 9216/10000 (91%)	Loss: 1.148282, Cross Entropy: 1.148282, Reg: 0.000000
+Elapsed time (s): 17.886176824569702
+Memory usage (GB): 0.6906089782714844
+Test: 9728/10000 (96%)	Loss: 1.324861, Cross Entropy: 1.324861, Reg: 0.000000
+Elapsed time (s): 17.573364973068237
+Memory usage (GB): 0.6904563903808594
+Test set: Average loss: 1.2499, Average cross entropy: 1.2499, Average reg: 0.0000, Accuracy: 9869/10000 (99%), Robust accuracy: 437/9869 (4%)
+
+wandb: Waiting for W&B process to finish... (success).
+wandb: - 0.002 MB of 0.002 MB uploaded (0.000 MB deduped)wandb: \ 0.002 MB of 0.021 MB uploaded (0.000 MB deduped)wandb: | 0.002 MB of 0.021 MB uploaded (0.000 MB deduped)wandb: 
+wandb: Run history:
+wandb:         Accuracy ▁
+wandb:     Adv Accuracy ▁
+wandb:      Adv Correct ▁
+wandb: Adv Total Tested ▁
+wandb:          Avg Reg ▁
+wandb:          Correct ▁
+wandb:      Test Avg CE ▁
+wandb:        Test Loss ▁
+wandb:     Total Tested ▁
+wandb: 
+wandb: Run summary:
+wandb:         Accuracy 98.69
+wandb:     Adv Accuracy 4.42801
+wandb:      Adv Correct 437
+wandb: Adv Total Tested 9869
+wandb:          Avg Reg 0.0
+wandb:          Correct 9869
+wandb:      Test Avg CE 1.24992
+wandb:        Test Loss 1.24992
+wandb:     Total Tested 10000
+wandb: 
+wandb: Synced vocal-sweep-9: https://wandb.ai/geometric_robustness/MNIST%20Attacks/runs/0lk680xx
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20221204_184501-0lk680xx/logs
+wandb: Agent Starting Run: fw4p0y20 with config:
+wandb: 	budget: 0.2
+wandb: 	model: parseval_1_8.pt
+wandb: Tracking run with wandb version 0.13.5
+wandb: Run data is saved locally in /home/loic/lsg/code/geometric_robustness/wandb/run-20221204_185102-fw4p0y20
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run snowy-sweep-10
+wandb: ⭐️ View project at https://wandb.ai/geometric_robustness/MNIST%20Attacks
+wandb: 🧹 View sweep at https://wandb.ai/geometric_robustness/MNIST%20Attacks/sweeps/k8pg3xeo
+wandb: 🚀 View run at https://wandb.ai/geometric_robustness/MNIST%20Attacks/runs/fw4p0y20
+Using cpu
+Using testing batch size for test loader
+Using testing batch size for train loader
+Loading weights
+Initialization done
+Start testing
+Using test loader
+Test: 0/10000 (0%)	Loss: 0.011365, Cross Entropy: 0.011365, Reg: 0.000000
+Elapsed time (s): 4.425879716873169
+Memory usage (GB): 0.6912765502929688
+Test: 512/10000 (5%)	Loss: 0.033166, Cross Entropy: 0.033166, Reg: 0.000000
+Elapsed time (s): 17.571234464645386
+Memory usage (GB): 0.69134521484375
+Test: 1024/10000 (10%)	Loss: 0.042649, Cross Entropy: 0.042649, Reg: 0.000000
+Elapsed time (s): 17.40471124649048
+Memory usage (GB): 0.6912078857421875
+Test: 1536/10000 (15%)	Loss: 0.052090, Cross Entropy: 0.052090, Reg: 0.000000
+Elapsed time (s): 17.22387385368347
+Memory usage (GB): 0.6912460327148438
+Test: 2048/10000 (20%)	Loss: 0.097962, Cross Entropy: 0.097962, Reg: 0.000000
+Elapsed time (s): 17.37101912498474
+Memory usage (GB): 0.6912651062011719
+Test: 2560/10000 (25%)	Loss: 0.057931, Cross Entropy: 0.057931, Reg: 0.000000
+Elapsed time (s): 17.37910747528076
+Memory usage (GB): 0.6913604736328125
+Test: 3072/10000 (30%)	Loss: 0.012199, Cross Entropy: 0.012199, Reg: 0.000000
+Elapsed time (s): 17.368865728378296
+Memory usage (GB): 0.691162109375
+Test: 3584/10000 (35%)	Loss: 0.025393, Cross Entropy: 0.025393, Reg: 0.000000
+Elapsed time (s): 17.977436780929565
+Memory usage (GB): 0.6912498474121094
+Test: 4096/10000 (41%)	Loss: 0.116414, Cross Entropy: 0.116414, Reg: 0.000000
+Elapsed time (s): 17.37422752380371
+Memory usage (GB): 0.6913223266601562
+Test: 4608/10000 (46%)	Loss: 0.054063, Cross Entropy: 0.054063, Reg: 0.000000
+Elapsed time (s): 17.447776794433594
+Memory usage (GB): 0.6913528442382812
+Test: 5120/10000 (51%)	Loss: 0.011147, Cross Entropy: 0.011147, Reg: 0.000000
+Elapsed time (s): 17.485461473464966
+Memory usage (GB): 0.7085227966308594
+Test: 5632/10000 (56%)	Loss: 0.033194, Cross Entropy: 0.033194, Reg: 0.000000
+Elapsed time (s): 17.627220392227173
+Memory usage (GB): 0.6910896301269531
+Test: 6144/10000 (61%)	Loss: 0.052013, Cross Entropy: 0.052013, Reg: 0.000000
+Elapsed time (s): 18.00927472114563
+Memory usage (GB): 0.6914634704589844
+Test: 6656/10000 (66%)	Loss: 0.024911, Cross Entropy: 0.024911, Reg: 0.000000
+Elapsed time (s): 17.34190082550049
+Memory usage (GB): 0.7088127136230469
+Test: 7168/10000 (71%)	Loss: 0.015503, Cross Entropy: 0.015503, Reg: 0.000000
+Elapsed time (s): 17.577165842056274
+Memory usage (GB): 0.6910514831542969
+Test: 7680/10000 (76%)	Loss: 0.001607, Cross Entropy: 0.001607, Reg: 0.000000
+Elapsed time (s): 17.60355234146118
+Memory usage (GB): 0.6912384033203125
+Test: 8192/10000 (81%)	Loss: 0.022443, Cross Entropy: 0.022443, Reg: 0.000000
+Elapsed time (s): 17.52636694908142
+Memory usage (GB): 0.6912689208984375
+Test: 8704/10000 (86%)	Loss: 0.001106, Cross Entropy: 0.001106, Reg: 0.000000
+Elapsed time (s): 17.769516944885254
+Memory usage (GB): 0.691375732421875
+Test: 9216/10000 (91%)	Loss: 0.001630, Cross Entropy: 0.001630, Reg: 0.000000
+Elapsed time (s): 17.76036262512207
+Memory usage (GB): 0.6913261413574219
+Test: 9728/10000 (96%)	Loss: 0.050331, Cross Entropy: 0.050331, Reg: 0.000000
+Elapsed time (s): 17.436503171920776
+Memory usage (GB): 0.6914558410644531
+Test set: Average loss: 0.0401, Average cross entropy: 0.0401, Average reg: 0.0000, Accuracy: 9873/10000 (99%), Robust accuracy: 583/9873 (6%)
+
+wandb: Waiting for W&B process to finish... (success).
+wandb: - 0.002 MB of 0.002 MB uploaded (0.000 MB deduped)wandb: \ 0.002 MB of 0.006 MB uploaded (0.000 MB deduped)wandb: | 0.002 MB of 0.021 MB uploaded (0.000 MB deduped)wandb: / 0.002 MB of 0.021 MB uploaded (0.000 MB deduped)wandb: 
+wandb: Run history:
+wandb:         Accuracy ▁
+wandb:     Adv Accuracy ▁
+wandb:      Adv Correct ▁
+wandb: Adv Total Tested ▁
+wandb:          Avg Reg ▁
+wandb:          Correct ▁
+wandb:      Test Avg CE ▁
+wandb:        Test Loss ▁
+wandb:     Total Tested ▁
+wandb: 
+wandb: Run summary:
+wandb:         Accuracy 98.73
+wandb:     Adv Accuracy 5.90499
+wandb:      Adv Correct 583
+wandb: Adv Total Tested 9873
+wandb:          Avg Reg 0.0
+wandb:          Correct 9873
+wandb:      Test Avg CE 0.04011
+wandb:        Test Loss 0.04011
+wandb:     Total Tested 10000
+wandb: 
+wandb: Synced snowy-sweep-10: https://wandb.ai/geometric_robustness/MNIST%20Attacks/runs/fw4p0y20
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20221204_185102-fw4p0y20/logs
+wandb: Agent Starting Run: swewkyq4 with config:
+wandb: 	budget: 0.25
+wandb: 	model: distill_1_baseline_4_8.pt
+wandb: Tracking run with wandb version 0.13.5
+wandb: Run data is saved locally in /home/loic/lsg/code/geometric_robustness/wandb/run-20221204_185658-swewkyq4
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run genial-sweep-11
+wandb: ⭐️ View project at https://wandb.ai/geometric_robustness/MNIST%20Attacks
+wandb: 🧹 View sweep at https://wandb.ai/geometric_robustness/MNIST%20Attacks/sweeps/k8pg3xeo
+wandb: 🚀 View run at https://wandb.ai/geometric_robustness/MNIST%20Attacks/runs/swewkyq4
+Using cpu
+Using testing batch size for test loader
+Using testing batch size for train loader
+Loading weights
+Initialization done
+Start testing
+Using test loader
+Test: 0/10000 (0%)	Loss: 1.276220, Cross Entropy: 1.276220, Reg: 0.000000
+Elapsed time (s): 4.401327610015869
+Memory usage (GB): 0.6979942321777344
+Test: 512/10000 (5%)	Loss: 1.247200, Cross Entropy: 1.247200, Reg: 0.000000
+Elapsed time (s): 17.590739011764526
+Memory usage (GB): 0.6946983337402344
+Test: 1024/10000 (10%)	Loss: 1.263720, Cross Entropy: 1.263720, Reg: 0.000000
+Elapsed time (s): 17.22644543647766
+Memory usage (GB): 0.6946678161621094
+Test: 1536/10000 (15%)	Loss: 1.282346, Cross Entropy: 1.282346, Reg: 0.000000
+Elapsed time (s): 17.17830491065979
+Memory usage (GB): 0.6873512268066406
+Test: 2048/10000 (20%)	Loss: 1.261909, Cross Entropy: 1.261909, Reg: 0.000000
+Elapsed time (s): 17.48980140686035
+Memory usage (GB): 0.7044029235839844
+Test: 2560/10000 (25%)	Loss: 1.248531, Cross Entropy: 1.248531, Reg: 0.000000
+Elapsed time (s): 17.621235847473145
+Memory usage (GB): 0.7046775817871094
+Test: 3072/10000 (30%)	Loss: 1.247328, Cross Entropy: 1.247328, Reg: 0.000000
+Elapsed time (s): 17.353126764297485
+Memory usage (GB): 0.6869087219238281
+Test: 3584/10000 (35%)	Loss: 1.240305, Cross Entropy: 1.240305, Reg: 0.000000
+Elapsed time (s): 17.47340679168701
+Memory usage (GB): 0.7040786743164062
+Test: 4096/10000 (41%)	Loss: 1.291468, Cross Entropy: 1.291468, Reg: 0.000000
+Elapsed time (s): 17.562474966049194
+Memory usage (GB): 0.7221260070800781
+Test: 4608/10000 (46%)	Loss: 1.259709, Cross Entropy: 1.259709, Reg: 0.000000
+Elapsed time (s): 17.41924238204956
+Memory usage (GB): 0.6869277954101562
+Test: 5120/10000 (51%)	Loss: 1.193809, Cross Entropy: 1.193809, Reg: 0.000000
+Elapsed time (s): 17.428815841674805
+Memory usage (GB): 0.6697044372558594
+Test: 5632/10000 (56%)	Loss: 1.252828, Cross Entropy: 1.252828, Reg: 0.000000
+Elapsed time (s): 17.415143251419067
+Memory usage (GB): 0.6867523193359375
+Test: 6144/10000 (61%)	Loss: 1.181832, Cross Entropy: 1.181832, Reg: 0.000000
+Elapsed time (s): 17.341477870941162
+Memory usage (GB): 0.7044029235839844
+Test: 6656/10000 (66%)	Loss: 1.284874, Cross Entropy: 1.284874, Reg: 0.000000
+Elapsed time (s): 17.460408210754395
+Memory usage (GB): 0.7045478820800781
+Test: 7168/10000 (71%)	Loss: 1.221809, Cross Entropy: 1.221809, Reg: 0.000000
+Elapsed time (s): 17.375436305999756
+Memory usage (GB): 0.6864433288574219
+Test: 7680/10000 (76%)	Loss: 1.201614, Cross Entropy: 1.201614, Reg: 0.000000
+Elapsed time (s): 17.392083883285522
+Memory usage (GB): 0.6864242553710938
+Test: 8192/10000 (81%)	Loss: 1.252728, Cross Entropy: 1.252728, Reg: 0.000000
+Elapsed time (s): 17.413744926452637
+Memory usage (GB): 0.6863479614257812
+Test: 8704/10000 (86%)	Loss: 1.171270, Cross Entropy: 1.171270, Reg: 0.000000
+Elapsed time (s): 17.459285497665405
+Memory usage (GB): 0.6864662170410156
+Test: 9216/10000 (91%)	Loss: 1.148282, Cross Entropy: 1.148282, Reg: 0.000000
+Elapsed time (s): 17.35960578918457
+Memory usage (GB): 0.6862869262695312
+Test: 9728/10000 (96%)	Loss: 1.324861, Cross Entropy: 1.324861, Reg: 0.000000
+Elapsed time (s): 17.403523445129395
+Memory usage (GB): 0.7036018371582031
+Test set: Average loss: 1.2499, Average cross entropy: 1.2499, Average reg: 0.0000, Accuracy: 9869/10000 (99%), Robust accuracy: 5/9869 (0%)
+
+wandb: Waiting for W&B process to finish... (success).
+wandb: 
+wandb: Run history:
+wandb:         Accuracy ▁
+wandb:     Adv Accuracy ▁
+wandb:      Adv Correct ▁
+wandb: Adv Total Tested ▁
+wandb:          Avg Reg ▁
+wandb:          Correct ▁
+wandb:      Test Avg CE ▁
+wandb:        Test Loss ▁
+wandb:     Total Tested ▁
+wandb: 
+wandb: Run summary:
+wandb:         Accuracy 98.69
+wandb:     Adv Accuracy 0.05066
+wandb:      Adv Correct 5
+wandb: Adv Total Tested 9869
+wandb:          Avg Reg 0.0
+wandb:          Correct 9869
+wandb:      Test Avg CE 1.24992
+wandb:        Test Loss 1.24992
+wandb:     Total Tested 10000
+wandb: 
+wandb: Synced genial-sweep-11: https://wandb.ai/geometric_robustness/MNIST%20Attacks/runs/swewkyq4
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20221204_185658-swewkyq4/logs
+wandb: Agent Starting Run: gt6e7sul with config:
+wandb: 	budget: 0.25
+wandb: 	model: parseval_1_8.pt
+wandb: Tracking run with wandb version 0.13.5
+wandb: Run data is saved locally in /home/loic/lsg/code/geometric_robustness/wandb/run-20221204_190254-gt6e7sul
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run sandy-sweep-12
+wandb: ⭐️ View project at https://wandb.ai/geometric_robustness/MNIST%20Attacks
+wandb: 🧹 View sweep at https://wandb.ai/geometric_robustness/MNIST%20Attacks/sweeps/k8pg3xeo
+wandb: 🚀 View run at https://wandb.ai/geometric_robustness/MNIST%20Attacks/runs/gt6e7sul
+Using cpu
+Using testing batch size for test loader
+Using testing batch size for train loader
+Loading weights
+Initialization done
+Start testing
+Using test loader
+Test: 0/10000 (0%)	Loss: 0.011365, Cross Entropy: 0.011365, Reg: 0.000000
+Elapsed time (s): 4.404740333557129
+Memory usage (GB): 0.6799545288085938
+Test: 512/10000 (5%)	Loss: 0.033166, Cross Entropy: 0.033166, Reg: 0.000000
+Elapsed time (s): 17.459012746810913
+Memory usage (GB): 0.6799850463867188
+Test: 1024/10000 (10%)	Loss: 0.042649, Cross Entropy: 0.042649, Reg: 0.000000
+Elapsed time (s): 17.41143774986267
+Memory usage (GB): 0.6801872253417969
+Test: 1536/10000 (15%)	Loss: 0.052090, Cross Entropy: 0.052090, Reg: 0.000000
+Elapsed time (s): 17.287684440612793
+Memory usage (GB): 0.6800575256347656
+Test: 2048/10000 (20%)	Loss: 0.097962, Cross Entropy: 0.097962, Reg: 0.000000
+Elapsed time (s): 17.316584587097168
+Memory usage (GB): 0.6797714233398438
+Test: 2560/10000 (25%)	Loss: 0.057931, Cross Entropy: 0.057931, Reg: 0.000000
+Elapsed time (s): 17.39877223968506
+Memory usage (GB): 0.6799087524414062
+Test: 3072/10000 (30%)	Loss: 0.012199, Cross Entropy: 0.012199, Reg: 0.000000
+Elapsed time (s): 17.446712255477905
+Memory usage (GB): 0.68011474609375
+Test: 3584/10000 (35%)	Loss: 0.025393, Cross Entropy: 0.025393, Reg: 0.000000
+Elapsed time (s): 17.482529401779175
+Memory usage (GB): 0.6801872253417969
+Test: 4096/10000 (41%)	Loss: 0.116414, Cross Entropy: 0.116414, Reg: 0.000000
+Elapsed time (s): 17.3226056098938
+Memory usage (GB): 0.679962158203125
+Test: 4608/10000 (46%)	Loss: 0.054063, Cross Entropy: 0.054063, Reg: 0.000000
+Elapsed time (s): 17.611474990844727
+Memory usage (GB): 0.6800155639648438
+Test: 5120/10000 (51%)	Loss: 0.011147, Cross Entropy: 0.011147, Reg: 0.000000
+Elapsed time (s): 17.64185667037964
+Memory usage (GB): 0.6800613403320312
+Test: 5632/10000 (56%)	Loss: 0.033194, Cross Entropy: 0.033194, Reg: 0.000000
+Elapsed time (s): 17.84944772720337
+Memory usage (GB): 0.7072219848632812
+Test: 6144/10000 (61%)	Loss: 0.052013, Cross Entropy: 0.052013, Reg: 0.000000
+Elapsed time (s): 17.606993675231934
+Memory usage (GB): 0.6801185607910156
+Test: 6656/10000 (66%)	Loss: 0.024911, Cross Entropy: 0.024911, Reg: 0.000000
+Elapsed time (s): 17.684708833694458
+Memory usage (GB): 0.6799240112304688
+Test: 7168/10000 (71%)	Loss: 0.015503, Cross Entropy: 0.015503, Reg: 0.000000
+Elapsed time (s): 17.968759536743164
+Memory usage (GB): 0.6799507141113281
+Test: 7680/10000 (76%)	Loss: 0.001607, Cross Entropy: 0.001607, Reg: 0.000000
+Elapsed time (s): 17.89177703857422
+Memory usage (GB): 0.6802520751953125
+Test: 8192/10000 (81%)	Loss: 0.022443, Cross Entropy: 0.022443, Reg: 0.000000
+Elapsed time (s): 17.850748300552368
+Memory usage (GB): 0.68023681640625
+Test: 8704/10000 (86%)	Loss: 0.001106, Cross Entropy: 0.001106, Reg: 0.000000
+Elapsed time (s): 17.885504007339478
+Memory usage (GB): 0.6800918579101562
+Test: 9216/10000 (91%)	Loss: 0.001630, Cross Entropy: 0.001630, Reg: 0.000000
+Elapsed time (s): 17.81210732460022
+Memory usage (GB): 0.6800689697265625
+Test: 9728/10000 (96%)	Loss: 0.050331, Cross Entropy: 0.050331, Reg: 0.000000
+Elapsed time (s): 17.70751452445984
+Memory usage (GB): 0.6799240112304688
+Test set: Average loss: 0.0401, Average cross entropy: 0.0401, Average reg: 0.0000, Accuracy: 9873/10000 (99%), Robust accuracy: 1/9873 (0%)
+
+wandb: Waiting for W&B process to finish... (success).
+wandb: - 0.002 MB of 0.002 MB uploaded (0.000 MB deduped)wandb: \ 0.021 MB of 0.021 MB uploaded (0.000 MB deduped)wandb: | 0.021 MB of 0.021 MB uploaded (0.000 MB deduped)wandb: 
+wandb: Run history:
+wandb:         Accuracy ▁
+wandb:     Adv Accuracy ▁
+wandb:      Adv Correct ▁
+wandb: Adv Total Tested ▁
+wandb:          Avg Reg ▁
+wandb:          Correct ▁
+wandb:      Test Avg CE ▁
+wandb:        Test Loss ▁
+wandb:     Total Tested ▁
+wandb: 
+wandb: Run summary:
+wandb:         Accuracy 98.73
+wandb:     Adv Accuracy 0.01013
+wandb:      Adv Correct 1
+wandb: Adv Total Tested 9873
+wandb:          Avg Reg 0.0
+wandb:          Correct 9873
+wandb:      Test Avg CE 0.04011
+wandb:        Test Loss 0.04011
+wandb:     Total Tested 10000
+wandb: 
+wandb: Synced sandy-sweep-12: https://wandb.ai/geometric_robustness/MNIST%20Attacks/runs/gt6e7sul
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20221204_190254-gt6e7sul/logs
+wandb: Agent Starting Run: 9rqfehao with config:
+wandb: 	budget: 0.3
+wandb: 	model: distill_1_baseline_4_8.pt
+wandb: Tracking run with wandb version 0.13.5
+wandb: Run data is saved locally in /home/loic/lsg/code/geometric_robustness/wandb/run-20221204_190853-9rqfehao
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run glorious-sweep-13
+wandb: ⭐️ View project at https://wandb.ai/geometric_robustness/MNIST%20Attacks
+wandb: 🧹 View sweep at https://wandb.ai/geometric_robustness/MNIST%20Attacks/sweeps/k8pg3xeo
+wandb: 🚀 View run at https://wandb.ai/geometric_robustness/MNIST%20Attacks/runs/9rqfehao
+Using cpu
+Using testing batch size for test loader
+Using testing batch size for train loader
+Loading weights
+Initialization done
+Start testing
+Using test loader
+Test: 0/10000 (0%)	Loss: 1.276220, Cross Entropy: 1.276220, Reg: 0.000000
+Elapsed time (s): 4.44421911239624
+Memory usage (GB): 0.6972122192382812
+Test: 512/10000 (5%)	Loss: 1.247200, Cross Entropy: 1.247200, Reg: 0.000000
+Elapsed time (s): 17.67433190345764
+Memory usage (GB): 0.6897087097167969
+Test: 1024/10000 (10%)	Loss: 1.263720, Cross Entropy: 1.263720, Reg: 0.000000
+Elapsed time (s): 17.58940863609314
+Memory usage (GB): 0.7063713073730469
+Test: 1536/10000 (15%)	Loss: 1.282346, Cross Entropy: 1.282346, Reg: 0.000000
+Elapsed time (s): 17.525148630142212
+Memory usage (GB): 0.6895484924316406
+Test: 2048/10000 (20%)	Loss: 1.261909, Cross Entropy: 1.261909, Reg: 0.000000
+Elapsed time (s): 17.640293836593628
+Memory usage (GB): 0.7068672180175781
+Test: 2560/10000 (25%)	Loss: 1.248531, Cross Entropy: 1.248531, Reg: 0.000000
+Elapsed time (s): 17.730888605117798
+Memory usage (GB): 0.7068634033203125
+Test: 3072/10000 (30%)	Loss: 1.247328, Cross Entropy: 1.247328, Reg: 0.000000
+Elapsed time (s): 17.598692178726196
+Memory usage (GB): 0.7068634033203125
+Test: 3584/10000 (35%)	Loss: 1.240305, Cross Entropy: 1.240305, Reg: 0.000000
+Elapsed time (s): 17.7635498046875
+Memory usage (GB): 0.7067832946777344
+Test: 4096/10000 (41%)	Loss: 1.291468, Cross Entropy: 1.291468, Reg: 0.000000
+Elapsed time (s): 17.510521173477173
+Memory usage (GB): 0.6997528076171875
+Test: 4608/10000 (46%)	Loss: 1.259709, Cross Entropy: 1.259709, Reg: 0.000000
+Elapsed time (s): 17.626967191696167
+Memory usage (GB): 0.7067413330078125
+Test: 5120/10000 (51%)	Loss: 1.193809, Cross Entropy: 1.193809, Reg: 0.000000
+Elapsed time (s): 17.65197491645813
+Memory usage (GB): 0.7067413330078125
+Test: 5632/10000 (56%)	Loss: 1.252828, Cross Entropy: 1.252828, Reg: 0.000000
+Elapsed time (s): 17.848159313201904
+Memory usage (GB): 0.70672607421875
+Test: 6144/10000 (61%)	Loss: 1.181832, Cross Entropy: 1.181832, Reg: 0.000000
+Elapsed time (s): 17.706828832626343
+Memory usage (GB): 0.70672607421875
+Test: 6656/10000 (66%)	Loss: 1.284874, Cross Entropy: 1.284874, Reg: 0.000000
+Elapsed time (s): 17.678887128829956
+Memory usage (GB): 0.7069015502929688
+Test: 7168/10000 (71%)	Loss: 1.221809, Cross Entropy: 1.221809, Reg: 0.000000
+Elapsed time (s): 17.9289710521698
+Memory usage (GB): 0.6897048950195312
+Test: 7680/10000 (76%)	Loss: 1.201614, Cross Entropy: 1.201614, Reg: 0.000000
+Elapsed time (s): 17.764750719070435
+Memory usage (GB): 0.70684814453125
+Test: 8192/10000 (81%)	Loss: 1.252728, Cross Entropy: 1.252728, Reg: 0.000000
+Elapsed time (s): 17.77567172050476
+Memory usage (GB): 0.6894454956054688
+Test: 8704/10000 (86%)	Loss: 1.171270, Cross Entropy: 1.171270, Reg: 0.000000
+Elapsed time (s): 17.77995491027832
+Memory usage (GB): 0.6896896362304688
+Test: 9216/10000 (91%)	Loss: 1.148282, Cross Entropy: 1.148282, Reg: 0.000000
+Elapsed time (s): 17.86771059036255
+Memory usage (GB): 0.6897201538085938
+Test: 9728/10000 (96%)	Loss: 1.324861, Cross Entropy: 1.324861, Reg: 0.000000
+Elapsed time (s): 17.591217041015625
+Memory usage (GB): 0.7066078186035156
+Test set: Average loss: 1.2499, Average cross entropy: 1.2499, Average reg: 0.0000, Accuracy: 9869/10000 (99%), Robust accuracy: 0/9869 (0%)
+
+wandb: Waiting for W&B process to finish... (success).
+wandb: - 0.002 MB of 0.018 MB uploaded (0.000 MB deduped)wandb: \ 0.021 MB of 0.021 MB uploaded (0.000 MB deduped)wandb: | 0.021 MB of 0.021 MB uploaded (0.000 MB deduped)wandb: 
+wandb: Run history:
+wandb:         Accuracy ▁
+wandb:     Adv Accuracy ▁
+wandb:      Adv Correct ▁
+wandb: Adv Total Tested ▁
+wandb:          Avg Reg ▁
+wandb:          Correct ▁
+wandb:      Test Avg CE ▁
+wandb:        Test Loss ▁
+wandb:     Total Tested ▁
+wandb: 
+wandb: Run summary:
+wandb:         Accuracy 98.69
+wandb:     Adv Accuracy 0.0
+wandb:      Adv Correct 0
+wandb: Adv Total Tested 9869
+wandb:          Avg Reg 0.0
+wandb:          Correct 9869
+wandb:      Test Avg CE 1.24992
+wandb:        Test Loss 1.24992
+wandb:     Total Tested 10000
+wandb: 
+wandb: Synced glorious-sweep-13: https://wandb.ai/geometric_robustness/MNIST%20Attacks/runs/9rqfehao
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20221204_190853-9rqfehao/logs
+wandb: Sweep Agent: Waiting for job.
+wandb: Job received.
+wandb: Agent Starting Run: wwkm4lz1 with config:
+wandb: 	budget: 0.3
+wandb: 	model: parseval_1_8.pt
+wandb: Tracking run with wandb version 0.13.5
+wandb: Run data is saved locally in /home/loic/lsg/code/geometric_robustness/wandb/run-20221204_191500-wwkm4lz1
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run confused-sweep-14
+wandb: ⭐️ View project at https://wandb.ai/geometric_robustness/MNIST%20Attacks
+wandb: 🧹 View sweep at https://wandb.ai/geometric_robustness/MNIST%20Attacks/sweeps/k8pg3xeo
+wandb: 🚀 View run at https://wandb.ai/geometric_robustness/MNIST%20Attacks/runs/wwkm4lz1
+Using cpu
+Using testing batch size for test loader
+Using testing batch size for train loader
+Loading weights
+Initialization done
+Start testing
+Using test loader
+Test: 0/10000 (0%)	Loss: 0.011365, Cross Entropy: 0.011365, Reg: 0.000000
+Elapsed time (s): 4.440603017807007
+Memory usage (GB): 0.6799659729003906
+Test: 512/10000 (5%)	Loss: 0.033166, Cross Entropy: 0.033166, Reg: 0.000000
+Elapsed time (s): 17.4218692779541
+Memory usage (GB): 0.6799812316894531
+Test: 1024/10000 (10%)	Loss: 0.042649, Cross Entropy: 0.042649, Reg: 0.000000
+Elapsed time (s): 17.428547382354736
+Memory usage (GB): 0.7419929504394531
+Test: 1536/10000 (15%)	Loss: 0.052090, Cross Entropy: 0.052090, Reg: 0.000000
+Elapsed time (s): 17.552172660827637
+Memory usage (GB): 0.7422065734863281
+Test: 2048/10000 (20%)	Loss: 0.097962, Cross Entropy: 0.097962, Reg: 0.000000
+Elapsed time (s): 17.581485271453857
+Memory usage (GB): 0.7422065734863281
+Test: 2560/10000 (25%)	Loss: 0.057931, Cross Entropy: 0.057931, Reg: 0.000000
+Elapsed time (s): 17.70670795440674
+Memory usage (GB): 0.7422256469726562
+Test: 3072/10000 (30%)	Loss: 0.012199, Cross Entropy: 0.012199, Reg: 0.000000
+Elapsed time (s): 17.651384115219116
+Memory usage (GB): 0.7422218322753906
+Test: 3584/10000 (35%)	Loss: 0.025393, Cross Entropy: 0.025393, Reg: 0.000000
+Elapsed time (s): 17.694084405899048
+Memory usage (GB): 0.742218017578125
+Test: 4096/10000 (41%)	Loss: 0.116414, Cross Entropy: 0.116414, Reg: 0.000000
+Elapsed time (s): 17.573920488357544
+Memory usage (GB): 0.742218017578125
+Test: 4608/10000 (46%)	Loss: 0.054063, Cross Entropy: 0.054063, Reg: 0.000000
+Elapsed time (s): 17.983356475830078
+Memory usage (GB): 0.742218017578125
+Test: 5120/10000 (51%)	Loss: 0.011147, Cross Entropy: 0.011147, Reg: 0.000000
+Elapsed time (s): 18.34722876548767
+Memory usage (GB): 0.742218017578125
+Test: 5632/10000 (56%)	Loss: 0.033194, Cross Entropy: 0.033194, Reg: 0.000000
+Elapsed time (s): 18.79015851020813
+Memory usage (GB): 0.7422142028808594
+Test: 6144/10000 (61%)	Loss: 0.052013, Cross Entropy: 0.052013, Reg: 0.000000
+Elapsed time (s): 18.621034622192383
+Memory usage (GB): 0.7422142028808594
+Test: 6656/10000 (66%)	Loss: 0.024911, Cross Entropy: 0.024911, Reg: 0.000000
+Elapsed time (s): 18.24289560317993
+Memory usage (GB): 0.7422142028808594
+Test: 7168/10000 (71%)	Loss: 0.015503, Cross Entropy: 0.015503, Reg: 0.000000
+Elapsed time (s): 18.11321496963501
+Memory usage (GB): 0.7422142028808594
+Test: 7680/10000 (76%)	Loss: 0.001607, Cross Entropy: 0.001607, Reg: 0.000000
+Elapsed time (s): 19.1329448223114
+Memory usage (GB): 0.7422103881835938
+Test: 8192/10000 (81%)	Loss: 0.022443, Cross Entropy: 0.022443, Reg: 0.000000
+Elapsed time (s): 21.6734619140625
+Memory usage (GB): 0.73516845703125
+Test: 8704/10000 (86%)	Loss: 0.001106, Cross Entropy: 0.001106, Reg: 0.000000
+Elapsed time (s): 18.104471921920776
+Memory usage (GB): 0.73516845703125
+Test: 9216/10000 (91%)	Loss: 0.001630, Cross Entropy: 0.001630, Reg: 0.000000
+Elapsed time (s): 17.9943368434906
+Memory usage (GB): 0.73516845703125
+Test: 9728/10000 (96%)	Loss: 0.050331, Cross Entropy: 0.050331, Reg: 0.000000
+Elapsed time (s): 17.79215383529663
+Memory usage (GB): 0.73516845703125
+Test set: Average loss: 0.0401, Average cross entropy: 0.0401, Average reg: 0.0000, Accuracy: 9873/10000 (99%), Robust accuracy: 0/9873 (0%)
+
+wandb: Waiting for W&B process to finish... (success).
+wandb: - 0.002 MB of 0.002 MB uploaded (0.000 MB deduped)wandb: \ 0.002 MB of 0.006 MB uploaded (0.000 MB deduped)wandb: | 0.021 MB of 0.021 MB uploaded (0.000 MB deduped)wandb: / 0.021 MB of 0.021 MB uploaded (0.000 MB deduped)wandb: 
+wandb: Run history:
+wandb:         Accuracy ▁
+wandb:     Adv Accuracy ▁
+wandb:      Adv Correct ▁
+wandb: Adv Total Tested ▁
+wandb:          Avg Reg ▁
+wandb:          Correct ▁
+wandb:      Test Avg CE ▁
+wandb:        Test Loss ▁
+wandb:     Total Tested ▁
+wandb: 
+wandb: Run summary:
+wandb:         Accuracy 98.73
+wandb:     Adv Accuracy 0.0
+wandb:      Adv Correct 0
+wandb: Adv Total Tested 9873
+wandb:          Avg Reg 0.0
+wandb:          Correct 9873
+wandb:      Test Avg CE 0.04011
+wandb:        Test Loss 0.04011
+wandb:     Total Tested 10000
+wandb: 
+wandb: Synced confused-sweep-14: https://wandb.ai/geometric_robustness/MNIST%20Attacks/runs/wwkm4lz1
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20221204_191500-wwkm4lz1/logs
+wandb: Sweep Agent: Waiting for job.
+wandb: Job received.
+wandb: Agent Starting Run: 8oueb9na with config:
+wandb: 	budget: 0.35
+wandb: 	model: distill_1_baseline_4_8.pt
+wandb: Tracking run with wandb version 0.13.5
+wandb: Run data is saved locally in /home/loic/lsg/code/geometric_robustness/wandb/run-20221204_192116-8oueb9na
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run feasible-sweep-15
+wandb: ⭐️ View project at https://wandb.ai/geometric_robustness/MNIST%20Attacks
+wandb: 🧹 View sweep at https://wandb.ai/geometric_robustness/MNIST%20Attacks/sweeps/k8pg3xeo
+wandb: 🚀 View run at https://wandb.ai/geometric_robustness/MNIST%20Attacks/runs/8oueb9na
+Using cpu
+Using testing batch size for test loader
+Using testing batch size for train loader
+Loading weights
+Initialization done
+Start testing
+Using test loader
+Test: 0/10000 (0%)	Loss: 1.276220, Cross Entropy: 1.276220, Reg: 0.000000
+Elapsed time (s): 4.354796648025513
+Memory usage (GB): 0.6733055114746094
+Test: 512/10000 (5%)	Loss: 1.247200, Cross Entropy: 1.247200, Reg: 0.000000
+Elapsed time (s): 17.57884645462036
+Memory usage (GB): 0.6732978820800781
+Test: 1024/10000 (10%)	Loss: 1.263720, Cross Entropy: 1.263720, Reg: 0.000000
+Elapsed time (s): 17.395067930221558
+Memory usage (GB): 0.6731033325195312
+Test: 1536/10000 (15%)	Loss: 1.282346, Cross Entropy: 1.282346, Reg: 0.000000
+Elapsed time (s): 17.418902158737183
+Memory usage (GB): 0.6731109619140625
+Test: 2048/10000 (20%)	Loss: 1.261909, Cross Entropy: 1.261909, Reg: 0.000000
+Elapsed time (s): 17.575937509536743
+Memory usage (GB): 0.6733207702636719
+Test: 2560/10000 (25%)	Loss: 1.248531, Cross Entropy: 1.248531, Reg: 0.000000
+Elapsed time (s): 18.051209211349487
+Memory usage (GB): 0.6732215881347656
+Test: 3072/10000 (30%)	Loss: 1.247328, Cross Entropy: 1.247328, Reg: 0.000000
+Elapsed time (s): 17.45881724357605
+Memory usage (GB): 0.6731300354003906
+Test: 3584/10000 (35%)	Loss: 1.240305, Cross Entropy: 1.240305, Reg: 0.000000
+Elapsed time (s): 17.48353385925293
+Memory usage (GB): 0.6732826232910156
+Test: 4096/10000 (41%)	Loss: 1.291468, Cross Entropy: 1.291468, Reg: 0.000000
+Elapsed time (s): 17.482703924179077
+Memory usage (GB): 0.6731376647949219
+Test: 4608/10000 (46%)	Loss: 1.259709, Cross Entropy: 1.259709, Reg: 0.000000
+Elapsed time (s): 17.50338077545166
+Memory usage (GB): 0.67315673828125
+Test: 5120/10000 (51%)	Loss: 1.193809, Cross Entropy: 1.193809, Reg: 0.000000
+Elapsed time (s): 17.52187752723694
+Memory usage (GB): 0.6733627319335938
+Test: 5632/10000 (56%)	Loss: 1.252828, Cross Entropy: 1.252828, Reg: 0.000000
+Elapsed time (s): 17.744569540023804
+Memory usage (GB): 0.6733970642089844
+Test: 6144/10000 (61%)	Loss: 1.181832, Cross Entropy: 1.181832, Reg: 0.000000
+Elapsed time (s): 17.689214944839478
+Memory usage (GB): 0.6730422973632812
+Test: 6656/10000 (66%)	Loss: 1.284874, Cross Entropy: 1.284874, Reg: 0.000000
+Elapsed time (s): 17.757339239120483
+Memory usage (GB): 0.6734123229980469
+Test: 7168/10000 (71%)	Loss: 1.221809, Cross Entropy: 1.221809, Reg: 0.000000
+Elapsed time (s): 17.838155031204224
+Memory usage (GB): 0.7084312438964844
+Test: 7680/10000 (76%)	Loss: 1.201614, Cross Entropy: 1.201614, Reg: 0.000000
+Elapsed time (s): 18.00023579597473
+Memory usage (GB): 0.6731834411621094
+Test: 8192/10000 (81%)	Loss: 1.252728, Cross Entropy: 1.252728, Reg: 0.000000
+Elapsed time (s): 17.897342920303345
+Memory usage (GB): 0.6732521057128906
+Test: 8704/10000 (86%)	Loss: 1.171270, Cross Entropy: 1.171270, Reg: 0.000000
+Elapsed time (s): 17.734947204589844
+Memory usage (GB): 0.6732521057128906
+Test: 9216/10000 (91%)	Loss: 1.148282, Cross Entropy: 1.148282, Reg: 0.000000
+Elapsed time (s): 17.77216410636902
+Memory usage (GB): 0.6733970642089844
+Test: 9728/10000 (96%)	Loss: 1.324861, Cross Entropy: 1.324861, Reg: 0.000000
+Elapsed time (s): 17.646778345108032
+Memory usage (GB): 0.6732292175292969
+Test set: Average loss: 1.2499, Average cross entropy: 1.2499, Average reg: 0.0000, Accuracy: 9869/10000 (99%), Robust accuracy: 0/9869 (0%)
+
+wandb: Waiting for W&B process to finish... (success).
+wandb: - 0.002 MB of 0.002 MB uploaded (0.000 MB deduped)wandb: \ 0.002 MB of 0.018 MB uploaded (0.000 MB deduped)wandb: | 0.021 MB of 0.021 MB uploaded (0.000 MB deduped)wandb: / 0.021 MB of 0.021 MB uploaded (0.000 MB deduped)wandb: 
+wandb: Run history:
+wandb:         Accuracy ▁
+wandb:     Adv Accuracy ▁
+wandb:      Adv Correct ▁
+wandb: Adv Total Tested ▁
+wandb:          Avg Reg ▁
+wandb:          Correct ▁
+wandb:      Test Avg CE ▁
+wandb:        Test Loss ▁
+wandb:     Total Tested ▁
+wandb: 
+wandb: Run summary:
+wandb:         Accuracy 98.69
+wandb:     Adv Accuracy 0.0
+wandb:      Adv Correct 0
+wandb: Adv Total Tested 9869
+wandb:          Avg Reg 0.0
+wandb:          Correct 9869
+wandb:      Test Avg CE 1.24992
+wandb:        Test Loss 1.24992
+wandb:     Total Tested 10000
+wandb: 
+wandb: Synced feasible-sweep-15: https://wandb.ai/geometric_robustness/MNIST%20Attacks/runs/8oueb9na
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20221204_192116-8oueb9na/logs
+wandb: Sweep Agent: Waiting for job.
+wandb: Job received.
+wandb: Agent Starting Run: okydf6t7 with config:
+wandb: 	budget: 0.35
+wandb: 	model: parseval_1_8.pt
+wandb: Tracking run with wandb version 0.13.5
+wandb: Run data is saved locally in /home/loic/lsg/code/geometric_robustness/wandb/run-20221204_192723-okydf6t7
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run eternal-sweep-16
+wandb: ⭐️ View project at https://wandb.ai/geometric_robustness/MNIST%20Attacks
+wandb: 🧹 View sweep at https://wandb.ai/geometric_robustness/MNIST%20Attacks/sweeps/k8pg3xeo
+wandb: 🚀 View run at https://wandb.ai/geometric_robustness/MNIST%20Attacks/runs/okydf6t7
+Using cpu
+Using testing batch size for test loader
+Using testing batch size for train loader
+Loading weights
+Initialization done
+Start testing
+Using test loader
+Test: 0/10000 (0%)	Loss: 0.011365, Cross Entropy: 0.011365, Reg: 0.000000
+Elapsed time (s): 4.433730363845825
+Memory usage (GB): 0.6733741760253906
+Test: 512/10000 (5%)	Loss: 0.033166, Cross Entropy: 0.033166, Reg: 0.000000
+Elapsed time (s): 17.646684646606445
+Memory usage (GB): 0.6736335754394531
+Test: 1024/10000 (10%)	Loss: 0.042649, Cross Entropy: 0.042649, Reg: 0.000000
+Elapsed time (s): 17.55863094329834
+Memory usage (GB): 0.690643310546875
+Test: 1536/10000 (15%)	Loss: 0.052090, Cross Entropy: 0.052090, Reg: 0.000000
+Elapsed time (s): 17.355626106262207
+Memory usage (GB): 0.673492431640625
+Test: 2048/10000 (20%)	Loss: 0.097962, Cross Entropy: 0.097962, Reg: 0.000000
+Elapsed time (s): 17.508354425430298
+Memory usage (GB): 0.673248291015625
+Test: 2560/10000 (25%)	Loss: 0.057931, Cross Entropy: 0.057931, Reg: 0.000000
+Elapsed time (s): 17.731968879699707
+Memory usage (GB): 0.6736488342285156
+Test: 3072/10000 (30%)	Loss: 0.012199, Cross Entropy: 0.012199, Reg: 0.000000
+Elapsed time (s): 17.614661931991577
+Memory usage (GB): 0.6736488342285156
+Test: 3584/10000 (35%)	Loss: 0.025393, Cross Entropy: 0.025393, Reg: 0.000000
+Elapsed time (s): 17.639694452285767
+Memory usage (GB): 0.6737785339355469
+Test: 4096/10000 (41%)	Loss: 0.116414, Cross Entropy: 0.116414, Reg: 0.000000
+Elapsed time (s): 17.467337608337402
+Memory usage (GB): 0.6734733581542969
+Test: 4608/10000 (46%)	Loss: 0.054063, Cross Entropy: 0.054063, Reg: 0.000000
+Elapsed time (s): 17.613646745681763
+Memory usage (GB): 0.6735000610351562
+Test: 5120/10000 (51%)	Loss: 0.011147, Cross Entropy: 0.011147, Reg: 0.000000
+Elapsed time (s): 17.569956302642822
+Memory usage (GB): 0.6752586364746094
+Test: 5632/10000 (56%)	Loss: 0.033194, Cross Entropy: 0.033194, Reg: 0.000000
+Elapsed time (s): 17.69072699546814
+Memory usage (GB): 0.6754493713378906
+Test: 6144/10000 (61%)	Loss: 0.052013, Cross Entropy: 0.052013, Reg: 0.000000
+Elapsed time (s): 17.58883547782898
+Memory usage (GB): 0.6755905151367188
+Test: 6656/10000 (66%)	Loss: 0.024911, Cross Entropy: 0.024911, Reg: 0.000000
+Elapsed time (s): 17.533679246902466
+Memory usage (GB): 0.6758575439453125
+Test: 7168/10000 (71%)	Loss: 0.015503, Cross Entropy: 0.015503, Reg: 0.000000
+Elapsed time (s): 17.70237159729004
+Memory usage (GB): 0.6754417419433594
+Test: 7680/10000 (76%)	Loss: 0.001607, Cross Entropy: 0.001607, Reg: 0.000000
+Elapsed time (s): 17.787954568862915
+Memory usage (GB): 0.6757431030273438
+Test: 8192/10000 (81%)	Loss: 0.022443, Cross Entropy: 0.022443, Reg: 0.000000
+Elapsed time (s): 17.683492183685303
+Memory usage (GB): 0.6754188537597656
+Test: 8704/10000 (86%)	Loss: 0.001106, Cross Entropy: 0.001106, Reg: 0.000000
+Elapsed time (s): 17.71313214302063
+Memory usage (GB): 0.6753654479980469
+Test: 9216/10000 (91%)	Loss: 0.001630, Cross Entropy: 0.001630, Reg: 0.000000
+Elapsed time (s): 17.72203302383423
+Memory usage (GB): 0.6754722595214844
+Test: 9728/10000 (96%)	Loss: 0.050331, Cross Entropy: 0.050331, Reg: 0.000000
+Elapsed time (s): 17.656757354736328
+Memory usage (GB): 0.6754302978515625
+Test set: Average loss: 0.0401, Average cross entropy: 0.0401, Average reg: 0.0000, Accuracy: 9873/10000 (99%), Robust accuracy: 0/9873 (0%)
+
+wandb: Waiting for W&B process to finish... (success).
+wandb: 
+wandb: Run history:
+wandb:         Accuracy ▁
+wandb:     Adv Accuracy ▁
+wandb:      Adv Correct ▁
+wandb: Adv Total Tested ▁
+wandb:          Avg Reg ▁
+wandb:          Correct ▁
+wandb:      Test Avg CE ▁
+wandb:        Test Loss ▁
+wandb:     Total Tested ▁
+wandb: 
+wandb: Run summary:
+wandb:         Accuracy 98.73
+wandb:     Adv Accuracy 0.0
+wandb:      Adv Correct 0
+wandb: Adv Total Tested 9873
+wandb:          Avg Reg 0.0
+wandb:          Correct 9873
+wandb:      Test Avg CE 0.04011
+wandb:        Test Loss 0.04011
+wandb:     Total Tested 10000
+wandb: 
+wandb: Synced eternal-sweep-16: https://wandb.ai/geometric_robustness/MNIST%20Attacks/runs/okydf6t7
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20221204_192723-okydf6t7/logs
+wandb: Agent Starting Run: jje4om4f with config:
+wandb: 	budget: 0.4
+wandb: 	model: distill_1_baseline_4_8.pt
+wandb: Tracking run with wandb version 0.13.5
+wandb: Run data is saved locally in /home/loic/lsg/code/geometric_robustness/wandb/run-20221204_193321-jje4om4f
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run resilient-sweep-17
+wandb: ⭐️ View project at https://wandb.ai/geometric_robustness/MNIST%20Attacks
+wandb: 🧹 View sweep at https://wandb.ai/geometric_robustness/MNIST%20Attacks/sweeps/k8pg3xeo
+wandb: 🚀 View run at https://wandb.ai/geometric_robustness/MNIST%20Attacks/runs/jje4om4f
+Using cpu
+Using testing batch size for test loader
+Using testing batch size for train loader
+Loading weights
+Initialization done
+Start testing
+Using test loader
+Test: 0/10000 (0%)	Loss: 1.276220, Cross Entropy: 1.276220, Reg: 0.000000
+Elapsed time (s): 4.372698068618774
+Memory usage (GB): 0.6755867004394531
+Test: 512/10000 (5%)	Loss: 1.247200, Cross Entropy: 1.247200, Reg: 0.000000
+Elapsed time (s): 17.484074592590332
+Memory usage (GB): 0.6756668090820312
+Test: 1024/10000 (10%)	Loss: 1.263720, Cross Entropy: 1.263720, Reg: 0.000000
+Elapsed time (s): 17.36470079421997
+Memory usage (GB): 0.6757545471191406
+Test: 1536/10000 (15%)	Loss: 1.282346, Cross Entropy: 1.282346, Reg: 0.000000
+Elapsed time (s): 17.263739109039307
+Memory usage (GB): 0.7106819152832031
+Test: 2048/10000 (20%)	Loss: 1.261909, Cross Entropy: 1.261909, Reg: 0.000000
+Elapsed time (s): 17.329713106155396
+Memory usage (GB): 0.6757926940917969
+Test: 2560/10000 (25%)	Loss: 1.248531, Cross Entropy: 1.248531, Reg: 0.000000
+Elapsed time (s): 17.509695529937744
+Memory usage (GB): 0.6757888793945312
+Test: 3072/10000 (30%)	Loss: 1.247328, Cross Entropy: 1.247328, Reg: 0.000000
+Elapsed time (s): 17.323068857192993
+Memory usage (GB): 0.6757125854492188
+Test: 3584/10000 (35%)	Loss: 1.240305, Cross Entropy: 1.240305, Reg: 0.000000
+Elapsed time (s): 17.48096013069153
+Memory usage (GB): 0.6756401062011719
+Test: 4096/10000 (41%)	Loss: 1.291468, Cross Entropy: 1.291468, Reg: 0.000000
+Elapsed time (s): 17.475919246673584
+Memory usage (GB): 0.6756744384765625
+Test: 4608/10000 (46%)	Loss: 1.259709, Cross Entropy: 1.259709, Reg: 0.000000
+Elapsed time (s): 17.42377996444702
+Memory usage (GB): 0.6757278442382812
+Test: 5120/10000 (51%)	Loss: 1.193809, Cross Entropy: 1.193809, Reg: 0.000000
+Elapsed time (s): 17.43561053276062
+Memory usage (GB): 0.6757926940917969
+Test: 5632/10000 (56%)	Loss: 1.252828, Cross Entropy: 1.252828, Reg: 0.000000
+Elapsed time (s): 17.829877138137817
+Memory usage (GB): 0.6758766174316406
+Test: 6144/10000 (61%)	Loss: 1.181832, Cross Entropy: 1.181832, Reg: 0.000000
+Elapsed time (s): 17.562265157699585
+Memory usage (GB): 0.6758079528808594
+Test: 6656/10000 (66%)	Loss: 1.284874, Cross Entropy: 1.284874, Reg: 0.000000
+Elapsed time (s): 17.69622802734375
+Memory usage (GB): 0.6758079528808594
+Test: 7168/10000 (71%)	Loss: 1.221809, Cross Entropy: 1.221809, Reg: 0.000000
+Elapsed time (s): 17.87751078605652
+Memory usage (GB): 0.6757659912109375
+Test: 7680/10000 (76%)	Loss: 1.201614, Cross Entropy: 1.201614, Reg: 0.000000
+Elapsed time (s): 17.932146072387695
+Memory usage (GB): 0.6755104064941406
+Test: 8192/10000 (81%)	Loss: 1.252728, Cross Entropy: 1.252728, Reg: 0.000000
+Elapsed time (s): 17.942068338394165
+Memory usage (GB): 0.675811767578125
+Test: 8704/10000 (86%)	Loss: 1.171270, Cross Entropy: 1.171270, Reg: 0.000000
+Elapsed time (s): 17.781991720199585
+Memory usage (GB): 0.6757888793945312
+Test: 9216/10000 (91%)	Loss: 1.148282, Cross Entropy: 1.148282, Reg: 0.000000
+Elapsed time (s): 17.75839328765869
+Memory usage (GB): 0.7104988098144531
+Test: 9728/10000 (96%)	Loss: 1.324861, Cross Entropy: 1.324861, Reg: 0.000000
+Elapsed time (s): 17.614482402801514
+Memory usage (GB): 0.6756057739257812
+Test set: Average loss: 1.2499, Average cross entropy: 1.2499, Average reg: 0.0000, Accuracy: 9869/10000 (99%), Robust accuracy: 0/9869 (0%)
+
+wandb: Waiting for W&B process to finish... (success).
+wandb: - 0.002 MB of 0.002 MB uploaded (0.000 MB deduped)wandb: \ 0.002 MB of 0.021 MB uploaded (0.000 MB deduped)wandb: | 0.002 MB of 0.021 MB uploaded (0.000 MB deduped)wandb: 
+wandb: Run history:
+wandb:         Accuracy ▁
+wandb:     Adv Accuracy ▁
+wandb:      Adv Correct ▁
+wandb: Adv Total Tested ▁
+wandb:          Avg Reg ▁
+wandb:          Correct ▁
+wandb:      Test Avg CE ▁
+wandb:        Test Loss ▁
+wandb:     Total Tested ▁
+wandb: 
+wandb: Run summary:
+wandb:         Accuracy 98.69
+wandb:     Adv Accuracy 0.0
+wandb:      Adv Correct 0
+wandb: Adv Total Tested 9869
+wandb:          Avg Reg 0.0
+wandb:          Correct 9869
+wandb:      Test Avg CE 1.24992
+wandb:        Test Loss 1.24992
+wandb:     Total Tested 10000
+wandb: 
+wandb: Synced resilient-sweep-17: https://wandb.ai/geometric_robustness/MNIST%20Attacks/runs/jje4om4f
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20221204_193321-jje4om4f/logs
+wandb: Agent Starting Run: iqswik87 with config:
+wandb: 	budget: 0.4
+wandb: 	model: parseval_1_8.pt
+wandb: Tracking run with wandb version 0.13.5
+wandb: Run data is saved locally in /home/loic/lsg/code/geometric_robustness/wandb/run-20221204_193916-iqswik87
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run leafy-sweep-18
+wandb: ⭐️ View project at https://wandb.ai/geometric_robustness/MNIST%20Attacks
+wandb: 🧹 View sweep at https://wandb.ai/geometric_robustness/MNIST%20Attacks/sweeps/k8pg3xeo
+wandb: 🚀 View run at https://wandb.ai/geometric_robustness/MNIST%20Attacks/runs/iqswik87
+Using cpu
+Using testing batch size for test loader
+Using testing batch size for train loader
+Loading weights
+Initialization done
+Start testing
+Using test loader
+Test: 0/10000 (0%)	Loss: 0.011365, Cross Entropy: 0.011365, Reg: 0.000000
+Elapsed time (s): 4.4186224937438965
+Memory usage (GB): 0.675933837890625
+Test: 512/10000 (5%)	Loss: 0.033166, Cross Entropy: 0.033166, Reg: 0.000000
+Elapsed time (s): 17.54497504234314
+Memory usage (GB): 0.6760749816894531
+Test: 1024/10000 (10%)	Loss: 0.042649, Cross Entropy: 0.042649, Reg: 0.000000
+Elapsed time (s): 17.44269871711731
+Memory usage (GB): 0.6761970520019531
+Test: 1536/10000 (15%)	Loss: 0.052090, Cross Entropy: 0.052090, Reg: 0.000000
+Elapsed time (s): 17.301738739013672
+Memory usage (GB): 0.6760749816894531
+Test: 2048/10000 (20%)	Loss: 0.097962, Cross Entropy: 0.097962, Reg: 0.000000
+Elapsed time (s): 17.334880828857422
+Memory usage (GB): 0.6759872436523438
+Test: 2560/10000 (25%)	Loss: 0.057931, Cross Entropy: 0.057931, Reg: 0.000000
+Elapsed time (s): 17.43580460548401
+Memory usage (GB): 0.675933837890625
+Test: 3072/10000 (30%)	Loss: 0.012199, Cross Entropy: 0.012199, Reg: 0.000000
+Elapsed time (s): 17.416770935058594
+Memory usage (GB): 0.6758537292480469
+Test: 3584/10000 (35%)	Loss: 0.025393, Cross Entropy: 0.025393, Reg: 0.000000
+Elapsed time (s): 17.38470220565796
+Memory usage (GB): 0.6760368347167969
+Test: 4096/10000 (41%)	Loss: 0.116414, Cross Entropy: 0.116414, Reg: 0.000000
+Elapsed time (s): 17.19918727874756
+Memory usage (GB): 0.6758613586425781
+Test: 4608/10000 (46%)	Loss: 0.054063, Cross Entropy: 0.054063, Reg: 0.000000
+Elapsed time (s): 17.39770531654358
+Memory usage (GB): 0.6760101318359375
+Test: 5120/10000 (51%)	Loss: 0.011147, Cross Entropy: 0.011147, Reg: 0.000000
+Elapsed time (s): 17.413897275924683
+Memory usage (GB): 0.6761245727539062
+Test: 5632/10000 (56%)	Loss: 0.033194, Cross Entropy: 0.033194, Reg: 0.000000
+Elapsed time (s): 17.62535047531128
+Memory usage (GB): 0.675811767578125
+Test: 6144/10000 (61%)	Loss: 0.052013, Cross Entropy: 0.052013, Reg: 0.000000
+Elapsed time (s): 17.372439861297607
+Memory usage (GB): 0.6759262084960938
+Test: 6656/10000 (66%)	Loss: 0.024911, Cross Entropy: 0.024911, Reg: 0.000000
+Elapsed time (s): 17.521926403045654
+Memory usage (GB): 0.6759872436523438
+Test: 7168/10000 (71%)	Loss: 0.015503, Cross Entropy: 0.015503, Reg: 0.000000
+Elapsed time (s): 17.619569540023804
+Memory usage (GB): 0.6759910583496094
+Test: 7680/10000 (76%)	Loss: 0.001607, Cross Entropy: 0.001607, Reg: 0.000000
+Elapsed time (s): 17.585081577301025
+Memory usage (GB): 0.6761436462402344
+Test: 8192/10000 (81%)	Loss: 0.022443, Cross Entropy: 0.022443, Reg: 0.000000
+Elapsed time (s): 17.53647494316101
+Memory usage (GB): 0.6761550903320312
+Test: 8704/10000 (86%)	Loss: 0.001106, Cross Entropy: 0.001106, Reg: 0.000000
+Elapsed time (s): 17.573843479156494
+Memory usage (GB): 0.675933837890625
+Test: 9216/10000 (91%)	Loss: 0.001630, Cross Entropy: 0.001630, Reg: 0.000000
+Elapsed time (s): 17.69982361793518
+Memory usage (GB): 0.6758689880371094
+Test: 9728/10000 (96%)	Loss: 0.050331, Cross Entropy: 0.050331, Reg: 0.000000
+Elapsed time (s): 17.45982074737549
+Memory usage (GB): 0.6758270263671875
+Test set: Average loss: 0.0401, Average cross entropy: 0.0401, Average reg: 0.0000, Accuracy: 9873/10000 (99%), Robust accuracy: 0/9873 (0%)
+
+wandb: Waiting for W&B process to finish... (success).
+wandb: - 0.002 MB of 0.002 MB uploaded (0.000 MB deduped)wandb: \ 0.002 MB of 0.021 MB uploaded (0.000 MB deduped)wandb: | 0.002 MB of 0.021 MB uploaded (0.000 MB deduped)wandb: 
+wandb: Run history:
+wandb:         Accuracy ▁
+wandb:     Adv Accuracy ▁
+wandb:      Adv Correct ▁
+wandb: Adv Total Tested ▁
+wandb:          Avg Reg ▁
+wandb:          Correct ▁
+wandb:      Test Avg CE ▁
+wandb:        Test Loss ▁
+wandb:     Total Tested ▁
+wandb: 
+wandb: Run summary:
+wandb:         Accuracy 98.73
+wandb:     Adv Accuracy 0.0
+wandb:      Adv Correct 0
+wandb: Adv Total Tested 9873
+wandb:          Avg Reg 0.0
+wandb:          Correct 9873
+wandb:      Test Avg CE 0.04011
+wandb:        Test Loss 0.04011
+wandb:     Total Tested 10000
+wandb: 
+wandb: Synced leafy-sweep-18: https://wandb.ai/geometric_robustness/MNIST%20Attacks/runs/iqswik87
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20221204_193916-iqswik87/logs
+wandb: Sweep Agent: Waiting for job.
+wandb: Sweep Agent: Exiting.
