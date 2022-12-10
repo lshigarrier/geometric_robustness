@@ -1,3 +1,35 @@
+            elif i == 2:
+                # jacobian reg with medium eps
+                print('jac_13')
+                param['name'] = prefix + 'jac_13'
+                param['reg'] = True
+            elif i == 3:
+                # jacobian reg with small eps
+                print('jac_12')
+                param['name'] = prefix + 'jac_12'
+                param['epsilon'] = 0.1
+            elif i == 4:
+                # jacobian reg with large eps
+                print('jac_14')
+                param['name'] = prefix + 'jac_14'
+                param['epsilon'] = 8.4
+            elif i == 5:
+                # suppress max eigenvalue
+                print('max_eig_2')
+                param['name'] = prefix + 'max_eig_2'
+                param['max_eig'] = True
+                param['reg'] = False
+                param['eta'] = 0.1
+            elif i == 6:
+                # regularization only
+                print('only_reg_1')
+                param['name'] = prefix + 'only_reg_1'
+                param['only_reg'] = True
+                param['max_eig'] = False
+                param['eta'] = 0.03
+                
+------------------------------------------------------------------------------------------------------
+
 name       : jacobian/jac_13
 model      : teacher.pt
 reg_type   : jacobian

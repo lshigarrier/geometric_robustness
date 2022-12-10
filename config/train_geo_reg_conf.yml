@@ -1,4 +1,4 @@
-name       : jacobian/jac_13
+name       : jacobian/baseline_4
 model      : teacher.pt
 reg_type   : jacobian
 barrier    : relu
@@ -10,7 +10,7 @@ distill        : False
 parseval_train : False
 max_eig        : False
 only_reg       : False
-reg            : True
+reg            : False
 compute_reg    : True
 plot           : True
 loop           : True

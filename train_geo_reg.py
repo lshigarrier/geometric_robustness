@@ -7,6 +7,7 @@ import psutil
 import os
 
 from mnist_utils import load_yaml, initialize, moving_average
+from mnist_model import JacobianReg
 from test_geo_reg import test
 from attacks_utils import TorchAttackGaussianNoise, TorchAttackFGSM, TorchAttackPGD, TorchAttackPGDL2, TorchAttackDeepFool, TorchAttackCWL2
 from defense_utils import parseval_orthonormal_constraint
@@ -18,6 +19,7 @@ def train(param, model, reg_model, teacher_model, device, train_loader, optimize
     epoch_loss    = []
     epoch_entropy = []
     epoch_reg     = []
+    epoch_jac_reg = []
     epoch_norm    = []
     epoch_hold    = []
     epoch_frob    = []
@@ -32,9 +34,6 @@ def train(param, model, reg_model, teacher_model, device, train_loader, optimize
         # Push to GPU/CPU
         data, target = data.to(device), target.to(device)
 
-        # Ensure grad is on
-        data.requires_grad = True
-
         # Adversarial train
         if param['adv_train']:
             # Update attacker
@@ -44,12 +43,17 @@ def train(param, model, reg_model, teacher_model, device, train_loader, optimize
             # Generate attacks
             data = attack.perturb(data, target)
 
+        # Ensure grad is on
+        data.requires_grad = True
+
         # Forward pass
         output = model(data)
 
         # Compute regularization and norms
         if param['compute_reg']:
             reg, norm, norm_hold, norm_frob, bound = reg_model(data, output, device)
+            if param['reg_type'] == 'isometry':
+                jac_reg, norm, norm_hold, norm_frob, bound = JacobianReg(param['epsilon'], barrier=param['barrier'])(data, output, device)
         else:
             reg       = torch.tensor(0)
             norm      = torch.tensor(0)
@@ -133,6 +137,8 @@ def train(param, model, reg_model, teacher_model, device, train_loader, optimize
         epoch_loss.append(loss.item())
         epoch_entropy.append(entropy.item())
         epoch_reg.append(reg.item())
+        if param['reg_type'] == 'isometry':
+            epoch_jac_reg.append(jac_reg.item())
         epoch_norm.append(norm.item())
         epoch_hold.append(norm_hold.item())
         epoch_frob.append(norm_frob.item())
@@ -159,14 +165,14 @@ def train(param, model, reg_model, teacher_model, device, train_loader, optimize
             np.mean(epoch_loss), np.mean(epoch_entropy), np.mean(epoch_reg)))
 
     # Return results
-    return epoch_loss, epoch_entropy, epoch_reg, epoch_norm, epoch_hold, epoch_frob, epoch_bound
+    return epoch_loss, epoch_entropy, epoch_reg, epoch_jac_reg, epoch_norm, epoch_hold, epoch_frob, epoch_bound
 
 
 def training(param, device, train_loader, test_loader, model, reg_model, teacher_model, optimizer, attack=None):
     ## Initialize
     # ---------------------------------------------------------------------- #
     # Initiate variables
-    loss_list, entropy_list, reg_list = [], [], []
+    loss_list, entropy_list, reg_list, jac_reg_list = [], [], [], []
     norm_list, hold_list, frob_list, bound_list = [], [], [], []
     test_loss_list, test_entropy_list, test_reg_list = [], [], []
     # ---------------------------------------------------------------------- #
@@ -176,10 +182,10 @@ def training(param, device, train_loader, test_loader, model, reg_model, teacher
     for epoch in range(1, param['epochs'] + 1):
 
         # Train
-        epoch_loss, epoch_entropy, epoch_reg, epoch_norm, epoch_hold, epoch_frob, epoch_bound = train(param, model, reg_model, teacher_model, device, train_loader, optimizer, epoch, param['eta'], attack)
+        epoch_loss, epoch_entropy, epoch_reg, epoch_jac_reg, epoch_norm, epoch_hold, epoch_frob, epoch_bound = train(param, model, reg_model, teacher_model, device, train_loader, optimizer, epoch, param['eta'], attack)
 
         # Validate
-        test_loss, test_entropy, test_reg = test(param, model, reg_model, device, test_loader, param['eta'], attack=attack, train=True)
+        test_loss, test_entropy, test_reg, _ = test(param, model, reg_model, device, test_loader, param['eta'], attack=attack, train=True)
 
         # Checkpoint model weights
         if epoch % param['save_step'] == 0:
@@ -193,6 +199,7 @@ def training(param, device, train_loader, test_loader, model, reg_model, teacher
         hold_list    = [*hold_list, *epoch_hold]
         frob_list    = [*frob_list, *epoch_frob]
         bound_list   = [*bound_list, *epoch_bound]
+        jac_reg_list = [*jac_reg_list, *epoch_jac_reg]
 
         test_loss_list.append(test_loss)
         test_entropy_list.append(test_entropy)
@@ -206,6 +213,7 @@ def training(param, device, train_loader, test_loader, model, reg_model, teacher
     hold_list      = moving_average(hold_list, 50)
     frob_list      = moving_average(frob_list, 50)
     bound_list_avg = moving_average(bound_list, 50)
+    jac_reg_list   = moving_average(jac_reg_list, 50)
     if param['plot']:
         # Display plot
         figs = [
@@ -222,6 +230,8 @@ def training(param, device, train_loader, test_loader, model, reg_model, teacher
             plot_curves([test_entropy_list], [None], "Test Cross Entropy", "Epoch", "Cross Entropy"),
             plot_curves([test_reg_list], [None], "Test Regularization", "Epoch", "Regularization")
         ]
+        if param['reg_type'] == 'isometry':
+            figs.append(plot_curves([jac_reg_list], [None], "Jacobian regularization", "Batch", "Regularization"))
 
         return figs
     return None
@@ -301,6 +311,8 @@ def one_run(param):
                  "_test_entropy.png",
                  "_test_reg.png"
                  ]
+        if param['reg_type'] == 'isometry':
+            paths.append("_jac_reg.png")
         for i in range(len(figs)):
             figs[i].savefig(prefix+name+paths[i])
     #    plt.show()
@@ -315,10 +327,9 @@ def main():
 
     # Loop
     if param['loop']:
-        prefix = 'jacobian/'
-        # NO ADVERSARIAL TRAINING WHILE I CAN'T INSTALL TORCHATTACKS ON DORMAMMU
-        for i in range(2,7):
-            print('-' * 102)
+        prefix = param['reg_type'] + '/'
+        for i in range(13):
+            print('-' * 101)
             if i == 0:
                 print('baseline_4')
             if i == 1:
@@ -361,19 +372,43 @@ def main():
                 os.system('cp ./models/jacobian/baseline_4/00010.pt ./models/jacobian/distill_baseline_4/teacher.pt')
                 param['name'] = prefix + 'distill_2_baseline_4'
                 param['distill'] = True
-                param['max_eig'] = False
+                param['only_reg'] = False
             elif i == 8:
                 # Parseval network
                 print('parseval_2')
                 param['name'] = prefix + 'parseval_2'
                 param['parseval_train'] = True
                 param['distill'] = False
-            elif i == 8:
+            elif i == 9:
+                # isometry reg with medium eps
+                print('iso_10')
+                param['reg_type'] = 'isometry'
+                prefix = param['reg_type'] + '/'
+                param['name'] = prefix + 'iso_10'
+                param['reg'] = True
+                param['parseval_train'] = False
+                param['epsilon'] = 4.2
+                param['eta'] = 0.00001
+            elif i == 10:
+                # isometry reg with small eps
+                print('iso_9')
+                param['name'] = prefix + 'iso_9'
+                param['epsilon'] = 0.1
+            elif i == 11:
+                # isometry reg with large eps
+                print('iso_11')
+                param['name'] = prefix + 'iso_11'
+                param['epsilon'] = 8.4
+            elif i == 12:
                 # adversarial training
                 print('adv_train_1')
+                param['reg_type'] = 'jacobian'
+                prefix = param['reg_type'] + '/'
                 param['name'] = prefix + 'adv_train_1'
                 param['adv_train'] = True
                 param['reg'] = False
+                param['epsilon'] = 4.2
+                param['eta'] = 0.03
             one_run(param)
 
     else:

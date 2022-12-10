@@ -220,7 +220,7 @@ def test(param, model, reg_model, device, test_loader, eta, attack=None, train=F
         test_bound_robust = torch.cat(test_bound_robust, dim=0).flatten().tolist()
         test_bound_nonrobust = torch.cat(test_bound_nonrobust, dim=0).flatten().tolist()
         return test_bound, test_bound_robust, test_bound_nonrobust
-    return test_loss, test_entropy, test_reg
+    return test_loss, test_entropy, test_reg, adv_correct
 
 
 def one_run():
@@ -312,7 +312,9 @@ def one_run():
         _ = plot_hist(test_bound_robust, "Robust points", "Bound minus max singular value", "Number")
         _ = plot_hist(test_bound_nonrobust, "Non-robust points", "Bound minus max singular value", "Number")
     else:
-        test(param, model, reg_model, device, loader, param['eta'], attack)
+        _, _, _, adv_correct = test(param, model, reg_model, device, loader, param['eta'], attack)
+        with open('outputs/jacobian/robust_acc/'+param['model'][:-2]+'txt', 'a') as file:
+            file.write(str(adv_correct)+'\n')
 
     if param['plot']:
         plt.show()
