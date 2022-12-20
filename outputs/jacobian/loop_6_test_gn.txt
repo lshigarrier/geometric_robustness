@@ -1,0 +1,621 @@
+Create sweep with ID: iyysx7gq
+Sweep URL: https://wandb.ai/geometric_robustness/MNIST%20Attacks/sweeps/iyysx7gq
+wandb: Agent Starting Run: 63dar2hz with config:
+wandb: 	budget: 0
+wandb: Currently logged in as: lshigarrier (geometric_robustness). Use `wandb login --relogin` to force relogin
+wandb: wandb version 0.13.6 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.13.5
+wandb: Run data is saved locally in /home/loic/lsg/code/geometric_robustness/wandb/run-20221211_115803-63dar2hz
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run rare-sweep-1
+wandb: ⭐️ View project at https://wandb.ai/geometric_robustness/MNIST%20Attacks
+wandb: 🧹 View sweep at https://wandb.ai/geometric_robustness/MNIST%20Attacks/sweeps/iyysx7gq
+wandb: 🚀 View run at https://wandb.ai/geometric_robustness/MNIST%20Attacks/runs/63dar2hz
+Using cpu
+Using testing batch size for test loader
+Using testing batch size for train loader
+Loading weights
+Initialization done
+Start testing
+Using test loader
+Test: 0/10000 (0%)	Loss: 0.006021, Cross Entropy: 0.006021, Reg: 0.000000
+Elapsed time (s): 0.07854151725769043
+Memory usage (GB): 0.45319366455078125
+Test: 3840/10000 (38%)	Loss: 0.029782, Cross Entropy: 0.029782, Reg: 0.000000
+Elapsed time (s): 2.3662023544311523
+Memory usage (GB): 0.5398063659667969
+Test: 7680/10000 (76%)	Loss: 0.001749, Cross Entropy: 0.001749, Reg: 0.000000
+Elapsed time (s): 2.3538990020751953
+Memory usage (GB): 0.5231475830078125
+Test set: Average loss: 0.0284, Average cross entropy: 0.0284, Average reg: 0.0000, Accuracy: 9898/10000 (99%), Robust accuracy: 9898/9898 (100%)
+
+wandb: Waiting for W&B process to finish... (success).
+wandb: 
+wandb: Run history:
+wandb:         Accuracy ▁
+wandb:     Adv Accuracy ▁
+wandb:      Adv Correct ▁
+wandb: Adv Total Tested ▁
+wandb:          Avg Reg ▁
+wandb:          Correct ▁
+wandb:      Test Avg CE ▁
+wandb:        Test Loss ▁
+wandb:     Total Tested ▁
+wandb: 
+wandb: Run summary:
+wandb:         Accuracy 98.98
+wandb:     Adv Accuracy 100.0
+wandb:      Adv Correct 9898
+wandb: Adv Total Tested 9898
+wandb:          Avg Reg 0.0
+wandb:          Correct 9898
+wandb:      Test Avg CE 0.0284
+wandb:        Test Loss 0.0284
+wandb:     Total Tested 10000
+wandb: 
+wandb: Synced rare-sweep-1: https://wandb.ai/geometric_robustness/MNIST%20Attacks/runs/63dar2hz
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20221211_115803-63dar2hz/logs
+wandb: Agent Starting Run: pt5e8ggf with config:
+wandb: 	budget: 0.15
+wandb: wandb version 0.13.6 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.13.5
+wandb: Run data is saved locally in /home/loic/lsg/code/geometric_robustness/wandb/run-20221211_115824-pt5e8ggf
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run solar-sweep-2
+wandb: ⭐️ View project at https://wandb.ai/geometric_robustness/MNIST%20Attacks
+wandb: 🧹 View sweep at https://wandb.ai/geometric_robustness/MNIST%20Attacks/sweeps/iyysx7gq
+wandb: 🚀 View run at https://wandb.ai/geometric_robustness/MNIST%20Attacks/runs/pt5e8ggf
+Using cpu
+Using testing batch size for test loader
+Using testing batch size for train loader
+Loading weights
+Initialization done
+Start testing
+Using test loader
+Test: 0/10000 (0%)	Loss: 0.006021, Cross Entropy: 0.006021, Reg: 0.000000
+Elapsed time (s): 0.08275389671325684
+Memory usage (GB): 0.5598068237304688
+Test: 3840/10000 (38%)	Loss: 0.029782, Cross Entropy: 0.029782, Reg: 0.000000
+Elapsed time (s): 2.2788236141204834
+Memory usage (GB): 0.5951423645019531
+Test: 7680/10000 (76%)	Loss: 0.001749, Cross Entropy: 0.001749, Reg: 0.000000
+Elapsed time (s): 2.277616262435913
+Memory usage (GB): 0.5949249267578125
+Test set: Average loss: 0.0284, Average cross entropy: 0.0284, Average reg: 0.0000, Accuracy: 9898/10000 (99%), Robust accuracy: 9880/9898 (100%)
+
+wandb: Waiting for W&B process to finish... (success).
+wandb: 
+wandb: Run history:
+wandb:         Accuracy ▁
+wandb:     Adv Accuracy ▁
+wandb:      Adv Correct ▁
+wandb: Adv Total Tested ▁
+wandb:          Avg Reg ▁
+wandb:          Correct ▁
+wandb:      Test Avg CE ▁
+wandb:        Test Loss ▁
+wandb:     Total Tested ▁
+wandb: 
+wandb: Run summary:
+wandb:         Accuracy 98.98
+wandb:     Adv Accuracy 99.81815
+wandb:      Adv Correct 9880
+wandb: Adv Total Tested 9898
+wandb:          Avg Reg 0.0
+wandb:          Correct 9898
+wandb:      Test Avg CE 0.0284
+wandb:        Test Loss 0.0284
+wandb:     Total Tested 10000
+wandb: 
+wandb: Synced solar-sweep-2: https://wandb.ai/geometric_robustness/MNIST%20Attacks/runs/pt5e8ggf
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20221211_115824-pt5e8ggf/logs
+wandb: Agent Starting Run: 7eiab7nz with config:
+wandb: 	budget: 0.3
+wandb: wandb version 0.13.6 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.13.5
+wandb: Run data is saved locally in /home/loic/lsg/code/geometric_robustness/wandb/run-20221211_115845-7eiab7nz
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run solar-sweep-3
+wandb: ⭐️ View project at https://wandb.ai/geometric_robustness/MNIST%20Attacks
+wandb: 🧹 View sweep at https://wandb.ai/geometric_robustness/MNIST%20Attacks/sweeps/iyysx7gq
+wandb: 🚀 View run at https://wandb.ai/geometric_robustness/MNIST%20Attacks/runs/7eiab7nz
+Using cpu
+Using testing batch size for test loader
+Using testing batch size for train loader
+Loading weights
+Initialization done
+Start testing
+Using test loader
+Test: 0/10000 (0%)	Loss: 0.006021, Cross Entropy: 0.006021, Reg: 0.000000
+Elapsed time (s): 0.07621526718139648
+Memory usage (GB): 0.5213356018066406
+Test: 3840/10000 (38%)	Loss: 0.029782, Cross Entropy: 0.029782, Reg: 0.000000
+Elapsed time (s): 2.331408977508545
+Memory usage (GB): 0.5386772155761719
+Test: 7680/10000 (76%)	Loss: 0.001749, Cross Entropy: 0.001749, Reg: 0.000000
+Elapsed time (s): 2.325723648071289
+Memory usage (GB): 0.5386543273925781
+Test set: Average loss: 0.0284, Average cross entropy: 0.0284, Average reg: 0.0000, Accuracy: 9898/10000 (99%), Robust accuracy: 9488/9898 (96%)
+
+wandb: Waiting for W&B process to finish... (success).
+wandb: 
+wandb: Run history:
+wandb:         Accuracy ▁
+wandb:     Adv Accuracy ▁
+wandb:      Adv Correct ▁
+wandb: Adv Total Tested ▁
+wandb:          Avg Reg ▁
+wandb:          Correct ▁
+wandb:      Test Avg CE ▁
+wandb:        Test Loss ▁
+wandb:     Total Tested ▁
+wandb: 
+wandb: Run summary:
+wandb:         Accuracy 98.98
+wandb:     Adv Accuracy 95.85775
+wandb:      Adv Correct 9488
+wandb: Adv Total Tested 9898
+wandb:          Avg Reg 0.0
+wandb:          Correct 9898
+wandb:      Test Avg CE 0.0284
+wandb:        Test Loss 0.0284
+wandb:     Total Tested 10000
+wandb: 
+wandb: Synced solar-sweep-3: https://wandb.ai/geometric_robustness/MNIST%20Attacks/runs/7eiab7nz
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20221211_115845-7eiab7nz/logs
+wandb: Agent Starting Run: lgn47en2 with config:
+wandb: 	budget: 0.45
+wandb: wandb version 0.13.6 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.13.5
+wandb: Run data is saved locally in /home/loic/lsg/code/geometric_robustness/wandb/run-20221211_115907-lgn47en2
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run peachy-sweep-4
+wandb: ⭐️ View project at https://wandb.ai/geometric_robustness/MNIST%20Attacks
+wandb: 🧹 View sweep at https://wandb.ai/geometric_robustness/MNIST%20Attacks/sweeps/iyysx7gq
+wandb: 🚀 View run at https://wandb.ai/geometric_robustness/MNIST%20Attacks/runs/lgn47en2
+Using cpu
+Using testing batch size for test loader
+Using testing batch size for train loader
+Loading weights
+Initialization done
+Start testing
+Using test loader
+Test: 0/10000 (0%)	Loss: 0.006021, Cross Entropy: 0.006021, Reg: 0.000000
+Elapsed time (s): 0.09734654426574707
+Memory usage (GB): 0.5391921997070312
+Test: 3840/10000 (38%)	Loss: 0.029782, Cross Entropy: 0.029782, Reg: 0.000000
+Elapsed time (s): 2.3511266708374023
+Memory usage (GB): 0.5391921997070312
+Test: 7680/10000 (76%)	Loss: 0.001749, Cross Entropy: 0.001749, Reg: 0.000000
+Elapsed time (s): 2.3018815517425537
+Memory usage (GB): 0.5391693115234375
+Test set: Average loss: 0.0284, Average cross entropy: 0.0284, Average reg: 0.0000, Accuracy: 9898/10000 (99%), Robust accuracy: 6011/9898 (61%)
+
+wandb: Waiting for W&B process to finish... (success).
+wandb: 
+wandb: Run history:
+wandb:         Accuracy ▁
+wandb:     Adv Accuracy ▁
+wandb:      Adv Correct ▁
+wandb: Adv Total Tested ▁
+wandb:          Avg Reg ▁
+wandb:          Correct ▁
+wandb:      Test Avg CE ▁
+wandb:        Test Loss ▁
+wandb:     Total Tested ▁
+wandb: 
+wandb: Run summary:
+wandb:         Accuracy 98.98
+wandb:     Adv Accuracy 60.72944
+wandb:      Adv Correct 6011
+wandb: Adv Total Tested 9898
+wandb:          Avg Reg 0.0
+wandb:          Correct 9898
+wandb:      Test Avg CE 0.0284
+wandb:        Test Loss 0.0284
+wandb:     Total Tested 10000
+wandb: 
+wandb: Synced peachy-sweep-4: https://wandb.ai/geometric_robustness/MNIST%20Attacks/runs/lgn47en2
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20221211_115907-lgn47en2/logs
+wandb: Agent Starting Run: 1r2jlgpj with config:
+wandb: 	budget: 0.6
+wandb: wandb version 0.13.6 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.13.5
+wandb: Run data is saved locally in /home/loic/lsg/code/geometric_robustness/wandb/run-20221211_115927-1r2jlgpj
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run vivid-sweep-5
+wandb: ⭐️ View project at https://wandb.ai/geometric_robustness/MNIST%20Attacks
+wandb: 🧹 View sweep at https://wandb.ai/geometric_robustness/MNIST%20Attacks/sweeps/iyysx7gq
+wandb: 🚀 View run at https://wandb.ai/geometric_robustness/MNIST%20Attacks/runs/1r2jlgpj
+Using cpu
+Using testing batch size for test loader
+Using testing batch size for train loader
+Loading weights
+Initialization done
+Start testing
+Using test loader
+Test: 0/10000 (0%)	Loss: 0.006021, Cross Entropy: 0.006021, Reg: 0.000000
+Elapsed time (s): 0.07335329055786133
+Memory usage (GB): 0.5515861511230469
+Test: 3840/10000 (38%)	Loss: 0.029782, Cross Entropy: 0.029782, Reg: 0.000000
+Elapsed time (s): 2.3212790489196777
+Memory usage (GB): 0.5519180297851562
+Test: 7680/10000 (76%)	Loss: 0.001749, Cross Entropy: 0.001749, Reg: 0.000000
+Elapsed time (s): 2.4669666290283203
+Memory usage (GB): 0.5517349243164062
+Test set: Average loss: 0.0284, Average cross entropy: 0.0284, Average reg: 0.0000, Accuracy: 9898/10000 (99%), Robust accuracy: 3054/9898 (31%)
+
+wandb: Waiting for W&B process to finish... (success).
+wandb: 
+wandb: Run history:
+wandb:         Accuracy ▁
+wandb:     Adv Accuracy ▁
+wandb:      Adv Correct ▁
+wandb: Adv Total Tested ▁
+wandb:          Avg Reg ▁
+wandb:          Correct ▁
+wandb:      Test Avg CE ▁
+wandb:        Test Loss ▁
+wandb:     Total Tested ▁
+wandb: 
+wandb: Run summary:
+wandb:         Accuracy 98.98
+wandb:     Adv Accuracy 30.85472
+wandb:      Adv Correct 3054
+wandb: Adv Total Tested 9898
+wandb:          Avg Reg 0.0
+wandb:          Correct 9898
+wandb:      Test Avg CE 0.0284
+wandb:        Test Loss 0.0284
+wandb:     Total Tested 10000
+wandb: 
+wandb: Synced vivid-sweep-5: https://wandb.ai/geometric_robustness/MNIST%20Attacks/runs/1r2jlgpj
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20221211_115927-1r2jlgpj/logs
+wandb: Agent Starting Run: x9h47u52 with config:
+wandb: 	budget: 0.75
+wandb: wandb version 0.13.6 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.13.5
+wandb: Run data is saved locally in /home/loic/lsg/code/geometric_robustness/wandb/run-20221211_115948-x9h47u52
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run scarlet-sweep-6
+wandb: ⭐️ View project at https://wandb.ai/geometric_robustness/MNIST%20Attacks
+wandb: 🧹 View sweep at https://wandb.ai/geometric_robustness/MNIST%20Attacks/sweeps/iyysx7gq
+wandb: 🚀 View run at https://wandb.ai/geometric_robustness/MNIST%20Attacks/runs/x9h47u52
+Using cpu
+Using testing batch size for test loader
+Using testing batch size for train loader
+Loading weights
+Initialization done
+Start testing
+Using test loader
+Test: 0/10000 (0%)	Loss: 0.006021, Cross Entropy: 0.006021, Reg: 0.000000
+Elapsed time (s): 0.09347414970397949
+Memory usage (GB): 0.5478973388671875
+Test: 3840/10000 (38%)	Loss: 0.029782, Cross Entropy: 0.029782, Reg: 0.000000
+Elapsed time (s): 2.733797788619995
+Memory usage (GB): 0.5560989379882812
+Test: 7680/10000 (76%)	Loss: 0.001749, Cross Entropy: 0.001749, Reg: 0.000000
+Elapsed time (s): 2.612429618835449
+Memory usage (GB): 0.5560569763183594
+Test set: Average loss: 0.0284, Average cross entropy: 0.0284, Average reg: 0.0000, Accuracy: 9898/10000 (99%), Robust accuracy: 1727/9898 (17%)
+
+wandb: Waiting for W&B process to finish... (success).
+wandb: - 0.002 MB of 0.002 MB uploaded (0.000 MB deduped)wandb: \ 0.002 MB of 0.002 MB uploaded (0.000 MB deduped)wandb: 
+wandb: Run history:
+wandb:         Accuracy ▁
+wandb:     Adv Accuracy ▁
+wandb:      Adv Correct ▁
+wandb: Adv Total Tested ▁
+wandb:          Avg Reg ▁
+wandb:          Correct ▁
+wandb:      Test Avg CE ▁
+wandb:        Test Loss ▁
+wandb:     Total Tested ▁
+wandb: 
+wandb: Run summary:
+wandb:         Accuracy 98.98
+wandb:     Adv Accuracy 17.44797
+wandb:      Adv Correct 1727
+wandb: Adv Total Tested 9898
+wandb:          Avg Reg 0.0
+wandb:          Correct 9898
+wandb:      Test Avg CE 0.0284
+wandb:        Test Loss 0.0284
+wandb:     Total Tested 10000
+wandb: 
+wandb: Synced scarlet-sweep-6: https://wandb.ai/geometric_robustness/MNIST%20Attacks/runs/x9h47u52
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20221211_115948-x9h47u52/logs
+wandb: Agent Starting Run: 6t8nd8jj with config:
+wandb: 	budget: 0.9
+wandb: wandb version 0.13.6 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.13.5
+wandb: Run data is saved locally in /home/loic/lsg/code/geometric_robustness/wandb/run-20221211_120010-6t8nd8jj
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run polished-sweep-7
+wandb: ⭐️ View project at https://wandb.ai/geometric_robustness/MNIST%20Attacks
+wandb: 🧹 View sweep at https://wandb.ai/geometric_robustness/MNIST%20Attacks/sweeps/iyysx7gq
+wandb: 🚀 View run at https://wandb.ai/geometric_robustness/MNIST%20Attacks/runs/6t8nd8jj
+Using cpu
+Using testing batch size for test loader
+Using testing batch size for train loader
+Loading weights
+Initialization done
+Start testing
+Using test loader
+Test: 0/10000 (0%)	Loss: 0.006021, Cross Entropy: 0.006021, Reg: 0.000000
+Elapsed time (s): 0.07554054260253906
+Memory usage (GB): 0.5570449829101562
+Test: 3840/10000 (38%)	Loss: 0.029782, Cross Entropy: 0.029782, Reg: 0.000000
+Elapsed time (s): 2.4145219326019287
+Memory usage (GB): 0.5911674499511719
+Test: 7680/10000 (76%)	Loss: 0.001749, Cross Entropy: 0.001749, Reg: 0.000000
+Elapsed time (s): 2.419867753982544
+Memory usage (GB): 0.5743560791015625
+Test set: Average loss: 0.0284, Average cross entropy: 0.0284, Average reg: 0.0000, Accuracy: 9898/10000 (99%), Robust accuracy: 1258/9898 (13%)
+
+wandb: Waiting for W&B process to finish... (success).
+wandb: - 0.002 MB of 0.002 MB uploaded (0.000 MB deduped)wandb: \ 0.002 MB of 0.018 MB uploaded (0.000 MB deduped)wandb: | 0.002 MB of 0.018 MB uploaded (0.000 MB deduped)wandb: 
+wandb: Run history:
+wandb:         Accuracy ▁
+wandb:     Adv Accuracy ▁
+wandb:      Adv Correct ▁
+wandb: Adv Total Tested ▁
+wandb:          Avg Reg ▁
+wandb:          Correct ▁
+wandb:      Test Avg CE ▁
+wandb:        Test Loss ▁
+wandb:     Total Tested ▁
+wandb: 
+wandb: Run summary:
+wandb:         Accuracy 98.98
+wandb:     Adv Accuracy 12.70964
+wandb:      Adv Correct 1258
+wandb: Adv Total Tested 9898
+wandb:          Avg Reg 0.0
+wandb:          Correct 9898
+wandb:      Test Avg CE 0.0284
+wandb:        Test Loss 0.0284
+wandb:     Total Tested 10000
+wandb: 
+wandb: Synced polished-sweep-7: https://wandb.ai/geometric_robustness/MNIST%20Attacks/runs/6t8nd8jj
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20221211_120010-6t8nd8jj/logs
+wandb: Agent Starting Run: q1g0lg8n with config:
+wandb: 	budget: 1.05
+wandb: wandb version 0.13.6 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.13.5
+wandb: Run data is saved locally in /home/loic/lsg/code/geometric_robustness/wandb/run-20221211_120030-q1g0lg8n
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run unique-sweep-8
+wandb: ⭐️ View project at https://wandb.ai/geometric_robustness/MNIST%20Attacks
+wandb: 🧹 View sweep at https://wandb.ai/geometric_robustness/MNIST%20Attacks/sweeps/iyysx7gq
+wandb: 🚀 View run at https://wandb.ai/geometric_robustness/MNIST%20Attacks/runs/q1g0lg8n
+Using cpu
+Using testing batch size for test loader
+Using testing batch size for train loader
+Loading weights
+Initialization done
+Start testing
+Using test loader
+Test: 0/10000 (0%)	Loss: 0.006021, Cross Entropy: 0.006021, Reg: 0.000000
+Elapsed time (s): 0.07979083061218262
+Memory usage (GB): 0.6057777404785156
+Test: 3840/10000 (38%)	Loss: 0.029782, Cross Entropy: 0.029782, Reg: 0.000000
+Elapsed time (s): 2.5831997394561768
+Memory usage (GB): 0.5742721557617188
+Test: 7680/10000 (76%)	Loss: 0.001749, Cross Entropy: 0.001749, Reg: 0.000000
+Elapsed time (s): 2.520075559616089
+Memory usage (GB): 0.5740013122558594
+Test set: Average loss: 0.0284, Average cross entropy: 0.0284, Average reg: 0.0000, Accuracy: 9898/10000 (99%), Robust accuracy: 1117/9898 (11%)
+
+wandb: Waiting for W&B process to finish... (success).
+wandb: - 0.002 MB of 0.002 MB uploaded (0.000 MB deduped)wandb: \ 0.002 MB of 0.002 MB uploaded (0.000 MB deduped)wandb: 
+wandb: Run history:
+wandb:         Accuracy ▁
+wandb:     Adv Accuracy ▁
+wandb:      Adv Correct ▁
+wandb: Adv Total Tested ▁
+wandb:          Avg Reg ▁
+wandb:          Correct ▁
+wandb:      Test Avg CE ▁
+wandb:        Test Loss ▁
+wandb:     Total Tested ▁
+wandb: 
+wandb: Run summary:
+wandb:         Accuracy 98.98
+wandb:     Adv Accuracy 11.28511
+wandb:      Adv Correct 1117
+wandb: Adv Total Tested 9898
+wandb:          Avg Reg 0.0
+wandb:          Correct 9898
+wandb:      Test Avg CE 0.0284
+wandb:        Test Loss 0.0284
+wandb:     Total Tested 10000
+wandb: 
+wandb: Synced unique-sweep-8: https://wandb.ai/geometric_robustness/MNIST%20Attacks/runs/q1g0lg8n
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20221211_120030-q1g0lg8n/logs
+wandb: Agent Starting Run: lxeswg8z with config:
+wandb: 	budget: 1.2
+wandb: wandb version 0.13.6 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.13.5
+wandb: Run data is saved locally in /home/loic/lsg/code/geometric_robustness/wandb/run-20221211_120052-lxeswg8z
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run comfy-sweep-9
+wandb: ⭐️ View project at https://wandb.ai/geometric_robustness/MNIST%20Attacks
+wandb: 🧹 View sweep at https://wandb.ai/geometric_robustness/MNIST%20Attacks/sweeps/iyysx7gq
+wandb: 🚀 View run at https://wandb.ai/geometric_robustness/MNIST%20Attacks/runs/lxeswg8z
+Using cpu
+Using testing batch size for test loader
+Using testing batch size for train loader
+Loading weights
+Initialization done
+Start testing
+Using test loader
+Test: 0/10000 (0%)	Loss: 0.006021, Cross Entropy: 0.006021, Reg: 0.000000
+Elapsed time (s): 0.10378217697143555
+Memory usage (GB): 0.5705642700195312
+Test: 3840/10000 (38%)	Loss: 0.029782, Cross Entropy: 0.029782, Reg: 0.000000
+Elapsed time (s): 2.790421485900879
+Memory usage (GB): 0.5571975708007812
+Test: 7680/10000 (76%)	Loss: 0.001749, Cross Entropy: 0.001749, Reg: 0.000000
+Elapsed time (s): 2.519765853881836
+Memory usage (GB): 0.6226577758789062
+Test set: Average loss: 0.0284, Average cross entropy: 0.0284, Average reg: 0.0000, Accuracy: 9898/10000 (99%), Robust accuracy: 1042/9898 (11%)
+
+wandb: Waiting for W&B process to finish... (success).
+wandb: - 0.002 MB of 0.002 MB uploaded (0.000 MB deduped)wandb: \ 0.002 MB of 0.002 MB uploaded (0.000 MB deduped)wandb: 
+wandb: Run history:
+wandb:         Accuracy ▁
+wandb:     Adv Accuracy ▁
+wandb:      Adv Correct ▁
+wandb: Adv Total Tested ▁
+wandb:          Avg Reg ▁
+wandb:          Correct ▁
+wandb:      Test Avg CE ▁
+wandb:        Test Loss ▁
+wandb:     Total Tested ▁
+wandb: 
+wandb: Run summary:
+wandb:         Accuracy 98.98
+wandb:     Adv Accuracy 10.52738
+wandb:      Adv Correct 1042
+wandb: Adv Total Tested 9898
+wandb:          Avg Reg 0.0
+wandb:          Correct 9898
+wandb:      Test Avg CE 0.0284
+wandb:        Test Loss 0.0284
+wandb:     Total Tested 10000
+wandb: 
+wandb: Synced comfy-sweep-9: https://wandb.ai/geometric_robustness/MNIST%20Attacks/runs/lxeswg8z
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20221211_120052-lxeswg8z/logs
+wandb: Agent Starting Run: tivxmolo with config:
+wandb: 	budget: 1.35
+wandb: wandb version 0.13.6 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.13.5
+wandb: Run data is saved locally in /home/loic/lsg/code/geometric_robustness/wandb/run-20221211_120113-tivxmolo
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run vital-sweep-10
+wandb: ⭐️ View project at https://wandb.ai/geometric_robustness/MNIST%20Attacks
+wandb: 🧹 View sweep at https://wandb.ai/geometric_robustness/MNIST%20Attacks/sweeps/iyysx7gq
+wandb: 🚀 View run at https://wandb.ai/geometric_robustness/MNIST%20Attacks/runs/tivxmolo
+Using cpu
+Using testing batch size for test loader
+Using testing batch size for train loader
+Loading weights
+Initialization done
+Start testing
+Using test loader
+Test: 0/10000 (0%)	Loss: 0.006021, Cross Entropy: 0.006021, Reg: 0.000000
+Elapsed time (s): 0.08945608139038086
+Memory usage (GB): 0.6173057556152344
+Test: 3840/10000 (38%)	Loss: 0.029782, Cross Entropy: 0.029782, Reg: 0.000000
+Elapsed time (s): 2.793957471847534
+Memory usage (GB): 0.6174697875976562
+Test: 7680/10000 (76%)	Loss: 0.001749, Cross Entropy: 0.001749, Reg: 0.000000
+Elapsed time (s): 2.7410855293273926
+Memory usage (GB): 0.6171951293945312
+Test set: Average loss: 0.0284, Average cross entropy: 0.0284, Average reg: 0.0000, Accuracy: 9898/10000 (99%), Robust accuracy: 1003/9898 (10%)
+
+wandb: Waiting for W&B process to finish... (success).
+wandb: - 0.002 MB of 0.006 MB uploaded (0.000 MB deduped)wandb: \ 0.002 MB of 0.006 MB uploaded (0.000 MB deduped)wandb: 
+wandb: Run history:
+wandb:         Accuracy ▁
+wandb:     Adv Accuracy ▁
+wandb:      Adv Correct ▁
+wandb: Adv Total Tested ▁
+wandb:          Avg Reg ▁
+wandb:          Correct ▁
+wandb:      Test Avg CE ▁
+wandb:        Test Loss ▁
+wandb:     Total Tested ▁
+wandb: 
+wandb: Run summary:
+wandb:         Accuracy 98.98
+wandb:     Adv Accuracy 10.13336
+wandb:      Adv Correct 1003
+wandb: Adv Total Tested 9898
+wandb:          Avg Reg 0.0
+wandb:          Correct 9898
+wandb:      Test Avg CE 0.0284
+wandb:        Test Loss 0.0284
+wandb:     Total Tested 10000
+wandb: 
+wandb: Synced vital-sweep-10: https://wandb.ai/geometric_robustness/MNIST%20Attacks/runs/tivxmolo
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20221211_120113-tivxmolo/logs
+wandb: Agent Starting Run: hsnzieyr with config:
+wandb: 	budget: 1.5
+wandb: wandb version 0.13.6 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.13.5
+wandb: Run data is saved locally in /home/loic/lsg/code/geometric_robustness/wandb/run-20221211_120134-hsnzieyr
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run faithful-sweep-11
+wandb: ⭐️ View project at https://wandb.ai/geometric_robustness/MNIST%20Attacks
+wandb: 🧹 View sweep at https://wandb.ai/geometric_robustness/MNIST%20Attacks/sweeps/iyysx7gq
+wandb: 🚀 View run at https://wandb.ai/geometric_robustness/MNIST%20Attacks/runs/hsnzieyr
+Using cpu
+Using testing batch size for test loader
+Using testing batch size for train loader
+Loading weights
+Initialization done
+Start testing
+Using test loader
+Test: 0/10000 (0%)	Loss: 0.006021, Cross Entropy: 0.006021, Reg: 0.000000
+Elapsed time (s): 0.07884359359741211
+Memory usage (GB): 0.61737060546875
+Test: 3840/10000 (38%)	Loss: 0.029782, Cross Entropy: 0.029782, Reg: 0.000000
+Elapsed time (s): 2.526040554046631
+Memory usage (GB): 0.6174430847167969
+Test: 7680/10000 (76%)	Loss: 0.001749, Cross Entropy: 0.001749, Reg: 0.000000
+Elapsed time (s): 2.528869867324829
+Memory usage (GB): 0.6172447204589844
+Test set: Average loss: 0.0284, Average cross entropy: 0.0284, Average reg: 0.0000, Accuracy: 9898/10000 (99%), Robust accuracy: 986/9898 (10%)
+
+wandb: Waiting for W&B process to finish... (success).
+wandb: - 0.002 MB of 0.002 MB uploaded (0.000 MB deduped)wandb: \ 0.002 MB of 0.019 MB uploaded (0.000 MB deduped)wandb: | 0.002 MB of 0.019 MB uploaded (0.000 MB deduped)wandb: 
+wandb: Run history:
+wandb:         Accuracy ▁
+wandb:     Adv Accuracy ▁
+wandb:      Adv Correct ▁
+wandb: Adv Total Tested ▁
+wandb:          Avg Reg ▁
+wandb:          Correct ▁
+wandb:      Test Avg CE ▁
+wandb:        Test Loss ▁
+wandb:     Total Tested ▁
+wandb: 
+wandb: Run summary:
+wandb:         Accuracy 98.98
+wandb:     Adv Accuracy 9.96161
+wandb:      Adv Correct 986
+wandb: Adv Total Tested 9898
+wandb:          Avg Reg 0.0
+wandb:          Correct 9898
+wandb:      Test Avg CE 0.0284
+wandb:        Test Loss 0.0284
+wandb:     Total Tested 10000
+wandb: 
+wandb: Synced faithful-sweep-11: https://wandb.ai/geometric_robustness/MNIST%20Attacks/runs/hsnzieyr
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20221211_120134-hsnzieyr/logs
+wandb: Sweep Agent: Waiting for job.
+wandb: Sweep Agent: Exiting.

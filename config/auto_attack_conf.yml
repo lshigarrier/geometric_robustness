@@ -1,0 +1,20 @@
+name               : jacobian/test
+model              : baseline_4_5.pt
+gpu_number         : "7"
+reg_type           : None
+testing_batch_size : 128
+
+# model
+
+channels1 : 32
+channels2 : 64
+hidden    : 128
+
+# AutoAttack
+
+norm     : Linf
+epsilon  : 0.15
+log_path : './outputs/log.txt'
+version  : standard
+save_dir : './outputs/'
+

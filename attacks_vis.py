@@ -227,26 +227,55 @@ def plot_robust_curves(budgets, data, labels, xlabel, ylabel):
 def main():
     plt.rcParams.update({'font.size': 16})
 
-    prefix = 'outputs/jacobian/robust_acc/'
+    prefix = 'outputs/jacobian/robust_acc/gn/'
+    '''
     files = ['budgets.txt',
              'baseline_4_5.txt',
              'baseline_5_3.txt',
-             'distill_1_baseline_4_8.txt',
              'jac_12_2.txt',
              'jac_13_3.txt',
              'jac_14_4.txt',
+             'iso_9_2.txt',
+             'iso_10_2.txt',
+             'iso_11_3.txt',
+             'iso_12_2.txt',
+             'iso_13_2.txt',
+             'iso_14_3.txt',
+             'distill_1_baseline_4_8.txt',
              'max_eig_2_8.txt',
              'only_reg_1_7.txt',
-             'parseval_1_8.txt']
+             'parseval_1_8.txt',
+             'adv_train_1_10.txt']
+    '''
+    files = ['budgets.txt',
+             'baseline_4_5.txt',
+             'jac_12_2.txt',
+             'iso_12_2.txt',
+             'parseval_1_8.txt',
+             'adv_train_1_10.txt']
+    '''
     labels = ['baseline - ep 5',
               'baseline bis - ep 3',
-              'distillation from baseline ep 10 - ep 8',
               'jacobian eps=0.1 - ep 2',
               'jacobian eps=4.2 - ep 3',
               'jacobian eps=8.4 - ep 4',
+              'isometry eps=0.1, eta=1e-4 - ep 2',
+              'isometry eps=4.2, eta=1e-4 - ep 2',
+              'isometry eps=8.4, eta=1e-4 - ep 3',
+              'isometry eps=0.1, eta=1e-5 - ep 2',
+              'isometry eps=4.2, eta=1e-5 - ep 2',
+              'isometry eps=8.4, eta=1e-5 - ep 3',
+              'distillation from baseline ep 10 - ep 8',
               'max eig - ep 8',
               'reg only - ep 7',
-              'parseval - ep 8']
+              'parseval - ep 8',
+              'adv train - ep 10']
+    '''
+    labels = ['baseline - ep 5',
+              'jacobian eps=0.1 - ep 2',
+              'isometry eps=0.1, eta=1e-5 - ep 2',
+              'parseval - ep 8',
+              'adv train - ep 10']
     data = []
 
     for i in range(len(files)):

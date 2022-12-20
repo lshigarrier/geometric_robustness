@@ -118,7 +118,7 @@ def test(param, model, reg_model, device, test_loader, eta, attack=None, train=F
                 diff_tensor = adv_data.contiguous().view(adv_data.shape[0], -1) - data[correct_mask].contiguous().view(adv_data.shape[0], -1)
                 min_norm = torch.max(torch.abs(diff_tensor), dim=1)[0].min()
                 # print(f'Min Linf norm: {min_norm}')
-                if min_norm < 0.9*param['budget']:
+                if param['attack_type'] != 'gn' and min_norm < 0.9*param['budget']:
                     print('PERTURBATION IS TOO SMALL!!!')
 
                 # Feed forward
@@ -313,7 +313,7 @@ def one_run():
         _ = plot_hist(test_bound_nonrobust, "Non-robust points", "Bound minus max singular value", "Number")
     else:
         _, _, _, adv_correct = test(param, model, reg_model, device, loader, param['eta'], attack)
-        with open('outputs/jacobian/robust_acc/'+param['model'][:-2]+'txt', 'a') as file:
+        with open('outputs/jacobian/robust_acc/'+param['attack_type']+'/'+param['model'][:-2]+'txt', 'a') as file:
             file.write(str(adv_correct)+'\n')
 
     if param['plot']:

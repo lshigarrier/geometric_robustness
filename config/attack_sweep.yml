@@ -4,8 +4,9 @@ metric :
   name     : val_acc
   goal     : maximize
 parameters :
-  model:
-    values : ["iso_9_2.pt", "iso_10_2.pt", "iso_11_3.pt", "iso_12_2.pt", "iso_13_2.pt", "iso_14_3.pt"]
-    # ["baseline_4_5.pt", "baseline_5_3.pt", "jac_12_2.pt", "jac_13_3.pt", "jac_14_4.pt", "max_eig_2_8.pt", "only_reg_1_7.pt", "parseval_1_8.pt", "distill_1_baseline_4_8.pt"]
+  # model:
+    # values :
+    # ["baseline_4_5.pt", "baseline_5_3.pt", "jac_12_2.pt", "jac_13_3.pt", "jac_14_4.pt", "iso_12_2.pt", "iso_13_2.pt", "iso_14_3.pt", "max_eig_2_8.pt", "only_reg_1_7.pt", "parseval_1_8.pt", "distill_1_baseline_4_8.pt"]
   budget        : 
     values : [0., 0.025, 0.05, 0.075, 0.1, 0.125, 0.15, 0.175, 0.2, 0.225, 0.25]
+    # [0., 0.15, 0.3, 0.45, 0.6, 0.75, 0.9, 1.05, 1.2, 1.35, 1.5]
