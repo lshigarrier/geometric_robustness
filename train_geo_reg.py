@@ -7,7 +7,7 @@ import psutil
 import os
 
 from mnist_utils import load_yaml, initialize, moving_average
-from mnist_model import JacobianReg
+# from mnist_model import JacobianReg
 from test_geo_reg import test
 from attacks_utils import TorchAttackGaussianNoise, TorchAttackFGSM, TorchAttackPGD, TorchAttackPGDL2, TorchAttackDeepFool, TorchAttackCWL2
 from defense_utils import parseval_orthonormal_constraint
@@ -19,11 +19,11 @@ def train(param, model, reg_model, teacher_model, device, train_loader, optimize
     epoch_loss    = []
     epoch_entropy = []
     epoch_reg     = []
-    epoch_jac_reg = []
+    # epoch_jac_reg = []
     epoch_norm    = []
-    epoch_hold    = []
-    epoch_frob    = []
-    epoch_bound   = []
+    # epoch_hold    = []
+    # epoch_frob    = []
+    # epoch_bound   = []
 
     # Make model stochastic and compute gradient graph
     model.train()
@@ -51,15 +51,16 @@ def train(param, model, reg_model, teacher_model, device, train_loader, optimize
 
         # Compute regularization and norms
         if param['compute_reg']:
-            reg, norm, norm_hold, norm_frob, bound = reg_model(data, output, device)
-            if param['reg_type'] == 'isometry':
-                jac_reg, norm, norm_hold, norm_frob, bound = JacobianReg(param['epsilon'], barrier=param['barrier'])(data, output, device)
+            reg, norm = reg_model(data, output, device)
+            # reg, norm, norm_hold, norm_frob, bound = reg_model(data, output, device)
+            # if param['reg_type'] == 'isometry':
+            #    jac_reg, norm, norm_hold, norm_frob, bound = JacobianReg(param['epsilon'], barrier=param['barrier'])(data, output, device)
         else:
             reg       = torch.tensor(0)
             norm      = torch.tensor(0)
-            norm_hold = torch.tensor(0)
-            norm_frob = torch.tensor(0)
-            bound     = torch.tensor(0)
+            # norm_hold = torch.tensor(0)
+            # norm_frob = torch.tensor(0)
+            # bound     = torch.tensor(0)
 
         ## Compute loss
         # Distillation
@@ -137,12 +138,12 @@ def train(param, model, reg_model, teacher_model, device, train_loader, optimize
         epoch_loss.append(loss.item())
         epoch_entropy.append(entropy.item())
         epoch_reg.append(reg.item())
-        if param['reg_type'] == 'isometry':
-            epoch_jac_reg.append(jac_reg.item())
+        # if param['reg_type'] == 'isometry':
+        #    epoch_jac_reg.append(jac_reg.item())
         epoch_norm.append(norm.item())
-        epoch_hold.append(norm_hold.item())
-        epoch_frob.append(norm_frob.item())
-        epoch_bound.append(bound.item())
+        # epoch_hold.append(norm_hold.item())
+        # epoch_frob.append(norm_frob.item())
+        # epoch_bound.append(bound.item())
 
 
         # Display
@@ -165,15 +166,16 @@ def train(param, model, reg_model, teacher_model, device, train_loader, optimize
             np.mean(epoch_loss), np.mean(epoch_entropy), np.mean(epoch_reg)))
 
     # Return results
-    return epoch_loss, epoch_entropy, epoch_reg, epoch_jac_reg, epoch_norm, epoch_hold, epoch_frob, epoch_bound
+    return epoch_loss, epoch_entropy, epoch_reg, epoch_norm
+    # return epoch_loss, epoch_entropy, epoch_reg, epoch_jac_reg, epoch_norm, epoch_hold, epoch_frob, epoch_bound
 
 
 def training(param, device, train_loader, test_loader, model, reg_model, teacher_model, optimizer, attack=None):
     ## Initialize
     # ---------------------------------------------------------------------- #
     # Initiate variables
-    loss_list, entropy_list, reg_list, jac_reg_list = [], [], [], []
-    norm_list, hold_list, frob_list, bound_list = [], [], [], []
+    loss_list, entropy_list, reg_list, norm_list = [], [], [], []
+    # jac_reg_list, hold_list, frob_list, bound_list = [], [], [], []
     test_loss_list, test_entropy_list, test_reg_list = [], [], []
     # ---------------------------------------------------------------------- #
 
@@ -182,24 +184,24 @@ def training(param, device, train_loader, test_loader, model, reg_model, teacher
     for epoch in range(1, param['epochs'] + 1):
 
         # Train
-        epoch_loss, epoch_entropy, epoch_reg, epoch_jac_reg, epoch_norm, epoch_hold, epoch_frob, epoch_bound = train(param, model, reg_model, teacher_model, device, train_loader, optimizer, epoch, param['eta'], attack)
+        epoch_loss, epoch_entropy, epoch_reg, epoch_norm = train(param, model, reg_model, teacher_model, device, train_loader, optimizer, epoch, param['eta'], attack)
 
         # Validate
         test_loss, test_entropy, test_reg, _ = test(param, model, reg_model, device, test_loader, param['eta'], attack=attack, train=True)
 
         # Checkpoint model weights
         if epoch % param['save_step'] == 0:
-            torch.save(model.state_dict(), f'models/{param["name"]}/{epoch:05d}.pt')
+            torch.save(model.state_dict(), f'models/{param["name"]}/epoch_{epoch:02d}.pt')
 
         # Collect statistics
         loss_list    = [*loss_list, *epoch_loss]
         entropy_list = [*entropy_list, *epoch_entropy]
         reg_list     = [*reg_list, *epoch_reg]
         norm_list    = [*norm_list, *epoch_norm]
-        hold_list    = [*hold_list, *epoch_hold]
-        frob_list    = [*frob_list, *epoch_frob]
-        bound_list   = [*bound_list, *epoch_bound]
-        jac_reg_list = [*jac_reg_list, *epoch_jac_reg]
+        # hold_list    = [*hold_list, *epoch_hold]
+        # frob_list    = [*frob_list, *epoch_frob]
+        # bound_list   = [*bound_list, *epoch_bound]
+        # jac_reg_list = [*jac_reg_list, *epoch_jac_reg]
 
         test_loss_list.append(test_loss)
         test_entropy_list.append(test_entropy)
@@ -210,28 +212,31 @@ def training(param, device, train_loader, test_loader, model, reg_model, teacher
     entropy_list   = moving_average(entropy_list, 50)
     reg_list       = moving_average(reg_list, 50)
     norm_list_avg  = moving_average(norm_list, 50)
-    hold_list      = moving_average(hold_list, 50)
-    frob_list      = moving_average(frob_list, 50)
-    bound_list_avg = moving_average(bound_list, 50)
-    jac_reg_list   = moving_average(jac_reg_list, 50)
+    # hold_list      = moving_average(hold_list, 50)
+    # frob_list      = moving_average(frob_list, 50)
+    # bound_list_avg = moving_average(bound_list, 50)
+    # jac_reg_list   = moving_average(jac_reg_list, 50)
     if param['plot']:
         # Display plot
         figs = [
             plot_curves([loss_list], [None], "Training Loss", "Batch", "Loss"),
             plot_curves([entropy_list], [None], "Training Cross Entropy", "Batch", "Cross entropy"),
             plot_curves([reg_list], [None], "Training Regularization", "Batch", "Regularization"),
+            plot_curves([norm_list_avg], ["Holder"], "Jacobian matrix norm", "Batch", "Norm"),
+            plot_curves([test_loss_list], [None], "Test Loss", "Epoch", "Loss"),
+            plot_curves([test_entropy_list], [None], "Test Cross Entropy", "Epoch", "Cross Entropy"),
+            plot_curves([test_reg_list], [None], "Test Regularization", "Epoch", "Regularization")
+        ]
+        '''
             plot_curves([norm_list_avg, hold_list],
                         ["Spectral", "Holder"],
                         "Jacobian matrix norms", "Batch", "Norm"),
             plot_curves([frob_list], [None], "Frobenius Norm", "Batch", "Norm"),
             plot_curves([bound_list_avg], [None], "Bound", "Batch", "Norm"),
             plot_curves([[bound_list[i] - norm_list[i] for i in range(len(bound_list))]], [None], "Bound minus True Norm", "Batch", "bound - norm"),
-            plot_curves([test_loss_list], [None], "Test Loss", "Epoch", "Loss"),
-            plot_curves([test_entropy_list], [None], "Test Cross Entropy", "Epoch", "Cross Entropy"),
-            plot_curves([test_reg_list], [None], "Test Regularization", "Epoch", "Regularization")
-        ]
-        if param['reg_type'] == 'isometry':
-            figs.append(plot_curves([jac_reg_list], [None], "Jacobian regularization", "Batch", "Regularization"))
+        '''
+        # if param['reg_type'] == 'isometry':
+        #    figs.append(plot_curves([jac_reg_list], [None], "Jacobian regularization", "Batch", "Regularization"))
 
         return figs
     return None
@@ -300,13 +305,15 @@ def one_run(param):
     if param['plot']:
         prefix = './outputs/'
         name = param['name'].split('/')[1]
+        '''
+                 "_frob_norm.png",
+                 "_bound.png",
+                 "_bound-norm.png",
+        '''
         paths = ["_train_loss.png",
                  "_train_entropy.png",
                  "_train_reg.png",
                  "_norms.png",
-                 "_frob_norm.png",
-                 "_bound.png",
-                 "_bound-norm.png",
                  "_test_loss.png",
                  "_test_entropy.png",
                  "_test_reg.png"
@@ -327,89 +334,32 @@ def main():
 
     # Loop
     if param['loop']:
-        prefix = param['reg_type'] + '/'
-        for i in range(13):
-            print('-' * 101)
-            if i == 0:
-                print('baseline_4')
-            if i == 1:
-                # baseline with another seed
-                print('baseline_5')
-                param['name'] = prefix + 'baseline_5'
-                param['seed'] = 42
-            elif i == 2:
-                # jacobian reg with medium eps
-                print('jac_13')
-                param['name'] = prefix + 'jac_13'
-                param['reg'] = True
-            elif i == 3:
-                # jacobian reg with small eps
-                print('jac_12')
-                param['name'] = prefix + 'jac_12'
-                param['epsilon'] = 0.1
-            elif i == 4:
-                # jacobian reg with large eps
-                print('jac_14')
-                param['name'] = prefix + 'jac_14'
-                param['epsilon'] = 8.4
-            elif i == 5:
-                # suppress max eigenvalue
-                print('max_eig_2')
-                param['name'] = prefix + 'max_eig_2'
-                param['max_eig'] = True
-                param['reg'] = False
-                param['eta'] = 0.1
-            elif i == 6:
-                # regularization only
-                print('only_reg_1')
-                param['name'] = prefix + 'only_reg_1'
-                param['only_reg'] = True
-                param['max_eig'] = False
-                param['eta'] = 0.03
-            elif i == 7:
-                # distillation
-                print('distill_2_baseline_4')
-                os.system('cp ./models/jacobian/baseline_4/00010.pt ./models/jacobian/distill_baseline_4/teacher.pt')
-                param['name'] = prefix + 'distill_2_baseline_4'
-                param['distill'] = True
-                param['only_reg'] = False
-            elif i == 8:
-                # Parseval network
-                print('parseval_2')
-                param['name'] = prefix + 'parseval_2'
-                param['parseval_train'] = True
-                param['distill'] = False
-            elif i == 9:
-                # isometry reg with medium eps
-                print('iso_10')
-                param['reg_type'] = 'isometry'
-                prefix = param['reg_type'] + '/'
-                param['name'] = prefix + 'iso_10'
-                param['reg'] = True
-                param['parseval_train'] = False
-                param['epsilon'] = 4.2
-                param['eta'] = 0.00001
-            elif i == 10:
-                # isometry reg with small eps
-                print('iso_9')
-                param['name'] = prefix + 'iso_9'
-                param['epsilon'] = 0.1
-            elif i == 11:
-                # isometry reg with large eps
-                print('iso_11')
-                param['name'] = prefix + 'iso_11'
-                param['epsilon'] = 8.4
-            elif i == 12:
-                # adversarial training
-                print('adv_train_1')
-                param['reg_type'] = 'jacobian'
-                prefix = param['reg_type'] + '/'
-                param['name'] = prefix + 'adv_train_1'
-                param['adv_train'] = True
-                param['reg'] = False
-                param['epsilon'] = 4.2
-                param['eta'] = 0.03
-            one_run(param)
+        prefix = 'train_conf/'
+        conf_files = [
+            'baseline',
+            'iso01',
+            'iso42',
+            'iso84',
+            'jac01',
+            'jac42',
+            'jac84',
+            'adv_train',
+            'noise_train',
+            'parseval',
+            'only_reg',
+            'max_eig',
+            'distillation'
+        ]
+        for conf_file in conf_files:
+            print('=' * 101)
+            for i in range(1, 11):
+                print('-' * 101)
+                param = load_yaml(prefix+conf_file+'_conf')
+                param['seed'] = i
+                param['name'] += f'r{i}'
+                if conf_file == 'distillation':
+                    os.system(f'cp ./models/train_sweep/baseline/r{i}/epoch_10.pt ./models/train_sweep/distillation/r{i}/teacher.pt')
+                one_run(param)
 
     else:
         one_run(param)

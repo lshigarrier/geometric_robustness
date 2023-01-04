@@ -63,6 +63,8 @@ def main():
     # Loop
     for file in files:
         param['model'] = file
+        print('-'*101)
+        print(param['model'][:-3])
         one_auto_attack(param, device)
 
 

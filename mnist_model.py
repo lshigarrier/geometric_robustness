@@ -83,7 +83,8 @@ class IsometryReg(nn.Module):
         reg = self.epsilon**2/n*torch.linalg.norm((jac - change).contiguous().view(len(data), -1), dim=1)
 
         # Return
-        return reg.mean(), 0, 0, 0, 0
+        return reg.mean(), 0
+        # return reg.mean(), 0, 0, 0, 0
 
 
 class JacobianReg(nn.Module):
@@ -135,8 +136,8 @@ class JacobianReg(nn.Module):
         bound = delta/(rho*self.epsilon)
 
         # Frobenius norm
-        jac_flat = jac.contiguous().view(jac.shape[0], -1)
-        jac_norm_frob = torch.square(jac_flat).sum(dim=1)
+        # jac_flat = jac.contiguous().view(jac.shape[0], -1)
+        # jac_norm_frob = torch.square(jac_flat).sum(dim=1)
 
         # Holder inequality
         abs_jac = torch.abs(jac)
@@ -145,12 +146,13 @@ class JacobianReg(nn.Module):
         jac_norm_holder = torch.sqrt(norm_1 * norm_inf)
 
         # Exact computation
-        max_eig_val = torch.lobpcg(torch.bmm(jac, jac.transpose(1,2)), k=1, largest=True)[0]
-        jac_norm = torch.sqrt(max_eig_val.squeeze())
+        # max_eig_val = torch.lobpcg(torch.bmm(jac, jac.transpose(1,2)), k=1, largest=True)[0]
+        # jac_norm = torch.sqrt(max_eig_val.squeeze())
 
         # Compute regularization
-        reg = self.barrier(jac_norm - bound)
-        return reg.mean(), jac_norm.mean(), jac_norm_holder.mean(), jac_norm_frob.mean(), bound.mean()
+        reg = self.barrier(jac_norm_holder - bound)
+        return reg.mean(), jac_norm_holder.mean()
+        # return reg.mean(), jac_norm.mean(), jac_norm_holder.mean(), jac_norm_frob.mean(), bound.mean()
 
 
 class Lenet(nn.Module):
